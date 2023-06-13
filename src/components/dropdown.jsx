@@ -5,7 +5,7 @@ import { } from "@fortawesome/free-solid-svg-icons";
 import { Picker } from "@react-native-picker/picker";
 
 import { colors } from "../css/colors";
-import { dropdownStyles } from "../css/input";
+import { dropdownStyles } from "../css/interactables";
 
 function DropdownComponent(props) {
   const { prompt, items } = props;

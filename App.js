@@ -9,10 +9,10 @@ import { colors } from "./src/css/colors";
 
 const Stack = createNativeStackNavigator();
 let customFonts = {
-  'Poppins-Regular': require('./assets/fonts/Poppins/Poppins-Regular.ttf'),
-  'Poppins-Medium': require('./assets/fonts/Poppins/Poppins-Medium.ttf'),
-  'Poppins-Thin': require('./assets/fonts/Poppins/Poppins-Thin.ttf'),
-  'Poppins-Bold': require('./assets/fonts/Poppins/Poppins-Bold.ttf'),
+  // 'Poppins-Regular': require('./assets/fonts/Poppins/Poppins-Regular.ttf'),
+  // 'Poppins-Medium': require('./assets/fonts/Poppins/Poppins-Medium.ttf'),
+  // 'Poppins-Thin': require('./assets/fonts/Poppins/Poppins-Thin.ttf'),
+  // 'Poppins-Bold': require('./assets/fonts/Poppins/Poppins-Bold.ttf'),
   'Lato-Regular': require('./assets/fonts/Lato/Lato-Regular.ttf'),
   'Lato-Medium': require('./assets/fonts/Lato/Lato-Light.ttf'),
   'Lato-Thin': require('./assets/fonts/Lato/Lato-Thin.ttf'),

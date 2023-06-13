@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Checkbox from "expo-checkbox";
 
-import { inputStyles, multiSelectStyles, buttons } from "../css/input";
+import { inputStyles, multiSelectStyles, buttons } from "../css/interactables";
 import { colors } from "../css/colors";
 import {
   ctaPrimary,

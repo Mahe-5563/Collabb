@@ -1,7 +1,8 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { appFontFamily } from "./common";
+import { appFontFamily, appFontFamilyBold, appFontFamilyMedium, appFontFamilyThin } from "./common";
 
+// Recursive Elements...
 const inputFieldBox = {
     borderColor: colors.secondary_color,
     borderStyle: "solid",
@@ -15,6 +16,31 @@ const inputFieldBox = {
     fontSize: 18,
 }
 
+const boxShadow = {
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    shadowOffset: { width: -2, height: 5},
+    shadowRadius: 5,
+    elevation: 3,
+}
+
+const toggleButtonSize = {
+    width: "40%",
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderRadius: 50,
+    alignSelf: "flex-start",
+    margin: 5,
+}
+
+const toggleButtonText = {
+    fontSize: 20,
+    fontFamily: appFontFamily,
+    textAlign: "center"
+}
+
+
+// Stylesheets...
 export const inputStyles = StyleSheet.create({
     inputView: {
         ...inputFieldBox,
@@ -83,13 +109,9 @@ export const multiSelectStyles = StyleSheet.create({
         ...inputFieldBox,
     },
     dropdownValues: {
+        // ...boxShadow,
         height: 500,
         marginTop: 5,
-        // shadowColor: 'black',
-        // shadowOpacity: 1,
-        // shadowOffset: { width: -2, height: 5},
-        // shadowRadius: 5,
-        // elevation: 3,
         backgroundColor: colors.primary_color,
         borderRadius: 5,
     },
@@ -149,5 +171,119 @@ export const buttons = StyleSheet.create({
         fontSize: 18,
         color: colors.secondary_color,
         fontFamily: appFontFamily,
+    },
+    attachButtonComponent: {
+        display: "flex",
+        flexDirection: "row",
+        borderWidth: 1,
+        alignSelf: "flex-start",
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        margin: 5,
+        borderRadius: 50,
+    },
+    attachButtonText: {
+        fontSize: 22
+    }
+})
+
+export const ctaButtons = StyleSheet.create({
+    ctaButtonComponent: {
+        ...boxShadow,
+        paddingHorizontal: 11,
+        paddingVertical: 20,
+        width: "50%",
+        borderWidth: 1,
+        margin: 5,
+        borderRadius: 5,
+        display: "flex",
+        flexDirection: "row",
+    },
+    ctaButtonTitle: {
+        fontFamily: appFontFamilyBold,
+        fontSize: 24,
+        textAlign: "center",
+        marginTop: "auto",
+        marginBottom: "auto",
+    },
+    ctaPrimaryComponent: {
+        backgroundColor: colors.primary_color,
+        borderColor: colors.secondary_color,
+    },
+    ctaPrimaryTitle: {
+        color: colors.primary_color,
+    },
+    ctaSecondaryComponent: {
+        backgroundColor: colors.secondary_color,
+        borderColor: colors.primary_color,
+    },
+    ctaSecondaryTitle: {
+        color: colors.secondary_color,
+    },
+    ctaPrimaryComponentDisabled: {
+        backgroundColor: colors.primary_color,
+        borderColor: colors.grey_color,
+    },
+    ctaPrimaryTitleDisabled: {
+        color: colors.grey_color,
+    },
+    ctaSecondaryComponentDisabled: {
+        backgroundColor: colors.secondary_color_medium,
+        borderColor: colors.primary_color,
+    },
+    ctaSecondaryTitleDisabled: {
+        color: colors.grey_color,
+    }
+})
+
+export const imgButtons = StyleSheet.create({
+    imgOverlay: {
+        ...boxShadow,
+        height: 170,
+        width: 370,
+        margin: 5,
+        marginLeft: "auto",
+        marginRight: "auto",
+        borderRadius: 5,
+    },
+    btnImg: {
+        flex: 1,
+    },
+    btnTitleBG: {
+        marginTop: "auto",
+        marginBottom: 10,
+        marginLeft: 10,
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
+        alignSelf: "flex-start",
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        maxWidth: 280,
+        borderRadius: 5,
+    },
+    btnTitle: {
+        fontFamily: appFontFamily,
+        color: "#fff",
+        fontSize: 28,
+        opacity: 1,
+    }
+})
+
+export const toggleButtons = StyleSheet.create({
+    btnFollow: {
+        ...toggleButtonSize,
+        backgroundColor: colors.secondary_color,
+    },
+    btnFollowTitle: {
+        ...toggleButtonText,
+        color: colors.primary_color,
+    },
+    btnFollowing: {
+        ...toggleButtonSize,
+        borderColor: colors.secondary_color,
+        backgroundColor: colors.primary_color,
+    },
+    btnFollowingTitle: {
+        ...toggleButtonText,
+        color: colors.secondary_color,
     }
 })

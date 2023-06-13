@@ -1,10 +1,9 @@
 import React from "react";
 import { SafeAreaView, TextInput, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faChevronLeft, faBell, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { colors } from "../css/colors";
-import { inputStyles } from "../css/input";
+import { inputStyles } from "../css/interactables";
 
 function InputField(props) {
   const { 
@@ -29,7 +28,7 @@ function InputField(props) {
           {interactableIcon && 
             <FontAwesomeIcon
               style={inputStyles.interactableIcon}
-              icon={faCalendarAlt}
+              icon={interactableIcon}
               size={24}
             />
           }

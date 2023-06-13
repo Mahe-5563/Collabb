@@ -4,6 +4,7 @@ export const colors = {
     primary_color_medium: "#DEDEB5",
     primary_color_dark: "#C5C580",
     secondary_color: "#242021",
+    secondary_color_medium: "#3F383A",
     success_color: "#2EC634",
     grey_color: "#9e9e9e",
     primary_complementary: "#DCDCF5",

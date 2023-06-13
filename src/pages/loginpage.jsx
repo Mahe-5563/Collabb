@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "../components/navbar";
 import InputField from "../components/input_field";
 import DropdownComponent from "../components/dropdown";
 import MultiSelect from "../components/multiselect";
+import CTAButton from "../components/cta_button";
+import ImgButton from "../components/img_button";
+import ButtonImg from "../../assets/images/btnImg.png";
+import ToggleButtons from "../components/toggle_button";
+import AttachButton from "../components/attach_button";
 
 function Login(props) {
 
@@ -83,7 +89,7 @@ function Login(props) {
       <ScrollView>
         <Navbar {...props} />
         <InputField
-          isMultiLine
+          // isMultiLine
           placeholderText="Placeholder text"
           type=""
           interactableIcon={false}
@@ -99,6 +105,26 @@ function Login(props) {
           setSelectedOptions={setSelectedOptions}
           selectedOptions={selectedOptions}
         />
+
+        <CTAButton
+          // isDisabled
+          // dark
+          title={"CTA title"}
+          onPress={() => { console.info("CTA Button clicked!") }}
+          icon={faSave}
+        />
+
+        <ImgButton
+          bgImg={ButtonImg}
+          title={"Button Title"}
+          onPress={() => { console.info("Image Button clicked!") }}
+        />
+
+        <ToggleButtons
+        />
+
+        <AttachButton />
+
       </ScrollView>
     </SafeAreaView>
   );
