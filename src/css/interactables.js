@@ -11,7 +11,7 @@ const inputFieldBox = {
     paddingLeft: 18,
     paddingTop: 15,
     paddingBottom: 15,
-    margin: 5,
+    // margin: 5,
     borderRadius: 5,
     fontSize: 18,
 }
@@ -50,17 +50,21 @@ export const inputStyles = StyleSheet.create({
     interactableIcon: {
         marginTop: "auto",
         marginBottom: "auto",
-        marginRight: 15,
+        margin: 15,
     },
     inputField: {
         fontSize: 18,
         fontFamily: appFontFamily,
-        width: "100%"
+        width: "95%" // Check if there is any width issue while typing the input.
     },
     multilineInputView: {
         ...inputFieldBox,
         maxHeight: 170,
         fontFamily: appFontFamily,
+    },
+    visibilityIcon: {
+        marginTop: "auto",
+        marginBottom: "auto",
     }
 })
 
@@ -190,14 +194,16 @@ export const buttons = StyleSheet.create({
 export const ctaButtons = StyleSheet.create({
     ctaButtonComponent: {
         ...boxShadow,
-        paddingHorizontal: 11,
-        paddingVertical: 20,
-        width: "50%",
+        paddingHorizontal: 5,
+        paddingVertical: 15,
         borderWidth: 1,
         margin: 5,
-        borderRadius: 5,
+        // borderRadius: 5,
         display: "flex",
         flexDirection: "row",
+    },
+    ctaHalf: {
+        width: "50%",
     },
     ctaButtonTitle: {
         fontFamily: appFontFamilyBold,
@@ -243,7 +249,7 @@ export const imgButtons = StyleSheet.create({
         width: 370,
         margin: 5,
         marginLeft: "auto",
-        marginRight: "auto",
+        margin: "auto",
         borderRadius: 5,
     },
     btnImg: {
@@ -285,5 +291,11 @@ export const toggleButtons = StyleSheet.create({
     btnFollowingTitle: {
         ...toggleButtonText,
         color: colors.secondary_color,
+    }
+})
+
+export const textStyles = StyleSheet.create({
+    errorMessage: {
+        color: colors.danger_color
     }
 })

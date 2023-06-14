@@ -1,131 +1,156 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { Image } from "react-native";
 
-import Navbar from "../components/navbar";
-import InputField from "../components/input_field";
-import DropdownComponent from "../components/dropdown";
-import MultiSelect from "../components/multiselect";
+import LogoDark from "../../assets/images/logo_dark.png";
 import CTAButton from "../components/cta_button";
-import ImgButton from "../components/img_button";
-import ButtonImg from "../../assets/images/btnImg.png";
-import ToggleButtons from "../components/toggle_button";
-import AttachButton from "../components/attach_button";
+import InputField from "../components/input_field";
+import {
+  customValue,
+  setMargin,
+  orSplit,
+  textColor,
+} from "../css/common";
+import { textStyles } from "../css/interactables";
+import { colors } from "../css/colors";
 
 function Login(props) {
+  const [formValues, setFormValues] = useState([]);
 
-  // State variables for multi select...
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  useEffect(() => {
-    // console.info("selectedOptions => ", selectedOptions)
-  }, [selectedOptions])
-  
-  const options = [
-    {
-      id: "1",
-      label: "Label 1",
-      value: "Value 1"
-    },
-    {
-      id: "2",
-      label: "Label 2",
-      value: "Value 2"
-    },
-    {
-      id: "3",
-      label: "Label 3",
-      value: "Value 3"
-    },
-    {
-      id: "4",
-      label: "Label 4",
-      value: "Value 4"
-    },
-    {
-      id: "5",
-      label: "Label 5",
-      value: "Value 5"
-    },
-    {
-      id: "6",
-      label: "Label 6",
-      value: "Value 6"
-    },
-    {
-      id: "7",
-      label: "Label 7",
-      value: "Value 7"
-    },
-    {
-      id: "8",
-      label: "Label 8",
-      value: "Value 8"
-    },
-    {
-      id: "9",
-      label: "Label 9",
-      value: "Value 9"
-    },
-    {
-      id: "10",
-      label: "Label 10",
-      value: "Value 10"
-    },
-    {
-      id: "11",
-      label: "Label 11",
-      value: "Value 11"
-    },
-    {
-      id: "12",
-      label: "Label 12",
-      value: "Value 12"
-    }
-  ]
+  const onTextChange = (key, value) => {
+    console.info(key + ": " + value);
+  };
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <Navbar {...props} />
-        <InputField
-          // isMultiLine
-          placeholderText="Placeholder text"
-          type=""
-          interactableIcon={false}
-        />
+    <SafeAreaView
+      style={{
+        marginHorizontal: 15,
+      }}
+    >
+      <Image
+        source={LogoDark}
+        style={{
+          height: 120,
+          width: 280,
+          marginRight: "auto",
+          marginLeft: "auto",
+          marginTop: 120,
+        }}
+      ></Image>
 
-        <DropdownComponent
-          items={options}
-          prompt={"Select a Value"}
+      {/* Form component */}
+      <View
+        style={{
+          marginTop: "20%",
+        }}
+      >
+        <Text style={[
+          textStyles.errorMessage,
+          setMargin(35).setMarginLeft,
+          setMargin(35).setMarginRight,
+          setMargin(20).setMarginBottom,
+          customValue("textAlign", "center").setCustomValue,
+        ]}>
+          Are you sure you've entered the right credentials? There seems to be something wrong!
+        </Text>
+        <InputField
+          fieldKey={"field_email"}
+          placeholderText="Enter Email"
+          onTextChange={(text) => onTextChange("field_email", text)}
+          onBlur={() => {}}
+          keyboardType={"email-address"}
         />
-        
-        <MultiSelect
-          items={options}
-          setSelectedOptions={setSelectedOptions}
-          selectedOptions={selectedOptions}
+        <Text 
+          style={[
+            textStyles.errorMessage,
+            setMargin(10).setMarginLeft
+          ]}
+        >
+          Error Message
+        </Text>
+
+        <InputField
+          passwordField
+          fieldKey={"field_pwd"}
+          placeholderText="Enter Password"
+          onTextChange={(text) => onTextChange("field_pwd", text)}
+          customCSS={[setMargin(15).setMarginTop]}
         />
+        <Text 
+          style={[
+            textStyles.errorMessage,
+            setMargin(10).setMarginLeft
+          ]}
+        >
+          Error Message
+        </Text>
 
         <CTAButton
-          // isDisabled
+          dark
+          halfWidth
+          title={"Login"}
+          onPress={() => {
+            console.info("Login Button clicked!");
+          }}
+          customCSS={[
+            setMargin("auto").setMarginRight,
+            setMargin("auto").setMarginLeft,
+            setMargin(20).setMarginTop,
+          ]}
+        />
+
+        <Pressable
+          style={[
+            setMargin(10).setMarginTop,
+            setMargin("auto").setMarginLeft,
+            setMargin("auto").setMarginRight
+          ]}
+          onPress={() => {
+            console.info("Forgot password!")
+          }}
+        >
+          <Text 
+            style={[
+              textColor(colors.primary_complementary_dark).setTextColor
+            ]}
+          >
+            Forgot Password
+          </Text>
+        </Pressable>
+
+        <View
+          style={[
+            orSplit.splitter,
+            setMargin(30).setMarginTop,
+            setMargin(30).setMarginBottom,
+          ]}
+        >
+          <View style={orSplit.splitLine} />
+          <Text style={orSplit.orText}> OR </Text>
+          <View style={orSplit.splitLine} />
+        </View>
+
+        <CTAButton
           // dark
-          title={"CTA title"}
-          onPress={() => { console.info("CTA Button clicked!") }}
-          icon={faSave}
+          // halfWidth
+          title={"Create a new account"}
+          onPress={() => {
+            console.info("New account Button clicked!");
+          }}
+          customCSS={[
+            setMargin(30).setMarginRight,
+            setMargin(30).setMarginLeft,
+          ]}
         />
-
-        <ImgButton
-          bgImg={ButtonImg}
-          title={"Button Title"}
-          onPress={() => { console.info("Image Button clicked!") }}
-        />
-
-        <ToggleButtons
-        />
-
-        <AttachButton />
-
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

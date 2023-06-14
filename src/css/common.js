@@ -8,50 +8,26 @@ export const appFontFamilyMedium = "Lato-Medium";
 export const appFontFamilyBold = "Lato-Bold";
 export const appFontFamilyThin = "Lato-Thin";
 
-// Function to set margin on all sides
-export const margin = (val) => StyleSheet.create({ setMargin: { margin: val } })
 
-// Function to set margin on right side
-export const marginRight = (val) => StyleSheet.create({ setMarginRight: { marginRight: val } })
+export const setMargin = (val) => StyleSheet.create({
+    setMargin: { margin: val },
+    setMarginRight: { marginRight: val },
+    setMarginLeft: { marginLeft: val },
+    setMarginTop: { marginTop: val },
+    setMarginBottom: { marginBottom: val },
+    setMarginHorizontal: { marginHorizontal: val },
+    setMarginVertical: { marginVertical: val }
+});
 
-// Function to set margin on left side
-export const marginLeft = (val) => StyleSheet.create({ setMarginLeft: { marginLeft: val } })
-
-// Function to set margin on top
-export const marginTop = (val) => StyleSheet.create({ setMarginTop: { marginTop: val } })
-
-// Function to set margin at bottom
-export const marginBottom = (val) => StyleSheet.create({ setMarginBottom: { marginBottom: val } })
-
-// Function to set margin horizontal --
-export const marginHorizontal = (val) => StyleSheet.create({ setMarginHorizontal: { marginHorizontal: val } })
-
-// Function to set margin vertical |
-export const marginVertical = (val) => StyleSheet.create({ setMarginVertical: { marginVertical: val } })
-
-
-
-// Function to set padding on all sides
-export const padding = (val) => StyleSheet.create({ setPadding: { padding: val } })
-
-// Function to set padding on right side
-export const paddingRight = (val) => StyleSheet.create({ setPaddingRight: { paddingRight: val } })
-
-// Function to set padding on left side
-export const paddingLeft = (val) => StyleSheet.create({ setPaddingLeft: { paddingLeft: val } })
-
-// Function to set padding on top
-export const paddingTop = (val) => StyleSheet.create({ setPaddingTop: { paddingTop: val } })
-
-// Function to set padding at bottom
-export const paddingBottom = (val) => StyleSheet.create({ setPaddingBottom: { paddingBottom: val } })
-
-// Function to set padding horizontal --
-export const paddingHorizontal = (val) => StyleSheet.create({ setPaddingHorizontal: { paddingHorizontal: val } })
-
-// Function to set padding vertical |
-export const paddingVertical = (val) => StyleSheet.create({ setPaddingVertical: { paddingVertical: val } })
-
+export const setPadding = (val) => StyleSheet.create({
+    setPadding: { padding: val },
+    setPaddingRight: { paddingRight: val },
+    setPaddingLeft: { paddingLeft: val },
+    setPaddingTop: { paddingTop: val },
+    setPaddingBottom: { paddingBottom: val },
+    setPaddingHorizontal: { paddingHorizontal: val },
+    setPaddingVertical: { paddingVertical: val }
+})
 
 
 // Function to set font size
@@ -65,6 +41,9 @@ export const fontFamily = (fontFamily = appFontFamily) => StyleSheet.create({ se
 
 // Function to set text color
 export const textColor = (color) => StyleSheet.create({ setTextColor: { color } });
+
+// Function to set custom css
+export const customValue = (key, value) => StyleSheet.create({ setCustomValue: { [key]: value } });
 
 
 
@@ -91,5 +70,26 @@ export const ctaTextPrimary = () => StyleSheet.create({
 export const ctaTextSecondary = () => StyleSheet.create({
     setCTAColor: {
         color: colors.primary_color,
+    }
+})
+
+export const orSplit = StyleSheet.create({
+    splitter: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginHorizontal: 10,
+    },
+    splitLine: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.light_color,
+        width: 160,
+        marginTop: "auto",
+        marginBottom: "auto",
+    },
+    orText: {
+        fontSize: 20,
+        fontFamily: appFontFamily,
+        color: colors.light_color
     }
 })

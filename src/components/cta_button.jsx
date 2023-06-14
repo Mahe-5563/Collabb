@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import { ctaButtons } from "../css/interactables";
 import { colors } from "../css/colors";
-import { marginBottom, marginLeft, marginRight, marginTop } from "../css/common";
+import { setMargin } from "../css/common";
 
 function CTAButton(props) {
     const {
@@ -12,7 +12,9 @@ function CTAButton(props) {
         onPress,
         icon,
         dark,
-        isDisabled
+        isDisabled,
+        halfWidth,
+        customCSS
     } = props;
     
     return (
@@ -24,7 +26,9 @@ function CTAButton(props) {
                         isDisabled ? [ ctaButtons.ctaSecondaryComponentDisabled] 
                             : [ ctaButtons.ctaSecondaryComponent ] 
                         : isDisabled ? [ ctaButtons.ctaPrimaryComponentDisabled ] 
-                            : [ctaButtons.ctaPrimaryComponent ])
+                            : [ctaButtons.ctaPrimaryComponent ]),
+                    ...(halfWidth ? [ ctaButtons.ctaHalf ] : []),
+                    ...(customCSS ? [ customCSS ] : []),
                 ]}
                 android_ripple={{
                     color: dark ? colors.secondary_color_medium : colors.primary_color_medium
@@ -37,9 +41,9 @@ function CTAButton(props) {
                         icon={icon} 
                         size={24}
                         style={[
-                            marginTop("auto").setMarginTop,
-                            marginBottom("auto").setMarginBottom,
-                            marginRight(10).setMarginRight
+                            setMargin("auto").setMarginTop,
+                            setMargin("auto").setMarginBottom,
+                            setMargin(10).setMarginRight
                         ]}
                         color={dark ? 
                             isDisabled ? colors.grey_color  : colors.primary_color 
@@ -51,8 +55,8 @@ function CTAButton(props) {
                     style={[
                         ctaButtons.ctaButtonTitle,
                         ...(!icon ? [
-                            marginRight("auto").setMarginRight,
-                            marginLeft("auto").setMarginLeft
+                            setMargin("auto").setMarginRight,
+                            setMargin("auto").setMarginLeft
                         ] : []),
                         ...(dark ? 
                             isDisabled ? [ ctaButtons.ctaPrimaryTitleDisabled ] 

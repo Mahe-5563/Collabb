@@ -19,9 +19,7 @@ import {
   display,
   fontFamily,
   fontSize,
-  marginBottom,
-  marginRight,
-  marginTop,
+  setMargin,
 } from "../css/common";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -77,7 +75,7 @@ function MultiSelect(props) {
                 <Text
                   style={[
                     multiSelectStyles.selectedItemText,
-                    marginRight(10).setMarginRight,
+                    setMargin(10).setMarginRight,
                   ]}
                   numberOfLines={1}
                 >
@@ -87,8 +85,8 @@ function MultiSelect(props) {
               <Pressable
                 style={[
                   multiSelectStyles.selectedItemCross,
-                  marginTop("auto").setMarginTop,
-                  marginBottom("auto").setMarginBottom,
+                  setMargin("auto").setMarginTop,
+                  setMargin("auto").setMarginBottom,
                   multiSelectStyles.selectedItemPadding,
                 ]}
                 android_ripple={{
@@ -136,7 +134,7 @@ function MultiSelect(props) {
                     <View style={multiSelectStyles.individualItem}>
                       <Checkbox
                         key={item.id}
-                        style={[marginRight(15).setMarginRight]}
+                        style={[setMargin(15).setMarginRight]}
                         value={
                           selectedOptions.filter((option) => option.id == item.id)
                             .length > 0
@@ -147,8 +145,8 @@ function MultiSelect(props) {
                       <Text
                         style={[
                           fontSize(18).setFontSize,
-                          marginTop("auto").setMarginTop,
-                          marginBottom("auto").setMarginBottom,
+                          setMargin("auto").setMarginTop,
+                          setMargin("auto").setMarginBottom,
                           fontFamily().setFontFamily,
                         ]}
                       >

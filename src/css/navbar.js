@@ -24,7 +24,7 @@ export const navStyles = StyleSheet.create({
         fontFamily: appFontFamily,
     },
     back: {
-        marginRight: 15,
+        margin: 15,
         marginTop: "auto",
         marginBottom: "auto"
     },

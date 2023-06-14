@@ -1,59 +1,95 @@
-import React from "react";
-import { SafeAreaView, TextInput, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Pressable, SafeAreaView, TextInput, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import { colors } from "../css/colors";
 import { inputStyles } from "../css/interactables";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function InputField(props) {
-  const { 
-    navigation, 
+  const {
+    navigation,
     interactableIcon,
     placeholderText,
-    isMultiLine
+    isMultiLine,
+    onTextChange,
+    fieldKey,
+    customCSS,
+    passwordField,
+    onBlur,
+    onFocus,
+    keyboardType = "default",
   } = props;
 
-  textFieldChange = (text) => {
-    // console.info(text);
-  }
+  const [visibility, setVisibility] = useState(true);
 
   return (
     <SafeAreaView>
 
       {/* Single line input field */}
-      {!isMultiLine && 
-        <View 
-          style={inputStyles.inputView}
+      {!isMultiLine && !passwordField && (
+        <View
+          style={[inputStyles.inputView, ...(customCSS ? [customCSS] : [])]}
         >
-          {interactableIcon && 
+          {interactableIcon && (
             <FontAwesomeIcon
               style={inputStyles.interactableIcon}
               icon={interactableIcon}
               size={24}
             />
-          }
-          <TextInput 
-            id="input_field" 
+          )}
+          <TextInput
+            key={fieldKey}
             style={inputStyles.inputField}
             placeholder={placeholderText}
-            onChangeText={(text) => textFieldChange(text)}
+            onChangeText={onTextChange}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            keyboardType={keyboardType}
           />
         </View>
-      }
-      
+      )}
+
+      {/* Password Field */}
+      {passwordField && !isMultiLine && (
+        <View
+          style={[inputStyles.inputView, ...(customCSS ? [customCSS] : [])]}
+        >
+          <TextInput
+            key={fieldKey}
+            style={inputStyles.inputField}
+            placeholder={placeholderText}
+            onChangeText={onTextChange}
+            secureTextEntry={visibility}
+            onBlur={onBlur}
+            onFocus={onFocus}
+          />
+          <Pressable
+            style={inputStyles.visibilityIcon}
+            onPress={() => setVisibility(!visibility)}
+            >
+            <FontAwesomeIcon
+              icon={visibility ? faEye : faEyeSlash}
+              size={24}
+            />
+          </Pressable>
+        </View>
+      )}
+
       {/* Multi line input field */}
-      {isMultiLine && 
+      {isMultiLine && (
         <TextInput
           editable
           multiline
-          id="paragraph_input"
+          key={fieldKey}
           textAlignVertical="top"
           style={inputStyles.multilineInputView}
           placeholder={placeholderText}
           numberOfLines={9}
-          
+          onBlur={onBlur}
+          onFocus={onFocus}
         />
-        }
+      )}
     </SafeAreaView>
   );
 }

@@ -3,7 +3,7 @@ import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { SafeAreaView, Text, Pressable } from "react-native";
 import { buttons } from "../css/interactables";
-import { marginBottom, marginRight, marginTop } from "../css/common";
+import { setMargin } from "../css/common";
 
 function AttachButton() {
     
@@ -16,9 +16,9 @@ function AttachButton() {
                 icon={faPaperclip}
                 size={18}
                 style={[
-                  marginTop("auto").setMarginTop,
-                  marginBottom("auto").setMarginBottom,
-                  marginRight(10).setMarginRight,
+                  setMargin("auto").setMarginTop,
+                  setMargin("auto").setMarginBottom,
+                  setMargin(10).setMarginRight,
                 ]}
             />
             <Text
