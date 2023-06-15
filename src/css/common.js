@@ -2,12 +2,25 @@ import { StyleSheet } from "react-native";
 import { colors } from "./colors";
 // import styled from "styled-components/native";
 
+/**
+ * Variable constants
+ */
+
 // Font family for the application
 export const appFontFamily = "Lato-Regular";
 export const appFontFamilyMedium = "Lato-Medium";
 export const appFontFamilyBold = "Lato-Bold";
 export const appFontFamilyThin = "Lato-Thin";
 
+// Font sizes for the application
+export const textHeaders = 28;
+export const textSubheaders = 22;
+export const textSize = 18;
+
+
+/**
+ * Functional constants
+ */
 
 export const setMargin = (val) => StyleSheet.create({
     setMargin: { margin: val },

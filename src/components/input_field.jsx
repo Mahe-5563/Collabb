@@ -63,6 +63,7 @@ function InputField(props) {
             secureTextEntry={visibility}
             onBlur={onBlur}
             onFocus={onFocus}
+            keyboardType={keyboardType}
           />
           <Pressable
             style={inputStyles.visibilityIcon}

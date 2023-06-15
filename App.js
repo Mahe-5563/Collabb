@@ -4,15 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from "./src/pages/loginpage";
-import NewPage from "./src/pages/newpage";
 import { colors } from "./src/css/colors";
+import Signup from "./src/pages/signup_page";
 
 const Stack = createNativeStackNavigator();
 let customFonts = {
-  // 'Poppins-Regular': require('./assets/fonts/Poppins/Poppins-Regular.ttf'),
-  // 'Poppins-Medium': require('./assets/fonts/Poppins/Poppins-Medium.ttf'),
-  // 'Poppins-Thin': require('./assets/fonts/Poppins/Poppins-Thin.ttf'),
-  // 'Poppins-Bold': require('./assets/fonts/Poppins/Poppins-Bold.ttf'),
   'Lato-Regular': require('./assets/fonts/Lato/Lato-Regular.ttf'),
   'Lato-Medium': require('./assets/fonts/Lato/Lato-Light.ttf'),
   'Lato-Thin': require('./assets/fonts/Lato/Lato-Thin.ttf'),
@@ -39,8 +35,8 @@ export default function App() {
             component={Login}
           />
           <Stack.Screen 
-            name="NewPage"
-            component={NewPage}
+            name="Signup"
+            component={Signup}
           />
         </Stack.Navigator>
       </NavigationContainer>
