@@ -3,13 +3,15 @@ import { ScrollView, View, Text, Pressable } from "react-native";
 
 import CTAButton from "../components/cta_button";
 import InputField from "../components/input_field";
-import { fontSize, setMargin, textHeaders } from "../css/common";
+import { appFontFamily, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
 import { textStyles } from "../css/interactables";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../css/colors";
 
 function Signup(props) {
+  console.info("props: ", props);
+  const { navigation } = props;
   const [formValues, setFormValues] = useState({});
   const [checkValidity, setCheckValidity] = useState({});
   //   const [isValidCred, setIsValidCred] = useState(true);
@@ -59,6 +61,16 @@ function Signup(props) {
     }
   };
 
+  const proceedWithSignup = () => {
+    // Check for validity..
+
+    // Proceed to Identify purpose page..
+    navigation.navigate(
+      "identify_purpose",
+      { back_key: props.route.key }
+    )
+  }
+
   return (
     <ScrollView
       style={{
@@ -78,7 +90,7 @@ function Signup(props) {
             setMargin("10%").setMarginBottom,
           ]}
           onPress={() => {
-            props.navigation.goBack(props.route.params.back_key);
+            props.navigation.goBack(props?.route?.params?.back_key);
           }}
         >
           <FontAwesomeIcon icon={faTimes} color={colors.grey_color} size={24} />
@@ -90,6 +102,7 @@ function Signup(props) {
             setMargin("auto").setMarginRight,
             setMargin(50).setMarginBottom,
             fontSize(textHeaders).setFontSize,
+            fontFamily(appFontFamily).setFontFamily,
           ]}
         >
           Create an Account
@@ -103,7 +116,7 @@ function Signup(props) {
             onBlur={() => onBlur("field_first_name")}
           />
           {checkValidity["field_first_name"] == false && 
-            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft]}>
+            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
                 Mandatory Field
             </Text>
           }
@@ -117,7 +130,7 @@ function Signup(props) {
             onBlur={() => onBlur("field_last_name")}
           />
           {checkValidity["field_last_name"] == false && 
-            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft]}>
+            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
               Mandatory Field
             </Text>
           }
@@ -132,7 +145,7 @@ function Signup(props) {
             keyboardType={"email-address"}
           />
           {checkValidity["field_email"] == false && 
-            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft]}>
+            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
               Invalid Email address
             </Text>
           }
@@ -147,7 +160,7 @@ function Signup(props) {
             onBlur={() => onBlur("field_pwd")}
           />
           {checkValidity["field_pwd"] == false && 
-            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft]}>
+            <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
               Invalid Password
             </Text>
           }
@@ -157,7 +170,7 @@ function Signup(props) {
           dark
           halfWidth
           title={"Signup"}
-          //   onPress={proceedWithSignup}
+          onPress={proceedWithSignup}
           customCSS={[
             setMargin("auto").setMarginRight,
             setMargin("auto").setMarginLeft,

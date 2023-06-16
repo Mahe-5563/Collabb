@@ -249,7 +249,7 @@ export const imgButtons = StyleSheet.create({
         width: 370,
         margin: 5,
         marginLeft: "auto",
-        margin: "auto",
+        marginRight: "auto",
         borderRadius: 5,
     },
     btnImg: {
@@ -267,7 +267,7 @@ export const imgButtons = StyleSheet.create({
         borderRadius: 5,
     },
     btnTitle: {
-        fontFamily: appFontFamily,
+        fontFamily: appFontFamilyBold,
         color: "#fff",
         fontSize: 28,
         opacity: 1,
@@ -296,6 +296,7 @@ export const toggleButtons = StyleSheet.create({
 
 export const textStyles = StyleSheet.create({
     errorMessage: {
-        color: colors.danger_color
+        color: colors.danger_color,
+        fontFamily: appFontFamily,
     }
 })

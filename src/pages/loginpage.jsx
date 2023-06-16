@@ -185,7 +185,7 @@ function Login(props) {
           // halfWidth
           title={"Create a new account"}
           onPress={() => {
-            props.navigation.navigate("Signup", {
+            props.navigation.navigate("signup", {
               back_key: props.route.key,
             });
           }}

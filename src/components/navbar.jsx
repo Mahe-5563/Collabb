@@ -6,7 +6,7 @@ import {
   SafeAreaView
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faChevronLeft, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong, faBell } from "@fortawesome/free-solid-svg-icons";
 
 import { navStyles } from "../css/navbar";
 import { colors } from "../css/colors";
@@ -24,7 +24,7 @@ function Navbar({ navigation }) {
             }}
         >
             <FontAwesomeIcon
-            icon={faChevronLeft}
+            icon={faLeftLong}
             style={navStyles.back}
             color={colors.primary_color}
             size={28}

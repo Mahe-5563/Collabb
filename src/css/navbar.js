@@ -34,3 +34,14 @@ export const navStyles = StyleSheet.create({
         marginBottom: "auto"
     }
 });
+
+export const secondaryNavStyle = StyleSheet.create({
+    secNavLayout: {
+        backgroundColor: colors.primary_color_medium,
+        paddingTop: 35,
+        paddingBottom: 10,
+    },
+    backButton: {
+        padding: 20,
+    }
+})

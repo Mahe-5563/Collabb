@@ -16,7 +16,8 @@ function ImgButton(props) {
     const {
         title,
         onPress,
-        bgImg
+        bgImg,
+        customCSS
     } = props;
 
   return (
@@ -24,7 +25,10 @@ function ImgButton(props) {
       <TouchableHighlight
         onPress={onPress}
         underlayColor={"white"}
-        style={[imgButtons.imgOverlay]}
+        style={[
+          imgButtons.imgOverlay,
+          ...(customCSS ? customCSS : []),
+        ]}
       >
         <ImageBackground
           source={bgImg}

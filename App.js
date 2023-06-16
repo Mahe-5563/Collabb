@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./src/pages/loginpage";
 import { colors } from "./src/css/colors";
 import Signup from "./src/pages/signup_page";
+import IdentifyPurpose from "./src/pages/signup_process/identify_purpose";
 
 const Stack = createNativeStackNavigator();
 let customFonts = {
@@ -30,13 +31,17 @@ export default function App() {
             }
           }}
         >
-          <Stack.Screen 
-            name="Login"
+          {/* <Stack.Screen 
+            name="login"
             component={Login}
-          />
+          /> */}
           <Stack.Screen 
-            name="Signup"
+            name="signup"
             component={Signup}
+          />
+          <Stack.Screen
+            name="identify_purpose"
+            component={IdentifyPurpose}
           />
         </Stack.Navigator>
       </NavigationContainer>
