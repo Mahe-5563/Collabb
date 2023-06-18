@@ -2,11 +2,13 @@ import * as React from "react";
 import { useFonts } from "expo-font" 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider } from "react-redux";
 
 import Login from "./src/pages/loginpage";
 import { colors } from "./src/css/colors";
 import Signup from "./src/pages/signup_page";
 import IdentifyPurpose from "./src/pages/signup_process/identify_purpose";
+import configureStore from "./store";
 
 const Stack = createNativeStackNavigator();
 let customFonts = {
@@ -19,8 +21,10 @@ let customFonts = {
 export default function App() {
   const [fontsLoaded] = useFonts(customFonts);
 
+  const store = configureStore();
+
   return (
-    <>
+    <Provider store={ store } >
     {fontsLoaded && 
       <NavigationContainer>
         <Stack.Navigator
@@ -46,6 +50,6 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     }
-    </>
+    </Provider>
   );
 }

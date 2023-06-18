@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text, Pressable } from "react-native";
-
-import CTAButton from "../components/cta_button";
-import InputField from "../components/input_field";
-import { appFontFamily, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
-import { textStyles } from "../css/interactables";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { connect } from "react-redux";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { ScrollView, View, Text, Pressable } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { bindActionCreators } from "redux";
+
 import { colors } from "../css/colors";
+import CTAButton from "../components/cta_button";
+import { textStyles } from "../css/interactables";
+import InputField from "../components/input_field";
+import { setUserDetails } from "../../redux/actions/user_details";
+import { appFontFamily, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
 
 function Signup(props) {
   console.info("props: ", props);
@@ -63,12 +66,13 @@ function Signup(props) {
 
   const proceedWithSignup = () => {
     // Check for validity..
+    // props.
 
     // Proceed to Identify purpose page..
-    navigation.navigate(
+    /* navigation.navigate(
       "identify_purpose",
       { back_key: props.route.key }
-    )
+    ) */
   }
 
   return (
@@ -182,4 +186,17 @@ function Signup(props) {
   );
 }
 
-export default Signup;
+const mapStateToProps = state => ({
+  userDetail: state.userDetail,
+});
+
+const ActionCreators = Object.assign(
+  {},
+  setUserDetails,
+);
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
