@@ -16,6 +16,7 @@ export const appFontFamilyThin = "Lato-Thin";
 export const textHeaders = 28;
 export const textSubheaders = 22;
 export const textSize = 18;
+export const textLabel = 14;
 
 
 /**
@@ -104,5 +105,18 @@ export const orSplit = StyleSheet.create({
         fontSize: 20,
         fontFamily: appFontFamily,
         color: colors.light_color
+    }
+})
+
+export const pageCommons = StyleSheet.create({
+    pageTitle: {
+        fontSize: textHeaders,
+        textAlign: "center",
+        fontFamily: appFontFamily,
+
+        // fontSize(textHeaders).setFontSize,
+            //   customValue("textAlign", "center").setCustomValue,
+            //   fontFamily(appFontFamily).setFontFamily,
+            //   setMargin(40).setMarginBottom,
     }
 })

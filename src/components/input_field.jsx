@@ -46,6 +46,7 @@ function InputField(props) {
             onBlur={onBlur}
             onFocus={onFocus}
             keyboardType={keyboardType}
+            numberOfLines={1}
           />
         </View>
       )}
@@ -87,6 +88,7 @@ function InputField(props) {
           style={inputStyles.multilineInputView}
           placeholder={placeholderText}
           numberOfLines={9}
+          onChangeText={onTextChange}
           onBlur={onBlur}
           onFocus={onFocus}
         />

@@ -41,7 +41,13 @@ export default function IdentifyPurpose(props) {
           <ImgButton
             bgImg={ButtonImg}
             title={"Post Jobs"}
-            onPress={() => { console.info("Post Jobs clicked!") }}
+            onPress={() => { 
+              // console.info("Post Jobs clicked!");
+              props.navigation.navigate("account_creation", {
+                back_key: props.route.key,
+                type: "client"
+              });
+            }}
             customCSS={[
               setMargin("10%").setMarginBottom,
             ]}
@@ -49,10 +55,14 @@ export default function IdentifyPurpose(props) {
           <ImgButton
             bgImg={ButtonImg}
             title={"Provide a Service"}
-            onPress={() => { console.info("Provide a service clicked!") }}
-            customCSS={[
-              // setMargin("10%").setMarginBottom,
-            ]}
+            onPress={() => { 
+              // console.info("Provide a service clicked!");
+              props.navigation.navigate("account_creation", {
+                back_key: props.route.key,
+                type: "talent"
+              });
+            }}
+            // customCSS={[]}
           />
         </View>
       </ScrollView>

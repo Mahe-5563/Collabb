@@ -4,11 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from "react-redux";
 
-import Login from "./src/pages/loginpage";
-import { colors } from "./src/css/colors";
-import Signup from "./src/pages/signup_page";
-import IdentifyPurpose from "./src/pages/signup_process/identify_purpose";
 import configureStore from "./store";
+import { pages } from "./src/json/pages";
+import { colors } from "./src/css/colors";
 
 const Stack = createNativeStackNavigator();
 let customFonts = {
@@ -35,18 +33,17 @@ export default function App() {
             }
           }}
         >
-          {/* <Stack.Screen 
-            name="login"
-            component={Login}
-          /> */}
-          <Stack.Screen 
-            name="signup"
-            component={Signup}
-          />
-          <Stack.Screen
-            name="identify_purpose"
-            component={IdentifyPurpose}
-          />
+          {pages.map(page => (
+            <>
+              {page.active &&
+                <Stack.Screen
+                  key={page.name}
+                  name={page.name}
+                  component={page.component}
+                /> 
+              }
+            </>
+          ))}
         </Stack.Navigator>
       </NavigationContainer>
     }

@@ -6,17 +6,15 @@ import { Picker } from "@react-native-picker/picker";
 
 import { colors } from "../css/colors";
 import { dropdownStyles } from "../css/interactables";
+import { appFontFamily, textSize } from "../css/common";
 
 function DropdownComponent(props) {
-  const { prompt, items } = props;
-  const [selectedValue, setSelectedValue] = useState();
-
-  useEffect(() => {
-    
-    // console.info(selectedValue);
-    
-  }, [selectedValue])
-  
+  const { 
+    prompt,
+    items,
+    stateValue,
+    onValueChange
+  } = props;
 
   return (
     <SafeAreaView>
@@ -25,16 +23,30 @@ function DropdownComponent(props) {
       >
         <Picker
           style={dropdownStyles.dropdownView}
-          selectedValue={selectedValue} 
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}
+          selectedValue={stateValue || ""} 
+          onValueChange={onValueChange}
           dropdownIconColor={colors.secondary_color}
-          prompt={prompt}
+          // prompt={prompt}
+          placeholder={prompt}
         >
+          <Picker.Item 
+            key={"default_key"}
+            label={prompt}
+            enabled={false}
+            style={{
+              color: colors.grey_color,
+              fontSize: textSize,
+              fontFamily: appFontFamily,
+            }}
+          />
           {items && items.map(item => (
             <Picker.Item 
               key={item.id}
               label={item.label} 
               value={item.value} 
+              style={{
+                fontFamily: appFontFamily,
+              }}
             />
           ))}
         </Picker>

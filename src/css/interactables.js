@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { appFontFamily, appFontFamilyBold, appFontFamilyMedium, appFontFamilyThin } from "./common";
+import { appFontFamily, appFontFamilyBold, textLabel, textSize } from "./common";
 
 // Recursive Elements...
 const inputFieldBox = {
@@ -13,7 +13,7 @@ const inputFieldBox = {
     paddingBottom: 15,
     // margin: 5,
     borderRadius: 5,
-    fontSize: 18,
+    fontSize: textSize,
 }
 
 const boxShadow = {
@@ -53,7 +53,7 @@ export const inputStyles = StyleSheet.create({
         margin: 15,
     },
     inputField: {
-        fontSize: 18,
+        fontSize: textSize,
         fontFamily: appFontFamily,
         width: "95%" // Check if there is any width issue while typing the input.
     },
@@ -61,6 +61,7 @@ export const inputStyles = StyleSheet.create({
         ...inputFieldBox,
         maxHeight: 170,
         fontFamily: appFontFamily,
+        fontSize: textSize,
     },
     visibilityIcon: {
         marginTop: "auto",
@@ -73,11 +74,51 @@ export const dropdownStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.secondary_color,
         borderStyle: "solid",
-        margin: 5,
+        marginVertical: 5,
         borderRadius: 5,
+        fontSize: textSize,
+        fontFamily: appFontFamily,
     },
     dropdownField: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+    },
+    customDropdown: {
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        paddingVertical: 18,
+        paddingHorizontal: 15,
+        borderRadius: 5,
+    },
+    customDropdownTitlePlaceholder: {
+        color: colors.grey_color,
+        fontSize: textSize,
+        height: 27,
+        textAlignVertical: "center",
+        fontFamily: appFontFamily,
+    },
+    customDropdownTitle: {
+        color: colors.secondary_color,
+        fontSize: textSize,
+        height: 27,
+        textAlignVertical: "center",
+        fontFamily: appFontFamily,
+    },
+    customDropdownList: {
+        textAlign: "left",
+        marginVertical: 10,
+        maxHeight: 300,
+        minHeight: 100,
+        fontFamily: appFontFamily,
+    },
+    listItem: {
         fontSize: 18,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.grey_color,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        display: "flex",
+        flexDirection: "row",
         fontFamily: appFontFamily,
     }
 })
@@ -91,7 +132,7 @@ export const multiSelectStyles = StyleSheet.create({
         borderRadius: 5,
     },
     multiSelectTitle: {
-        fontSize: 16,
+        fontSize: textSize,
     },
     selectedOptions: {
         display: "flex",
@@ -124,7 +165,7 @@ export const multiSelectStyles = StyleSheet.create({
         flexDirection: "row",
         paddingVertical: 20,
         paddingHorizontal: 10,
-        fontSize: 18,
+        fontSize: textSize,
         borderBottomWidth: 1,
         borderColor: colors.grey_color,
         marginHorizontal: 15,
@@ -144,7 +185,7 @@ export const multiSelectStyles = StyleSheet.create({
 
     },
     selectedItemText: {
-        fontSize: 18,
+        fontSize: textSize,
         fontFamily: appFontFamily,
         marginTop: "auto",
         marginBottom: "auto",
@@ -172,7 +213,7 @@ export const buttons = StyleSheet.create({
     },
     textStyle: {
         textAlign: "center",
-        fontSize: 18,
+        fontSize: textSize,
         color: colors.secondary_color,
         fontFamily: appFontFamily,
     },
@@ -298,5 +339,27 @@ export const textStyles = StyleSheet.create({
     errorMessage: {
         color: colors.danger_color,
         fontFamily: appFontFamily,
+    },
+    tipMessage: {
+        fontFamily: appFontFamily,
+        color: colors.blue_medium,
+        fontSize: textLabel,
     }
+})
+
+export const popupModal = StyleSheet.create({
+    modalView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      },
+      modalBody: {
+        margin: 20,
+        borderRadius: 5,
+        padding: 20,
+        // alignItems: 'center',
+        backgroundColor: colors.primary_color,
+        width: 350,
+      },
 })
