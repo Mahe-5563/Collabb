@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
-import { SafeAreaView, View, Text, Pressable, Modal, StyleSheet, Image, ScrollView, ImageBackground } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Pressable,
+  Modal,
+  StyleSheet,
+  Image,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 
 import { colors } from "../css/colors";
 import InputField from "./input_field";
-import { dropdownStyles, popupModal } from "../css/interactables";
+import { dropdownStyles, multiSelectStyles, popupModal } from "../css/interactables";
 import { countriesOfWorld } from "../json/locations";
 import { textSize } from "../css/common";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function DropdownComponentLocation(props) {
-  const { 
-    customCss, 
-    valueSelection, 
-    value, 
-    placeholderText 
-  } = props;
+  const { customCSS, valueSelection, value, placeholderText } = props;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,26 +31,28 @@ function DropdownComponentLocation(props) {
         <Pressable
           style={[
             dropdownStyles.customDropdown,
-            ...(customCss ? customCss : []),
+            ...(customCSS ? customCSS : []),
           ]}
           onPress={() => {
-            console.info("Location selected.")
+            console.info("Location selected.");
             setModalVisible(true);
           }}
         >
-          {!value ?
+          {!value ? (
             <Text style={dropdownStyles.customDropdownTitlePlaceholder}>
               {placeholderText}
             </Text>
-            :
+          ) : (
             <View
               style={{
                 display: "flex",
-                flexDirection: "row"
+                flexDirection: "row",
               }}
             >
               <Image
-                source={{ uri: `https://flagcdn.com/80x60/${value.code.toLowerCase()}.png` }}
+                source={{
+                  uri: `https://flagcdn.com/80x60/${value.code.toLowerCase()}.png`,
+                }}
                 alt={value.name}
                 resizeMethod="scale"
                 style={{
@@ -58,32 +67,36 @@ function DropdownComponentLocation(props) {
                 {value.name}
               </Text>
             </View>
-          }
+          )}
         </Pressable>
         <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View 
-              style={popupModal.modalView}
-            >
-              <View 
-                style={popupModal.modalBody}
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={popupModal.modalView}>
+            <View style={popupModal.modalBody}>
+              <Pressable
+                onPress={() => setModalVisible(false)}
+                style={multiSelectStyles.closeIcon}
               >
-                <InputField 
-                  placeholderText="Enter your location"
-                  onTextChange={(value) => {
-                    setSearchQuery(value);
-                  }}
-                />
-                <ScrollView
-                  style={dropdownStyles.customDropdownList}
-                >
-                  {countriesOfWorld.filter(country => country.name.toLowerCase().match(searchQuery.toLowerCase())).map(country => (
+                <FontAwesomeIcon icon={faTimes} size={22} color="#000" />
+              </Pressable>
+              <InputField
+                placeholderText="Enter your location"
+                onTextChange={(value) => {
+                  setSearchQuery(value);
+                }}
+              />
+              <ScrollView style={dropdownStyles.customDropdownList}>
+                {countriesOfWorld
+                  .filter((country) =>
+                    country.name.toLowerCase().match(searchQuery.toLowerCase())
+                  )
+                  .map((country) => (
                     <Pressable
                       key={country.code}
                       onPress={() => {
@@ -91,12 +104,12 @@ function DropdownComponentLocation(props) {
                         valueSelection(country);
                         setModalVisible(!modalVisible);
                       }}
-                      style={[
-                        dropdownStyles.listItem,
-                      ]}
+                      style={[dropdownStyles.listItem]}
                     >
                       <Image
-                        source={{ uri: `https://flagcdn.com/80x60/${country.code.toLowerCase()}.png` }}
+                        source={{
+                          uri: `https://flagcdn.com/80x60/${country.code.toLowerCase()}.png`,
+                        }}
                         alt={country.name}
                         resizeMethod="scale"
                         style={{
@@ -114,9 +127,9 @@ function DropdownComponentLocation(props) {
                       </Text>
                     </Pressable>
                   ))}
-                </ScrollView>
-              </View>
+              </ScrollView>
             </View>
+          </View>
         </Modal>
       </View>
     </SafeAreaView>

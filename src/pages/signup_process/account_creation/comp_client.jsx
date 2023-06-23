@@ -13,6 +13,8 @@ import InputField from "../../../components/input_field";
 import DropdownComponent from "../../../components/dropdown";
 import DropdownComponentLocation from "../../../components/select_location";
 import CTAButton from "../../../components/cta_button";
+import userImg from "../../../../assets/images/user.png";
+import UploadImage from "../../../components/upload_image";
 
 function ComponentClientAccount(props) {
   const [formValues, setFormValues] = useState({
@@ -21,7 +23,9 @@ function ComponentClientAccount(props) {
     location: "",
     description: "",
     website: "",
+    imgSrc: userImg,
   });
+  // const [imgSrc, setImgSrc] = useState(userImg)
 
   const accountTypesList = [
     {
@@ -42,7 +46,12 @@ function ComponentClientAccount(props) {
   
   const verifyAndProceed = () => {
 
-    if(((formValues.accountType == "Organisation" && formValues.organisationName) || formValues.accountType == "Personal") && formValues.description && formValues.location) {
+    if(
+      ((formValues.accountType == "Organisation" && formValues.organisationName) || formValues.accountType == "Personal") && 
+      formValues.description && 
+      formValues.location &&
+      formValues.imgSrc != userImg
+    ) {
       console.info('Able to proceed')
     } else {
       Alert.alert("Oops!", "Mandatory fields are missing");
@@ -56,6 +65,26 @@ function ComponentClientAccount(props) {
       }}
     >
       <View>
+        <UploadImage 
+          imgSrc={formValues.imgSrc}
+          height={150}
+          width={150}
+          alt={"Upload profile picture"}
+          label={"Upload Profile Image*"}
+          uploadFunction={(result) => {
+            if(!result.cancelled) {
+              setFormValues(prevState => ({
+                ...prevState,
+                imgSrc: { uri: result.uri },
+              }));
+            }
+          }}
+          customCSS={[
+            setMargin("auto").setMarginLeft,
+            setMargin("auto").setMarginRight,
+            setMargin("10%").setMarginBottom
+          ]}
+        />
         <DropdownComponent
           items={accountTypesList}
           prompt={"Select the type of your account *"}
@@ -70,7 +99,8 @@ function ComponentClientAccount(props) {
         <Text
           style={textStyles.tipMessage}
         >
-          Tip: If you are looking to work with freelancers and small-scale businesses, opt for Organisation. If you are looking to work with only small-scale businesses, opt for Personal.
+          Tip: If you are looking to work with freelancers and small-scale businesses, opt for Organisation. 
+          If you are looking to work with only small-scale businesses, opt for Personal.
         </Text>
         
       </View>
@@ -92,7 +122,7 @@ function ComponentClientAccount(props) {
         </View>
       }
       <DropdownComponentLocation
-        customCss={[
+        customCSS={[
           setMargin(20).setMarginVertical,
         ]}
         placeholderText="Select Country *"

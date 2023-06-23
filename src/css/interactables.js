@@ -125,7 +125,7 @@ export const dropdownStyles = StyleSheet.create({
 
 export const multiSelectStyles = StyleSheet.create({
     multiSelectTitleContainer: {
-        margin: 5,
+        marginVertical: 5,
         borderWidth: 1,
         borderColor: colors.secondary_color,
         padding: 20,
@@ -133,6 +133,7 @@ export const multiSelectStyles = StyleSheet.create({
     },
     multiSelectTitle: {
         fontSize: textSize,
+        color: colors.grey_color,
     },
     selectedOptions: {
         display: "flex",
@@ -147,15 +148,16 @@ export const multiSelectStyles = StyleSheet.create({
     },
     closeIcon: {
         marginLeft: "auto",
-        paddingVertical: 20,
-        paddingHorizontal: 5,
+        position: "absolute",
+        right: 0,
+        top: -30,
     },
     multiSelectView: {
         ...inputFieldBox,
     },
     dropdownValues: {
-        // ...boxShadow,
-        height: 500,
+        maxHeight: 340,
+        minHeight: 200,
         marginTop: 5,
         backgroundColor: colors.primary_color,
         borderRadius: 5,
@@ -202,6 +204,7 @@ export const buttons = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignSelf: "center",
+        paddingTop: 10,
     },
     dropdownButton: {
         padding: 12,

@@ -27,7 +27,8 @@ function AccountCreation(props) {
             >
               Account Details
             </Text>
-            <ComponentClientAccount />
+            {/* <ComponentClientAccount /> */}
+            <ComponentTalentAccount />
         </View>
     </ScrollView>
   );
