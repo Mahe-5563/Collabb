@@ -27,7 +27,7 @@ import {
   setMargin,
 } from "../css/common";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { Modal, Button } from "react-native";
 
@@ -70,6 +70,13 @@ function MultiSelect(props) {
         <Text style={multiSelectStyles.multiSelectTitle}>
           {placeholder || "Select your options"}
         </Text>
+        <FontAwesomeIcon 
+          icon={faCaretDown} 
+          style={{
+            marginBottom: "auto",
+            marginTop: "auto"
+          }} 
+        />
       </Pressable>
       <View style={multiSelectStyles.selectedOptions}>
         {selectedOptions &&
@@ -117,7 +124,11 @@ function MultiSelect(props) {
               onPress={() => setshowModal(false)}
               style={multiSelectStyles.closeIcon}
             >
-              <FontAwesomeIcon icon={faTimes} size={22} color="#000" />
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                size={22} 
+                color={colors.white} 
+              />
             </Pressable>
             <View style={inputStyles.inputView}>
               <TextInput

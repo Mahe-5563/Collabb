@@ -7,10 +7,12 @@ const inputFieldBox = {
     borderColor: colors.secondary_color,
     borderStyle: "solid",
     borderWidth: 1,
-    paddingRight: 18,
-    paddingLeft: 18,
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingVertical: 13,
+    paddingHorizontal: 15,
+    // paddingRight: 18,
+    // paddingLeft: 18,
+    // paddingTop: 15,
+    // paddingBottom: 15,
     // margin: 5,
     borderRadius: 5,
     fontSize: textSize,
@@ -50,7 +52,7 @@ export const inputStyles = StyleSheet.create({
     interactableIcon: {
         marginTop: "auto",
         marginBottom: "auto",
-        margin: 15,
+        marginRight: 15,
     },
     inputField: {
         fontSize: textSize,
@@ -66,6 +68,15 @@ export const inputStyles = StyleSheet.create({
     visibilityIcon: {
         marginTop: "auto",
         marginBottom: "auto",
+    },
+    infoTooltip: {
+        position: "absolute",
+        bottom: 30,
+        backgroundColor: colors.primary_color_medium,
+        width: 150,
+        padding: 5,
+        borderWidth: 1,
+        borderColor: colors.primary_color_dark,
     }
 })
 
@@ -74,40 +85,60 @@ export const dropdownStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.secondary_color,
         borderStyle: "solid",
-        marginVertical: 5,
         borderRadius: 5,
-        fontSize: textSize,
-        fontFamily: appFontFamily,
-    },
-    dropdownField: {
-        fontSize: textSize,
-        fontFamily: appFontFamily,
-    },
-    customDropdown: {
         borderWidth: 1,
         borderColor: colors.secondary_color,
         paddingVertical: 18,
         paddingHorizontal: 15,
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        display: "flex",
+        flexDirection: "row",
+    },
+    dropdownField: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        width: "95%"
+    },
+    dropdownTextField: {
+        color: colors.secondary_color_medium
+    },
+    dropdownPlaceholderField: {
+        color: colors.grey_color
+    },
+    dropdownItems: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        paddingVertical: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.light_color,
+    },
+    customDropdown: {
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        paddingVertical: 14,
+        paddingHorizontal: 15,
         borderRadius: 5,
+        display: "flex",
+        flexDirection: "row",
+    },
+    customDropdownText: {
+        fontSize: textSize,
+        height: 27,
+        textAlignVertical: "center",
+        fontFamily: appFontFamily,
+        width: "95%",
     },
     customDropdownTitlePlaceholder: {
         color: colors.grey_color,
-        fontSize: textSize,
-        height: 27,
-        textAlignVertical: "center",
-        fontFamily: appFontFamily,
     },
     customDropdownTitle: {
         color: colors.secondary_color,
-        fontSize: textSize,
-        height: 27,
-        textAlignVertical: "center",
-        fontFamily: appFontFamily,
     },
     customDropdownList: {
         textAlign: "left",
         marginVertical: 10,
-        maxHeight: 300,
+        maxHeight: 350,
         minHeight: 100,
         fontFamily: appFontFamily,
     },
@@ -128,12 +159,16 @@ export const multiSelectStyles = StyleSheet.create({
         marginVertical: 5,
         borderWidth: 1,
         borderColor: colors.secondary_color,
-        padding: 20,
+        paddingHorizontal: 15,
+        paddingVertical: 16,
         borderRadius: 5,
+        display: "flex",
+        flexDirection: "row",
     },
     multiSelectTitle: {
         fontSize: textSize,
         color: colors.grey_color,
+        width: "95%"
     },
     selectedOptions: {
         display: "flex",

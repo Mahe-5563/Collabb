@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Pressable, SafeAreaView, TextInput, View } from "react-native";
+import { Pressable, SafeAreaView, TextInput, View, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import { colors } from "../css/colors";
 import { inputStyles } from "../css/interactables";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleInfo,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import { appFontFamily, appFontFamilyBold } from "../css/common";
 
 function InputField(props) {
   const {
@@ -19,13 +24,16 @@ function InputField(props) {
     onBlur,
     onFocus,
     keyboardType = "default",
+    info,
+    half,
+    tooltipContent
   } = props;
 
   const [visibility, setVisibility] = useState(true);
+  const [openTooltip, setOpenTooltip] = useState(false);
 
   return (
     <SafeAreaView>
-
       {/* Single line input field */}
       {!isMultiLine && !passwordField && (
         <View
@@ -40,7 +48,10 @@ function InputField(props) {
           )}
           <TextInput
             key={fieldKey}
-            style={inputStyles.inputField}
+            style={[
+              inputStyles.inputField,
+              ...(half ? [{ width: "80%" }] : []),
+            ]}
             placeholder={placeholderText}
             onChangeText={onTextChange}
             onBlur={onBlur}
@@ -48,6 +59,35 @@ function InputField(props) {
             keyboardType={keyboardType}
             numberOfLines={1}
           />
+        </View>
+      )}
+      {info && (
+        <View
+          style={{
+            position: "absolute",
+            top: -10,
+            right: 5,
+          }}
+        >
+          <Pressable
+            onPress={() => { setOpenTooltip(!openTooltip) }}
+          >
+            <FontAwesomeIcon icon={faCircleInfo} size={24} />
+          </Pressable>
+          {openTooltip && tooltipContent && 
+            <View
+              style={inputStyles.infoTooltip}
+            >
+              <Text
+                style={{
+                  fontFamily: appFontFamily,
+                  fontSize: 16,
+                }}
+              >
+                {tooltipContent}
+              </Text>
+            </View>
+          }
         </View>
       )}
 
@@ -69,11 +109,8 @@ function InputField(props) {
           <Pressable
             style={inputStyles.visibilityIcon}
             onPress={() => setVisibility(!visibility)}
-            >
-            <FontAwesomeIcon
-              icon={visibility ? faEye : faEyeSlash}
-              size={24}
-            />
+          >
+            <FontAwesomeIcon icon={visibility ? faEye : faEyeSlash} size={24} />
           </Pressable>
         </View>
       )}

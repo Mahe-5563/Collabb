@@ -21,7 +21,7 @@ export const pages = [
     {
         name: "identify_purpose",
         component: IdentifyPurpose,
-        active: false,
+        active: true,
     },
     {
         name: "account_creation",

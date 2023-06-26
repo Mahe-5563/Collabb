@@ -119,8 +119,7 @@ function NewPage(props) {
           onPress={() => { console.info("Image Button clicked!") }}
         />
 
-        <ToggleButtons
-        />
+        <ToggleButtons/>
 
         <AttachButton />
 

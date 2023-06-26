@@ -18,14 +18,14 @@ import UploadImage from "../../../components/upload_image";
 
 function ComponentClientAccount(props) {
   const [formValues, setFormValues] = useState({
-    accountType: "",
-    organisationName: "",
+    account_type: "",
+    organisation_name: "",
     location: "",
     description: "",
     website: "",
-    imgSrc: userImg,
+    profile_photo: "",
   });
-  // const [imgSrc, setImgSrc] = useState(userImg)
+  // const [profile_photo, setImgSrc] = useState(userImg)
 
   const accountTypesList = [
     {
@@ -41,22 +41,8 @@ function ComponentClientAccount(props) {
   ];
 
   useEffect(() => {
-    console.info("formValues: ", formValues);
+    // console.info("formValues: ", formValues);
   }, [formValues]);
-  
-  const verifyAndProceed = () => {
-
-    if(
-      ((formValues.accountType == "Organisation" && formValues.organisationName) || formValues.accountType == "Personal") && 
-      formValues.description && 
-      formValues.location &&
-      formValues.imgSrc != userImg
-    ) {
-      console.info('Able to proceed')
-    } else {
-      Alert.alert("Oops!", "Mandatory fields are missing");
-    }
-  }
 
   return (
     <ScrollView
@@ -64,18 +50,22 @@ function ComponentClientAccount(props) {
         marginHorizontal: 15,
       }}
     >
-      <View>
+      <View
+        style={[
+          setMargin(20).setMarginBottom
+        ]}
+      >
         <UploadImage 
-          imgSrc={formValues.imgSrc}
+          imgSrc={formValues.profile_photo || userImg}
           height={150}
           width={150}
-          alt={"Upload profile picture"}
+          alt={"Profile Picture"}
           label={"Upload Profile Image*"}
           uploadFunction={(result) => {
             if(!result.cancelled) {
               setFormValues(prevState => ({
                 ...prevState,
-                imgSrc: { uri: result.uri },
+                profile_photo: { uri: result.uri },
               }));
             }
           }}
@@ -87,27 +77,30 @@ function ComponentClientAccount(props) {
         />
         <DropdownComponent
           items={accountTypesList}
-          prompt={"Select the type of your account *"}
+          prompt={"Select your account type *"}
           onValueChange={(value) => {
             setFormValues(prevValue => ({
               ...prevValue,
-              accountType: value,
+              account_type: value,
             }))
           }}
-          stateValue={formValues.accountType}
+          stateValue={formValues.account_type}
         />
         <Text
-          style={textStyles.tipMessage}
+          style={[
+            textStyles.tipMessage,
+            setMargin(5).setMarginTop
+          ]}
         >
           Tip: If you are looking to work with freelancers and small-scale businesses, opt for Organisation. 
           If you are looking to work with only small-scale businesses, opt for Personal.
         </Text>
         
       </View>
-      {formValues.accountType == "Organisation" && 
+      {formValues.account_type == "Organisation" && 
         <View
           style={[
-            setMargin(20).setMarginTop
+            setMargin(20).setMarginBottom
           ]}
         >
           <InputField
@@ -115,33 +108,36 @@ function ComponentClientAccount(props) {
             onTextChange={(value) => {
               setFormValues(prevValue => ({
                 ...prevValue,
-                organisationName: value
+                organisation_name: value
               }))
             }}
           />
         </View>
       }
-      <DropdownComponentLocation
-        customCSS={[
-          setMargin(20).setMarginVertical,
-        ]}
-        placeholderText="Select Country *"
-        valueSelection={(country) => {
-          setFormValues(prevValue => ({
-            ...prevValue,
-            location: country
-          }))
-        }}
-        value={formValues.location}
-      />
       <View
         style={[
-          setMargin(20).setMarginTop
+          setMargin(20).setMarginBottom,
+        ]}
+      >
+        <DropdownComponentLocation
+          placeholderText="Select Location *"
+          valueSelection={(country) => {
+            setFormValues(prevValue => ({
+              ...prevValue,
+              location: country
+            }))
+          }}
+          value={formValues.location}
+        />
+      </View>
+      <View
+        style={[
+          setMargin(20).setMarginBottom
         ]}
       >
         <InputField
           isMultiLine
-          placeholderText="(Mandatory) Mention a short description about what you do..."
+          placeholderText="(Mandatory) Describe what you do..."
           onTextChange={(value) => {
             setFormValues(prevValue => ({
               ...prevValue,
@@ -160,11 +156,11 @@ function ComponentClientAccount(props) {
       </View>
       <View
         style={[
-          setMargin(20).setMarginTop
+          setMargin(20).setMarginBottom
         ]}
       >
         <InputField
-          placeholderText="Include a link of your professional profile or website"
+          placeholderText="Link to your professional profile or website"
           onTextChange={(value) => {
             setFormValues(prevValue => ({
               ...prevValue,
@@ -191,7 +187,7 @@ function ComponentClientAccount(props) {
           setMargin("auto").setMarginLeft,
           setMargin("auto").setMarginRight,
         ]}
-        onPress={verifyAndProceed}
+        onPress={() => props.proceedToSummary(formValues)}
       />
     </ScrollView>
   );

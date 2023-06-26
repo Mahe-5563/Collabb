@@ -17,7 +17,7 @@ import { dropdownStyles, multiSelectStyles, popupModal } from "../css/interactab
 import { countriesOfWorld } from "../json/locations";
 import { textSize } from "../css/common";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function DropdownComponentLocation(props) {
   const { customCSS, valueSelection, value, placeholderText } = props;
@@ -34,12 +34,14 @@ function DropdownComponentLocation(props) {
             ...(customCSS ? customCSS : []),
           ]}
           onPress={() => {
-            console.info("Location selected.");
             setModalVisible(true);
           }}
         >
           {!value ? (
-            <Text style={dropdownStyles.customDropdownTitlePlaceholder}>
+            <Text style={[
+              dropdownStyles.customDropdownTitlePlaceholder,
+              dropdownStyles.customDropdownText
+            ]}>
               {placeholderText}
             </Text>
           ) : (
@@ -63,11 +65,21 @@ function DropdownComponentLocation(props) {
                   marginBottom: "auto",
                 }}
               />
-              <Text style={dropdownStyles.customDropdownTitle}>
+              <Text style={[
+                dropdownStyles.customDropdownTitle,
+                dropdownStyles.customDropdownText
+              ]}>
                 {value.name}
               </Text>
             </View>
           )}
+          <FontAwesomeIcon 
+            icon={faCaretDown} 
+            style={{
+              marginBottom: "auto",
+              marginTop: "auto"
+            }} 
+          />
         </Pressable>
         <Modal
           animationType="slide"
@@ -83,7 +95,11 @@ function DropdownComponentLocation(props) {
                 onPress={() => setModalVisible(false)}
                 style={multiSelectStyles.closeIcon}
               >
-                <FontAwesomeIcon icon={faTimes} size={22} color="#000" />
+                <FontAwesomeIcon 
+                  icon={faTimes} 
+                  size={22} 
+                  color={colors.white}
+                />
               </Pressable>
               <InputField
                 placeholderText="Enter your location"
@@ -100,7 +116,6 @@ function DropdownComponentLocation(props) {
                     <Pressable
                       key={country.code}
                       onPress={() => {
-                        console.info(country.name);
                         valueSelection(country);
                         setModalVisible(!modalVisible);
                       }}

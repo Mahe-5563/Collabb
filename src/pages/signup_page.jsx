@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ScrollView, View, Text, Pressable } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { bindActionCreators } from "redux";
 
 import { colors } from "../css/colors";
 import CTAButton from "../components/cta_button";
 import { textStyles } from "../css/interactables";
 import InputField from "../components/input_field";
-import { setUserDetails } from "../../redux/actions/user_details";
+import { setUserDetails } from "../../redux/actions/user";
 import { appFontFamily, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
 
 function Signup(props) {
@@ -185,18 +183,4 @@ function Signup(props) {
     </ScrollView>
   );
 }
-
-const mapStateToProps = state => ({
-  userDetail: state.userDetail,
-});
-
-const ActionCreators = Object.assign(
-  {},
-  setUserDetails,
-);
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(ActionCreators, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default Signup;

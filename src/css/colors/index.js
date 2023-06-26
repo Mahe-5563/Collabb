@@ -15,5 +15,6 @@ export const colors = {
     primary_complementary_dark: "#8F8FCD",
     blue_light: "#797EF2",
     blue_medium: "#373EEC",
-    blue_dark: "#1016AA"
+    blue_dark: "#1016AA",
+    white: "#ffffff"
 };

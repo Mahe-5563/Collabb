@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 
-import { setMargin } from "../../../css/common";
+import { customValue, setMargin } from "../../../css/common";
 import { textStyles } from "../../../css/interactables";
 import InputField from "../../../components/input_field";
 import DropdownComponent from "../../../components/dropdown";
@@ -16,22 +16,44 @@ import CTAButton from "../../../components/cta_button";
 import userImg from "../../../../assets/images/user.png";
 import UploadImage from "../../../components/upload_image";
 import MultiSelect from "../../../components/multiselect";
+import { freelanceCategories, smallScaleBusinessCategories } from "../../../json/cat_subcat";
+import { experienceLevel } from "../../../json/experience";
+import { faEuroSign } from "@fortawesome/free-solid-svg-icons";
 
 function ComponentTalentAccount(props) {
   const [formValues, setFormValues] = useState({
     category: "",
-    subcategory: "",
+    sub_category: "",
     location: "",
     description: "",
     skills: "",
-    imgSrc: userImg,
+    profile_photo: "",
     rate: "",
-    paytype: "",
+    pay_type: "",
     experience: "",
   });
   const [selectedSkills, setSelectedSkills] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
 
-  const options = [
+  const cats_n_subcats = [
+    ...freelanceCategories,
+    ...smallScaleBusinessCategories,
+  ];
+
+  const payType = [
+    {
+      id: "1",
+      label: "Per Hour",
+      value: "Per Hour",
+    },
+    {
+      id: "2",
+      label: "Per Project",
+      value: "Per Project",
+    }
+  ]
+
+  const skills = [
     {
       id: "1",
       label: "Label 1",
@@ -95,12 +117,19 @@ function ComponentTalentAccount(props) {
   ]
 
   useEffect(() => {
-    console.info("formValues: ", formValues);
-  }, [formValues]);
-  
-  const verifyAndProceed = () => {
+    if(formValues.category) {
+      setSubcategories(cats_n_subcats.filter(item => item.label == formValues.category)[0]?.subcategories);
+    }
+  }, [formValues.category]);
 
-  }
+  useEffect(() => {
+    if(selectedSkills) {
+      setFormValues(prevState => ({
+        ...prevState,
+        skills: selectedSkills,
+      }));
+    }
+  }, [selectedSkills])
 
   return (
     <ScrollView
@@ -109,7 +138,7 @@ function ComponentTalentAccount(props) {
       }}
     >
       <UploadImage 
-        imgSrc={formValues.imgSrc}
+        imgSrc={formValues.profile_photo || userImg}
         height={150}
         width={150}
         alt={"Upload profile picture"}
@@ -118,7 +147,7 @@ function ComponentTalentAccount(props) {
           if(!result.cancelled) {
             setFormValues(prevState => ({
               ...prevState,
-              imgSrc: { uri: result.uri },
+              profile_photo: { uri: result.uri },
             }));
           }
         }}
@@ -128,44 +157,48 @@ function ComponentTalentAccount(props) {
           setMargin("10%").setMarginBottom
         ]}
       />
-      <View>
-        <DropdownComponent
-          // items={accountTypesList}
-          prompt={"Select the category of your service *"}
-          onValueChange={(value) => {
-            setFormValues(prevValue => ({
-              ...prevValue,
-              category: value,
-            }))
-          }}
-          stateValue={formValues.category}
-        />
+      <View style={setMargin(formValues.category ? 24 : 20).setMarginBottom}>
+        {cats_n_subcats && 
+          <DropdownComponent 
+            items={cats_n_subcats}
+            prompt={"Select your category *"}
+            onValueChange={(value) => {
+              setFormValues(prevValue => ({
+                ...prevValue,
+                category: value,
+              }))
+            }}
+            stateValue={formValues.category}
+          />
+        }
       </View>
-      <View>
-        <DropdownComponent
-          // items={accountTypesList}
-          prompt={"Select the subcategory of your service *"}
-          onValueChange={(value) => {
-            setFormValues(prevValue => ({
-              ...prevValue,
-              subcategory: value,
-            }))
-          }}
-          stateValue={formValues.subcategory}
-        />
-      </View>
-      <View>
+      {formValues.category && 
+        <View style={setMargin(20).setMarginBottom}>
+          <DropdownComponent
+            items={subcategories}
+            prompt={"Select the sub category of your service *"}
+            onValueChange={(value) => {
+              setFormValues(prevValue => ({
+                ...prevValue,
+                sub_category: value,
+              }))
+            }}
+            stateValue={formValues.sub_category}
+          />
+        </View>
+      }
+      <View style={setMargin(20).setMarginBottom}>
         <MultiSelect
-          items={options}
+          items={skills}
           setSelectedOptions={setSelectedSkills}
           selectedOptions={selectedSkills}
           placeholder={"Select your skills *"}
           searchPlaceholder={"Search for your skill"}
         />
       </View>
-      <View>
+      <View style={setMargin(20).setMarginBottom}>
         <DropdownComponent
-          // items={accountTypesList}
+          items={experienceLevel}
           prompt={"Select your level of experience *"}
           onValueChange={(value) => {
             setFormValues(prevValue => ({
@@ -184,22 +217,25 @@ function ComponentTalentAccount(props) {
           You can update your experience later in your profile.
         </Text>
       </View>
-      <DropdownComponentLocation
-        customCSS={[
-          setMargin(20).setMarginVertical,
-        ]}
-        placeholderText="Where are you from? *"
-        valueSelection={(country) => {
-          setFormValues(prevValue => ({
-            ...prevValue,
-            location: country
-          }))
-        }}
-        value={formValues.location}
-      />
       <View
         style={[
-          setMargin(20).setMarginTop
+          setMargin(20).setMarginBottom
+        ]}
+      >
+        <DropdownComponentLocation
+          placeholderText="Where are you from? *"
+          valueSelection={(country) => {
+            setFormValues(prevValue => ({
+              ...prevValue,
+              location: country
+            }))
+          }}
+          value={formValues.location}
+        />
+      </View>
+      <View
+        style={[
+          setMargin(30).setMarginBottom
         ]}
       >
         <InputField
@@ -222,6 +258,54 @@ function ComponentTalentAccount(props) {
         </Text>
       </View>
 
+      <View
+        style={[
+          {
+            display: "flex",
+            flexDirection: "row",
+          },
+          setMargin(20).setMarginBottom
+        ]}
+      >
+        <View
+          style={[
+            customValue("width", "49%").setCustomValue,
+            setMargin(5).setMarginRight
+          ]}
+        >
+          <InputField
+            info
+            half
+            placeholderText="Avg. Payment"
+            onTextChange={(value) => {
+              setFormValues(prevValue => ({
+                ...prevValue,
+                rate: value
+              }))
+            }}
+            interactableIcon={faEuroSign}
+            tooltipContent={"Average payment you wish to earn out of providing the service."}
+          />
+        </View>
+        <View
+          style={[
+            customValue("width", "49%").setCustomValue,
+          ]}
+        >
+          <DropdownComponent
+            items={payType}
+            prompt={"Select Pay type *"}
+            onValueChange={(value) => {
+              setFormValues(prevValue => ({
+                ...prevValue,
+                pay_type: value,
+              }))
+            }}
+            stateValue={formValues.pay_type}
+          />
+        </View>
+      </View>
+
       <CTAButton
         dark
         halfWidth
@@ -231,7 +315,7 @@ function ComponentTalentAccount(props) {
           setMargin("auto").setMarginLeft,
           setMargin("auto").setMarginRight,
         ]}
-        onPress={verifyAndProceed}
+        onPress={() => props.proceedToSummary(formValues)}
       />
     </ScrollView>
   );

@@ -1,10 +1,11 @@
-import { USER_DETAILS } from "../constants";
+import { USER_DETAILS, PROFILE_DETAILS } from "../actions/types";
 
 const initialState = {
     userDetail: {},
+    profileDetails: {},
 }
 
-const userDetailReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action) => {
 
     switch(action.type) {
         case USER_DETAILS: 
@@ -12,9 +13,14 @@ const userDetailReducer = (state = initialState, action) => {
                 ...state,
                 userDetail: action.payload,
             };
+        case PROFILE_DETAILS: 
+            return {
+                ...state,
+                profileDetails: action.payload,
+            }
         default:
             return state;
     }
 }
 
-export default userDetailReducer;
+export default usersReducer;
