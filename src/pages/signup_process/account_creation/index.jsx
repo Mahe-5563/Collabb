@@ -5,13 +5,18 @@ import { connect } from "react-redux";
 import ComponentClientAccount from "./comp_client";
 import ComponentTalentAccount from "./comp_talent";
 import SecondaryNavbar from "../../../components/navbar_sec";
-import { setProfileDetails } from "../../../../redux/actions/user";
 import { pageCommons, setMargin } from "../../../css/common";
+import { setProfileDetails } from "../../../../redux/actions/user";
 
 function AccountCreation(props) {
+  const { 
+    route,
+    navigation,
+    setProfileDetails
+  } = props;
   const [accountType, setAccountType] = useState("");
 
-  useEffect(() => setAccountType(props?.route?.params?.type), [props?.route?.params?.type]);
+  useEffect(() => setAccountType(route?.params?.type), [route?.params?.type]);
 
   const proceedToSummary = (formValues) => {
     console.info("formValues: ", formValues);
@@ -39,7 +44,8 @@ function AccountCreation(props) {
       Alert.alert("Oops!", "The following mandatory fields are missing:\n\n"+ missingFields);
     } else {
       console.info("YAYY!!!");
-      props.setProfileDetails(formValues);
+      setProfileDetails(formValues);
+      navigation.navigate("account_summary", { accountType });
     }
   }
 

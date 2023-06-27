@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { appFontFamily, appFontFamilyBold, textLabel, textSize } from "./common";
+import { appFontFamily, appFontFamilyBold, textLabel, textSize, textSubheaders } from "./common";
 
 // Recursive Elements...
 const inputFieldBox = {
@@ -401,3 +401,29 @@ export const popupModal = StyleSheet.create({
         width: 350,
       },
 })
+
+export const summaryCard = StyleSheet.create({
+    cardBox: {
+        backgroundColor: colors.primary_color_medium,
+        padding: 25,
+        marginHorizontal: 20,
+        marginVertical: 10,
+        borderRadius: 5,
+    },
+    textTitle: {
+        fontFamily: appFontFamilyBold,
+        fontSize: textSubheaders,
+    },
+    textContent: {
+        fontFamily: appFontFamily,
+        fontSize: textSize,
+    },
+    chip: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        backgroundColor: colors.primary_complementary_medium,
+        fontSize: textSize,
+        borderRadius: 5,
+        marginRight: 10,
+    }
+});

@@ -4,6 +4,7 @@
 import Login from "../pages/loginpage";
 import Signup from "../pages/signup_page";
 import account_creation from "../pages/signup_process/account_creation";
+import AccountSummary from "../pages/signup_process/account_summary";
 import IdentifyPurpose from "../pages/signup_process/identify_purpose";
 
 
@@ -11,12 +12,12 @@ export const pages = [
     {
         name: "login",
         component: Login,
-        active: false,
+        active: true,
     },
     {
         name: "signup",
         component: Signup,
-        active: false,
+        active: true,
     },
     {
         name: "identify_purpose",
@@ -26,6 +27,11 @@ export const pages = [
     {
         name: "account_creation",
         component: account_creation,
+        active: true,
+    },
+    {
+        name: "account_summary",
+        component: AccountSummary,
         active: true,
     }
 ];

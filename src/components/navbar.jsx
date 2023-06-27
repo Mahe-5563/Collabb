@@ -17,10 +17,10 @@ function Navbar({ navigation }) {
       <View style={navStyles.leftSection}>
         <Pressable
             onPress={() => {
-            navigation.navigate("NewPage", {
+              navigation.navigate("NewPage", {
                 param1: "he",
                 param2: "th",
-            });
+              });
             }}
         >
             <FontAwesomeIcon
