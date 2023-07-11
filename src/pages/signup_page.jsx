@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ScrollView, View, Text, Pressable } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -9,10 +10,10 @@ import { textStyles } from "../css/interactables";
 import InputField from "../components/input_field";
 import { setUserDetails } from "../../redux/actions/user";
 import { appFontFamily, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
+import { apiCheckForUser } from "../api/account_creation";
 
 function Signup(props) {
-  console.info("props: ", props);
-  const { navigation } = props;
+  const { navigation, setUserDetails } = props;
   const [formValues, setFormValues] = useState({});
   const [checkValidity, setCheckValidity] = useState({});
   //   const [isValidCred, setIsValidCred] = useState(true);
@@ -57,20 +58,44 @@ function Signup(props) {
     } else if (key == "field_first_name" || key == "field_last_name") {
       setCheckValidity((prevState) => ({
         ...prevState,
-        [key]: formValues[key]?.length <= 1,
+        [key]: formValues[key]?.length >= 1,
       }));
     }
   };
 
   const proceedWithSignup = () => {
     // Check for validity..
-    // props.
+    let valid = true;
+    const validityKeys = Object.keys(checkValidity);
+    validityKeys.map(key => {
+      if(checkValidity[key] == false) {
+        valid = false;
+      }
+    })
+    apiCheckForUser(formValues, (res) => {
+      // console.info("response: ", res);
+      if(res.bool && valid) {
+        setUserDetails(formValues);
+      
+        // Proceed to Identify purpose page..
+        navigation.navigate(
+          "identify_purpose",
+          { back_key: props.route.key }
+        )
+      } else {
+        console.info("Email exists!!");
+      }
+    })
 
-    // Proceed to Identify purpose page..
-    /* navigation.navigate(
-      "identify_purpose",
-      { back_key: props.route.key }
-    ) */
+    /* if(valid) {
+      setUserDetails(formValues);
+      
+      // Proceed to Identify purpose page..
+      navigation.navigate(
+        "identify_purpose",
+        { back_key: props.route.key }
+      )
+    } */
   }
 
   return (
@@ -183,4 +208,14 @@ function Signup(props) {
     </ScrollView>
   );
 }
-export default Signup;
+const mapStateToProps = state => ({
+  ...state,
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUserDetails: (userObj) => dispatch(setUserDetails(userObj))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

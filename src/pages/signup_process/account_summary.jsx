@@ -19,14 +19,21 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { multiSelectStyles, summaryCard } from "../../css/interactables";
 import { colors } from "../../css/colors";
 import CTAButton from "../../components/cta_button";
+import { apiCreateAccount } from "../../api/account_creation";
 
 function AccountSummary(props) {
-  const { route, navigation } = props;
+  const { route, navigation, userDetail } = props;
 
   const [summaryOrder, setSummaryOrder] = useState([]);
   const [summaryKeys, setSummaryKeys] = useState([]);
   const [summaryDetails, setSummaryDetails] = useState({});
 
+  const userDetailsOrder = [
+    { key: "field_first_name", title: "First Name" },
+    { key: "field_last_name", title: "Last Name" },
+    { key: "field_email", title: "Email Id" },
+    // { key: "field_pwd", title: "Passw" },
+  ];
   const talentOrder = [
     { key: "category", title: "Category" },
     { key: "sub_category", title: "Sub Category" },
@@ -46,8 +53,14 @@ function AccountSummary(props) {
   ];
 
   useEffect(() => {
-    setSummaryDetails(props.userDetail.profileDetails);
-    setSummaryKeys(Object.keys(props.userDetail.profileDetails));
+    setSummaryDetails({
+      ...props.userDetail.profileDetails,
+      ...props.userDetail.userDetail,
+    });
+    setSummaryKeys(Object.keys({
+      ...props.userDetail.profileDetails,
+      ...props.userDetail.userDetail,
+    }));
     setSummaryOrder(
       route?.params?.accountType == "talent"
         ? talentOrder
@@ -56,6 +69,20 @@ function AccountSummary(props) {
         : ""
     );
   }, []);
+
+  const confirmDetails = () => {
+    // console.info("profileDetails: ", userDetail.profileDetails);
+
+    const userDetails = {
+      ...userDetail.profileDetails,
+      ...userDetail.userDetail,
+      type: route.params.accountType,
+    };
+
+    apiCreateAccount(userDetails, (response) => {
+      console.info("response: ", response);
+    });
+  }
 
   return (
     <ScrollView automaticallyAdjustKeyboardInsets={true}>
@@ -86,6 +113,64 @@ function AccountSummary(props) {
         }}
       />
 
+      <View
+        style={[
+          setMargin("10%").setMarginTop,
+          setPadding(20).setPaddingHorizontal,
+          {
+            display: "flex",
+            flexDirection: "row",
+          },
+        ]}
+      >
+        <Text
+          style={{
+            fontSize: textSubheaders,
+            fontFamily: appFontFamilyBold,
+          }}
+        >
+          Personal Details
+        </Text>
+        <Pressable
+          style={[
+            setMargin("auto").setMarginLeft,
+            setMargin("auto").setMarginTop,
+            setMargin("auto").setMarginBottom,
+          ]}
+          onPress={() => {
+            // navigation.goBack(route?.params?.back_key);
+          }}
+        >
+          <FontAwesomeIcon icon={faPenToSquare} size={22} />
+        </Pressable>
+      </View>
+
+      <View style={summaryCard.cardBox}>
+        {userDetailsOrder && 
+          summaryDetails &&
+          userDetailsOrder.map((summaryItem, index) => {
+            const key = summaryItem.key;
+            const title = summaryItem.title;
+            const data = summaryDetails[key];
+            return (
+              <>
+                {data && (
+                  <View key={key} style={[setMargin(20).setMarginBottom]}>
+                    <Text
+                      style={[
+                        summaryCard.textTitle,
+                        setMargin(5).setMarginBottom,
+                      ]}
+                    >
+                      {title}
+                    </Text>
+                    <Text style={summaryCard.textContent}>{data}</Text>
+                  </View>
+                )}
+              </>
+            );
+          })}
+      </View>
       <View
         style={[
           setMargin("10%").setMarginTop,
@@ -189,9 +274,7 @@ function AccountSummary(props) {
           setMargin("auto").setMarginLeft,
           setMargin("auto").setMarginRight,
         ]}
-        onPress={() => {
-          console.info("Confirm")
-        }}
+        onPress={confirmDetails}
       />
     </ScrollView>
   );

@@ -6,6 +6,7 @@ import {
   View, 
   Text 
 } from "react-native";
+import { connect } from "react-redux";
 
 // User components
 import { appFontFamily, customValue, fontFamily, fontSize, setMargin, textHeaders } from "../../css/common";
@@ -13,7 +14,7 @@ import ImgButton from "../../components/img_button";
 import SecondaryNavbar from "../../components/navbar_sec";
 import ButtonImg from "../../../assets/images/btnImg.png";
 
-export default function IdentifyPurpose(props) {
+function IdentifyPurpose(props) {
   return (
     <SafeAreaView>
       <ScrollView 
@@ -69,3 +70,4 @@ export default function IdentifyPurpose(props) {
     </SafeAreaView>
   );
 }
+export default IdentifyPurpose;

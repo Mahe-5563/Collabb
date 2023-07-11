@@ -18,6 +18,7 @@ import {
 } from "../css/common";
 import { textStyles } from "../css/interactables";
 import { colors } from "../css/colors";
+import { apiCreateAccount } from "../api/account_creation";
 
 function Login(props) {
   const [formValues, setFormValues] = useState({});
@@ -188,6 +189,7 @@ function Login(props) {
             props.navigation.navigate("signup", {
               back_key: props.route.key,
             });
+            // apiCreateAccount({ test: "hello world" });
           }}
           customCSS={[
             setMargin(30).setMarginRight,
