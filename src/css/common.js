@@ -17,6 +17,8 @@ export const textHeaders = 28;
 export const textSubheaders = 22;
 export const textSize = 18;
 export const textLabel = 14;
+export const textSmall = 12;
+export const marginCenter = { marginLeft: "auto", marginRight: "auto" };
 
 
 /**

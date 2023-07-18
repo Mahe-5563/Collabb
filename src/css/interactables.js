@@ -27,12 +27,11 @@ const boxShadow = {
 }
 
 const toggleButtonSize = {
-    width: "40%",
+    width: "100%",
     paddingVertical: 8,
     borderWidth: 1,
     borderRadius: 50,
     alignSelf: "flex-start",
-    margin: 5,
 }
 
 const toggleButtonText = {
@@ -391,15 +390,31 @@ export const popupModal = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "rgba(0, 0, 0, 0.5)",
-      },
-      modalBody: {
+    },
+    modalBody: {
         margin: 20,
         borderRadius: 5,
         padding: 20,
         // alignItems: 'center',
         backgroundColor: colors.primary_color,
         width: 350,
-      },
+    },
+    subcategoryTitle: { 
+        fontSize: textSubheaders, 
+        fontFamily: appFontFamilyBold,
+    },
+    subcategoryContainer: {
+        marginVertical: 20,
+        maxHeight: 300,
+        paddingHorizontal: 10,
+    },
+    subcategoryList: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        paddingVertical: 24,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.secondary_color
+    },
 })
 
 export const summaryCard = StyleSheet.create({
@@ -427,3 +442,52 @@ export const summaryCard = StyleSheet.create({
         marginRight: 10,
     }
 });
+
+export const searchFieldStyle = StyleSheet.create({
+    textFieldContainer: {
+        borderWidth: 1,
+        borderColor: "black",
+        display: "flex",
+        flexDirection: "row",
+        // margin: 5,
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 40,
+        // position: "relative",
+    },
+    searchIcon: {
+        marginTop: "auto",
+        marginBottom: "auto"
+    },
+    searchText: {
+        fontFamily: appFontFamily,
+        fontSize: textSize,
+    },
+    dropdownContainer: {
+        ...boxShadow,
+        position: "absolute",
+        backgroundColor: colors.primary_color,
+        top: 70,
+        width: "100%",
+        borderWidth: 1,
+        borderColor: colors.grey_color,
+        zIndex: 999,
+        padding: 10,
+        maxHeight: 200,
+        borderRadius: 5,
+    },
+    dropdownText: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        paddingVertical: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.secondary_color,
+        paddingHorizontal: 10,
+    },
+    noResultsFound: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+    }
+})

@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import configureStore from "./store";
 import { pages } from "./src/json/pages";
 import { colors } from "./src/css/colors";
+import { View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 let customFonts = {
@@ -34,7 +35,9 @@ export default function App() {
           }}
         >
           {pages.map(page => (
-            <>
+            <Stack.Group
+              key={page.name}
+            >
               {page.active &&
                 <Stack.Screen
                   key={page.name}
@@ -42,7 +45,7 @@ export default function App() {
                   component={page.component}
                 /> 
               }
-            </>
+            </Stack.Group>
           ))}
         </Stack.Navigator>
       </NavigationContainer>
