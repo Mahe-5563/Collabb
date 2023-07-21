@@ -8,6 +8,7 @@ import account_creation from "../pages/signup_process/account_creation";
 import AccountSummary from "../pages/signup_process/account_summary";
 import IdentifyPurpose from "../pages/signup_process/identify_purpose";
 import ClientIndex from "../pages/client";
+import poj_job_description from "../pages/client/poj_job_description";
 
 
 export const pages = [
@@ -44,6 +45,11 @@ export const pages = [
     {
         name: "client_choose_cat_subcat",
         component: ClientChooseCatSubcat,
+        active: true,
+    },
+    {
+        name: "poj_job_description",
+        component: poj_job_description,
         active: true,
     }
 ];

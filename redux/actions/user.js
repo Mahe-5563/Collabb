@@ -1,4 +1,4 @@
-import { USER_DETAILS, PROFILE_DETAILS } from './types';
+import { USER_DETAILS, PROFILE_DETAILS, CATEGORY_SUBCATE_SELECTION } from './types';
 
 export function setUserDetails (currentUser) {
     return {

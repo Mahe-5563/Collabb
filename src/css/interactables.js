@@ -406,14 +406,16 @@ export const popupModal = StyleSheet.create({
     subcategoryContainer: {
         marginVertical: 20,
         maxHeight: 300,
-        paddingHorizontal: 10,
+    },
+    subcategoryPress: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.secondary_color,
     },
     subcategoryList: {
         fontSize: textSize,
+        paddingHorizontal: 10,
         fontFamily: appFontFamily,
         paddingVertical: 24,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.secondary_color
     },
 })
 
@@ -489,5 +491,49 @@ export const searchFieldStyle = StyleSheet.create({
         fontFamily: appFontFamily,
         paddingVertical: 20,
         paddingHorizontal: 10,
+    }
+})
+
+export const toastMessageStyle = StyleSheet.create({
+    toastMessageContainer: {
+        ...boxShadow,
+        backgroundColor: colors.primary_color_dark,
+        position: "absolute",
+        bottom: 70,
+        left: 0,
+        right: 0,
+        alignItems: "center",
+        marginHorizontal: 40,
+        padding: 17,
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        borderRadius: 50,
+    },
+    toastMessageText: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+    }
+})
+
+export const breadCrumbStyles = StyleSheet.create({
+    poj_breadcrumb_container: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginHorizontal: 20,
+    },
+    poj_breadcrumb_sep: { 
+        borderBottomWidth: 1, 
+        borderBottomColor: "#000", 
+        width: "25%", 
+        marginBottom: "auto",
+        marginTop: "auto"
+    },
+    poj_breadcrumb_img: {
+        height: 50,
+        width: 50,
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        borderRadius: 50,
     }
 })

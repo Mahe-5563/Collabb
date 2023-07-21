@@ -42,7 +42,8 @@ export const secondaryNavStyle = StyleSheet.create({
         paddingBottom: 10,
     },
     backButton: {
-        padding: 20,
+        paddingHorizontal: 15,
+        paddingVertical: 20,
     }
 });
 

@@ -6,8 +6,11 @@ import {
   Pressable,
   SafeAreaView,
   Modal,
+  TouchableHighlight,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
@@ -26,13 +29,52 @@ import Navbar from "../../components/navbar";
 import ImgButton from "../../components/img_button";
 import btnImg from "../../../assets/images/btnImg.png";
 import SearchField from "../../components/search_field";
+import newLogo from "../../../assets/icons/new-logo.png";
 import { freelanceCategories } from "../../json/cat_subcat";
+// import ToastMessage from "../../components/toast_message";
 import { multiSelectStyles, popupModal } from "../../css/interactables";
+import { setCategoryAndSubcategory } from "../../../redux/actions/client";
 
 function ClientChooseCatSubcat(props) {
+  // console.info("Props: ", props);
+  const {
+    clientDetails,
+    setCategoryAndSubcategory,
+    navigation,
+  } = props;
   const [searchValue, setSearchValue] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [categorySelection, setCategorySelection] = useState();
+  const [categoryValueBool, setCategoryValueBool] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  useEffect(() => {
+    if(clientDetails?.cateSubcateSelection && categoryValueBool) {
+      console.info("PRESENT!");
+      setShowToast(true);
+      // setToastMessage("Selection Success!");
+      ToastAndroid.show("Selection Success!", 5000);
+      navigation.navigate(
+        "poj_job_description",
+        {
+          back_key: props.route.key,
+        }
+      )
+      setModalVisible(false);
+    }
+  }, [clientDetails?.cateSubcateSelection])
+
+  const categoryAndSubCatSelection = (subcat) => {
+    const obj = {
+      category: categorySelection.value,
+      subCategory: subcat.value
+    };
+    console.info("obj: ", obj);
+    setCategoryAndSubcategory(obj);
+    setCategoryValueBool(true);
+  }
+
   return (
     <>
       <SafeAreaView>
@@ -101,38 +143,69 @@ function ClientChooseCatSubcat(props) {
                 color={colors.white}
               />
             </Pressable>
-            <Text style={popupModal.subcategoryTitle}> Select your sub-category </Text>
+            <Text style={popupModal.subcategoryTitle}> {"Select your sub-category"} </Text>
             {categorySelection && 
               <ScrollView
                 style={popupModal.subcategoryContainer}
               >
                 {categorySelection.subcategories.map(subcate => (
-                  <Pressable
+                  <TouchableHighlight
                     key={subcate.id}
-                    onPress={() => console.info(subcate)}
+                    onPress={() => {
+                      // console.info(subcate)
+                      categoryAndSubCatSelection(subcate);
+                    }}
+                    underlayColor={colors.primary_color_medium}
+                    style={popupModal.subcategoryPress}
                   >
-                    <Text 
-                      style={popupModal.subcategoryList}
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        position: "relative",
+                      }}
                     >
-                      {subcate.label}
+                      <Text 
+                        style={popupModal.subcategoryList}
+                      >
+                        {subcate.label}
+                      </Text>
                       {subcate.status == "new" && 
-                        <FontAwesomeIcon 
-                          icon={faStar} 
+                        <Image
+                          source={newLogo}
                           style={{
-                            marginLeft: 30,
+                            height: 30,
+                            width: 30,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            marginLeft: 15,
                           }}
                         />
                       }
-                    </Text>
-                  </Pressable>
+                    </View>
+                  </TouchableHighlight>
                 ))}
               </ScrollView>
             }
           </View>
         </View>
       </Modal>
+      {/* <ToastMessage
+        showToast={showToast}
+        setShowToast={setShowToast}
+      /> */}
     </>
   );
 }
 
-export default ClientChooseCatSubcat;
+const mapStateToProps = (state) => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCategoryAndSubcategory: (selection) => dispatch(setCategoryAndSubcategory(selection))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientChooseCatSubcat);
