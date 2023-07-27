@@ -215,48 +215,26 @@ function AccountSummary(props) {
               <>
                 {data && (
                   <View key={key} style={[setMargin(20).setMarginBottom]}>
+                    <Text
+                      style={[
+                        summaryCard.textTitle,
+                        setMargin(5).setMarginBottom,
+                      ]}
+                    >
+                      {title}
+                    </Text>
                     {key == "skills" ? (
-                      <>
-                        <Text
-                          style={[
-                            summaryCard.textTitle,
-                            setMargin(5).setMarginBottom,
-                          ]}
-                        >
-                          {title}
-                        </Text>
-                        <View style={multiSelectStyles.selectedOptions}>
-                          {data.map((datum) => (
-                            <Text key={datum.id} style={summaryCard.chip}>
-                              {datum.label}
-                            </Text>
-                          ))}
-                        </View>
-                      </>
+                      <View style={multiSelectStyles.selectedOptions}>
+                        {data.map((datum) => (
+                          <Text key={datum.id} style={summaryCard.chip}>
+                            {datum.label}
+                          </Text>
+                        ))}
+                      </View>
                     ) : key == "location" ? (
-                      <>
-                        <Text
-                          style={[
-                            summaryCard.textTitle,
-                            setMargin(5).setMarginBottom,
-                          ]}
-                        >
-                          {title}
-                        </Text>
-                        <Text style={summaryCard.textContent}>{data.name}</Text>
-                      </>
+                      <Text style={summaryCard.textContent}>{data.name}</Text>
                     ) : (
-                      <>
-                        <Text
-                          style={[
-                            summaryCard.textTitle,
-                            setMargin(5).setMarginBottom,
-                          ]}
-                        >
-                          {title}
-                        </Text>
-                        <Text style={summaryCard.textContent}>{data}</Text>
-                      </>
+                      <Text style={summaryCard.textContent}>{data}</Text>
                     )}
                   </View>
                 )}

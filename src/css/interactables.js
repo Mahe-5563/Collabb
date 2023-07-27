@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { appFontFamily, appFontFamilyBold, textLabel, textSize, textSubheaders } from "./common";
+import { appFontFamily, appFontFamilyBold, textHeaderLarge, textHeaders, textLabel, textSize, textSubheaders } from "./common";
 
 // Recursive Elements...
 const inputFieldBox = {
@@ -76,7 +76,10 @@ export const inputStyles = StyleSheet.create({
         padding: 5,
         borderWidth: 1,
         borderColor: colors.primary_color_dark,
-    }
+    },
+    datepickerInputField: {
+        ...inputFieldBox,
+    },
 })
 
 export const dropdownStyles = StyleSheet.create({
@@ -535,5 +538,11 @@ export const breadCrumbStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.secondary_color,
         borderRadius: 50,
+    },
+    poj_breadcrumb_title: {
+        textAlign: "center",
+        marginVertical: 30,
+        fontFamily: appFontFamilyBold,
+        fontSize: textHeaderLarge,
     }
 })

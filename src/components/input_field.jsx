@@ -54,7 +54,7 @@ function InputField(props) {
             ]}
             placeholder={placeholderText}
             onChangeText={onTextChange}
-            onBlur={onBlur}
+            onEndEditing={onBlur}
             onFocus={onFocus}
             keyboardType={keyboardType}
             numberOfLines={1}

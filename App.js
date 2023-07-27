@@ -22,6 +22,18 @@ export default function App() {
 
   const store = configureStore();
 
+  const config = {
+    animation: 'spring',
+    config: {
+      stiffness: 1000,
+      damping: 50,
+      mass: 3,
+      overshootClamping: false,
+      restDisplacementThreshold: 0.01,
+      restSpeedThreshold: 0.01,
+    }
+  }
+
   return (
     <Provider store={ store } >
     {fontsLoaded && 
@@ -29,14 +41,18 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
+            gestureEnabled: true,
             contentStyle: {
               backgroundColor: colors.primary_color
-            }
+            },
           }}
         >
           {pages.map(page => (
             <Stack.Group
               key={page.name}
+              screenOptions={{
+                animation: page.animation || "fade_from_bottom",
+              }}
             >
               {page.active &&
                 <Stack.Screen

@@ -51,9 +51,7 @@ function ClientChooseCatSubcat(props) {
 
   useEffect(() => {
     if(clientDetails?.cateSubcateSelection && categoryValueBool) {
-      console.info("PRESENT!");
       setShowToast(true);
-      // setToastMessage("Selection Success!");
       ToastAndroid.show("Selection Success!", 5000);
       navigation.navigate(
         "poj_job_description",
