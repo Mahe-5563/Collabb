@@ -50,7 +50,7 @@ export const secondaryNavStyle = StyleSheet.create({
 
 export const homepageNavStyle = StyleSheet.create({
     container: {
-        height: 200,
+        height: 170,
         backgroundColor: colors.secondary_color,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,

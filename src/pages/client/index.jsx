@@ -7,7 +7,6 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
-import { faChartColumn, faCircleUser, faHouse, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
@@ -20,6 +19,7 @@ import { marginCenter, setMargin, setPadding } from "../../css/common";
 import { homepageElements } from "../../css/client";
 import ToggleButtons from "../../components/toggle_button";
 import FixedBottomNav from "../../components/fixedbottom_nav";
+import SimilarTalents from "../../components/page_components/similar_talents";
 
 function ClientIndex(props) {
   const { navigation } = props;
@@ -70,35 +70,12 @@ function ClientIndex(props) {
     },
   ];
 
-  const menuItems = [
-    {
-      id: 1,
-      title: "HOME",
-      icon: faHouse,
-    },
-    {
-      id: 2,
-      title: "DASHBOARD",
-      icon: faChartColumn,
-    },
-    {
-      id: 3,
-      title: "MESSAGE",
-      icon: faMessage,
-    },
-    {
-      id: 4,
-      title: "ACCOUNT",
-      icon: faCircleUser,
-    }
-  ];
-
   return (
     <>
       <SafeAreaView>
         <NavbarHomepage {...props} />
       </SafeAreaView>
-      <ScrollView style={[setPadding(20).setPaddingVertical]}>
+      <ScrollView style={[setPadding(20).setPadding]}>
         <View>
           {imgButtons.map((btn) => (
             <ImgButton
@@ -117,75 +94,14 @@ function ClientIndex(props) {
             paddingBottom: 40,
           }}
         >
-          <Text style={homepageElements.suggTitle}>
-            {"Similar to your Searches"}
-          </Text>
-          <ScrollView
-            horizontal={true}
-            style={[
-              setMargin(20).setMarginTop,
-              {
-                display: "flex",
-                flexDirection: "row",
-              },
-            ]}
-          >
-            {similarTalents.map((talent, index) => (
-              <View
-                key={`similar_talent_${talent.id}`}
-                style={[
-                  homepageElements.followSuggCard,
-                  ...(index != similarTalents.length - 1
-                    ? [setMargin(20).setMarginRight]
-                    : []),
-                ]}
-              >
-                <Pressable
-                  style={{
-                    position: "absolute",
-                    right: 10,
-                    top: 10,
-                  }}
-                  onPress={() => {
-                    console.info("tried to favourite!");
-                    setFollowing(!following);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={following ? faStarSolid : faStarRegular}
-                    size={28}
-                    color="#d20000"
-                  />
-                </Pressable>
-                <Image
-                  source={talent.profilePic}
-                  style={[marginCenter, setMargin(20).setMarginTop]}
-                />
-                <Text style={homepageElements.suggCardTitle}>
-                  {talent.name}
-                </Text>
-                <Text style={homepageElements.suggCardRole}>
-                  {talent.jobRole}
-                </Text>
-                <View
-                  style={[
-                    setMargin(20).setMarginTop,
-                    {
-                      display: "flex",
-                      marginTop: "auto",
-                    },
-                  ]}
-                >
-                  <ToggleButtons />
-                </View>
-              </View>
-            ))}
-          </ScrollView>
+          <SimilarTalents 
+            {...props}
+            similarTalents={similarTalents}
+          />
         </View>
       </ScrollView> 
       <FixedBottomNav
         currentPage={currentPage}
-        menuItems={menuItems}
         setCurrentPage={setCurrentPage}
       />
     </>

@@ -264,11 +264,7 @@ function PojJobDescription(props) {
             }
           </View>
         </View>
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
+        <View style={{ alignItems: "center" }}>
           <CTAButton
             dark
             halfWidth

@@ -12,11 +12,7 @@ function NavbarHomepage({ navigation }) {
       <View style={[homepageNavStyle.container]}>
         <Pressable
           style={[
-            homepageNavStyle.profileImgPressable,
-            {      
-              // marginTop: "auto",
-              // marginBottom: "auto",
-            }
+            homepageNavStyle.profileImgPressable
           ]}
           onPress={() => {
             console.info("Profile Pic pressed!");

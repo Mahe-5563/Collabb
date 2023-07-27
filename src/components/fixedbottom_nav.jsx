@@ -2,15 +2,38 @@ import React, { useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { fixedBottomNavbar } from "../css/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faChartColumn, faCircleUser, faHouse, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { appFontFamily, setMargin, textLabel, textSmall } from "../css/common";
 import { colors } from "../css/colors";
 
 function FixedBottomNav(props) {
   const { 
     setCurrentPage,
-    currentPage,
-    menuItems
+    currentPage
   } = props;
+
+  const menuItems = [
+    {
+      id: 1,
+      title: "HOME",
+      icon: faHouse,
+    },
+    {
+      id: 2,
+      title: "DASHBOARD",
+      icon: faChartColumn,
+    },
+    {
+      id: 3,
+      title: "MESSAGE",
+      icon: faMessage,
+    },
+    {
+      id: 4,
+      title: "ACCOUNT",
+      icon: faCircleUser,
+    }
+  ];
 
   return (
     <View

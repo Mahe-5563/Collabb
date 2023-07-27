@@ -546,3 +546,30 @@ export const breadCrumbStyles = StyleSheet.create({
         fontSize: textHeaderLarge,
     }
 })
+
+export const talentApplyStyles = StyleSheet.create({
+    cardContainer: {
+        padding: 20,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        position: "relative",
+    },
+    title: {
+        fontSize: textSubheaders,
+        fontFamily: appFontFamily,
+        marginBottom: 20,
+    },
+    textItem: {
+        marginTop: "auto",
+        marginBottom: "auto",
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        marginLeft: 10,
+    },
+    date: {
+        position: "absolute",
+        right: 7,
+        top: 7,
+    }
+})
