@@ -21,6 +21,7 @@ import { faEuroSign } from "@fortawesome/free-solid-svg-icons";
 import CTAButton from "../../components/cta_button";
 import { setPostJobDetails } from "../../../redux/actions/client";
 import { textStyles } from "../../css/interactables";
+import { paymentType } from "../../json/common";
 
 function PojBudgetRequirements(props) {
   const [formData, setFormData] = useState({
@@ -44,11 +45,6 @@ function PojBudgetRequirements(props) {
     textStyles.errorMessage, 
     setMargin(10).setMarginLeft, 
     setMargin(5).setMarginTop
-  ];
-  
-  const paymentType = [
-    { id: "1", label: "Project", value: "Project", },
-    { id: "2", label: "Per Hour", value: "Per Hour", },
   ];
 
   const handleInputValues = (key, value) => {

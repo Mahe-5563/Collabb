@@ -7,10 +7,17 @@ import NavbarHomepage from "../../components/navbar_homepage";
 import FixedBottomNav from "../../components/fixedbottom_nav";
 import { setMargin, setPadding, textSubheaders } from "../../css/common";
 import TalJobCard from "../../components/page_components/job_card_tal_home";
+import TalentFilterModal from "../../components/page_components/talent_filter_modal";
 
 function TalentIndex(props) {
   const { navigation } = props;
   const [currentPage, setCurrentPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [filterData, setFilterData] = useState({
+    paymentType: {},
+    amount: "",
+    startDate: "",
+  });
 
   const jobList = [
     {
@@ -39,6 +46,10 @@ function TalentIndex(props) {
       date: "07/07/1997",
     }
   ]
+
+  const resetFilterData = () => {
+    setFilterData(filterData);
+  }
 
   return (
     <>
@@ -71,7 +82,7 @@ function TalentIndex(props) {
           </Text>
           <Pressable
             style={setPadding(20).setPadding}
-            onPress={() => console.info("Filter open")}
+            onPress={() => setShowModal(true)}
           >
             <FontAwesomeIcon 
               icon={faFilter}
@@ -80,16 +91,36 @@ function TalentIndex(props) {
           </Pressable>
         </View>
         {jobList.map(job => (
-          <View
-            id={job.id}
-            style={[ setMargin(10).setMarginBottom ]}
+          <Pressable
+            id={`job_id_${job.id}`}
+            key={`job_id_${job.id}`}
+            style={[ 
+              setMargin(20).setMarginBottom,
+              setMargin(5).setMarginHorizontal,
+            ]}
+            onPress={() => {
+              // console.info("Job: ", job);
+              navigation.navigate(
+                "talent_apply_job_page",
+                {
+                  jobDetails: job,
+                }
+              )
+            }}
           >
             <TalJobCard
               {...job}
             />
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
+      <TalentFilterModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        resetFilterData={resetFilterData}
+      />
       <FixedBottomNav 
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

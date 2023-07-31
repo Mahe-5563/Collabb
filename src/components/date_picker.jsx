@@ -9,10 +9,10 @@ import { colors } from "../css/colors";
 
 function DatePicker(props) {
   const { 
-    label, 
+    label, // Mandatory 
     half, 
-    onChange, 
-    date,
+    onChange, // Mandatory
+    date, // Mandatory
     minDate
   } = props;
   const [show, setShow] = useState(false);

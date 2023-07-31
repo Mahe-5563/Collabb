@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { appFontFamily, appFontFamilyBold, textHeaderLarge, textHeaders, textLabel, textSize, textSubheaders } from "./common";
+import { appFontFamily, appFontFamilyBold, appFontFamilyMedium, textHeaderLarge, textHeaders, textLabel, textSize, textSmall, textSubheaders } from "./common";
 
 // Recursive Elements...
 const inputFieldBox = {
@@ -320,6 +320,10 @@ export const ctaButtons = StyleSheet.create({
     },
     ctaSecondaryTitleDisabled: {
         color: colors.grey_color,
+    },
+    bottomCTAFixedContainer: {
+        padding: 10,
+        backgroundColor: colors.primary_color_medium,
     }
 })
 
@@ -420,6 +424,11 @@ export const popupModal = StyleSheet.create({
         fontFamily: appFontFamily,
         paddingVertical: 24,
     },
+    subcategoryTip: {
+        fontSize: textSmall,
+        fontFamily: appFontFamilyMedium,
+        color: colors.secondary_color_medium,
+    }
 })
 
 export const summaryCard = StyleSheet.create({
@@ -549,11 +558,14 @@ export const breadCrumbStyles = StyleSheet.create({
 
 export const talentApplyStyles = StyleSheet.create({
     cardContainer: {
+        shadowColor: colors.secondary_color ,
+        elevation: 3,
         padding: 20,
         borderRadius: 5,
-        borderWidth: 1,
-        borderColor: colors.secondary_color,
+        // borderWidth: 1,
+        // borderColor: colors.secondary_color,
         position: "relative",
+        backgroundColor: colors.primary_color_medium
     },
     title: {
         fontSize: textSubheaders,
@@ -571,5 +583,26 @@ export const talentApplyStyles = StyleSheet.create({
         position: "absolute",
         right: 7,
         top: 7,
+    }
+})
+
+export const overlayDropdownStyles = StyleSheet.create({
+    overlayContainer: {
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        padding: 15,
+        backgroundColor: colors.primary_color,
+        width: "100%",
+        position: "absolute",
+        top: 65,
+        maxHeight: 170,
+        zIndex: 999,
+    },
+    overlayListItem: {
+        fontSize: 18,
+        fontFamily: appFontFamily,
+        paddingVertical: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.secondary_color
     }
 })

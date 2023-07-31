@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import { faBriefcase, faEuroSign, faList, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { talentApplyStyles } from "../../css/interactables";
-import { setPadding, textSubheaders } from "../../css/common";
 
 function TalJobCard(props) {
   const sectionStyle = { display: "flex", flexDirection: "row", marginBottom: 15, paddingRight: 10, };

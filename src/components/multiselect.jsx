@@ -33,11 +33,11 @@ import { Modal, Button } from "react-native";
 
 function MultiSelect(props) {
   let {
-    items,
-    setSelectedOptions,
-    selectedOptions,
-    placeholder,
-    searchPlaceholder,
+    items, // Mandatory
+    setSelectedOptions, // Mandatory
+    selectedOptions, // Mandatory
+    placeholder, // Mandatory
+    searchPlaceholder, // Mandatory
   } = props;
   const [inputValue, setInputValue] = useState("");
   const [showModal, setshowModal] = useState(false);

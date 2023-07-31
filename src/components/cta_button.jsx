@@ -8,8 +8,8 @@ import { setMargin } from "../css/common";
 
 function CTAButton(props) {
     const {
-        title,
-        onPress,
+        title, // Mandatory
+        onPress, // Mandatory
         icon,
         dark,
         isDisabled,

@@ -10,10 +10,10 @@ import { appFontFamily, textHeaders, textSize, textSubheaders } from "../css/com
 
 function DropdownComponent(props) {
   const { 
-    prompt,
-    items,
-    stateValue,
-    onValueChange,
+    prompt, // Mandatory
+    items, // Mandatory
+    stateValue, // Mandatory
+    onValueChange, // Mandatory
     customCSS,
   } = props;
   const [modalVisible, setModalVisible] = useState(false);

@@ -15,10 +15,10 @@ function InputField(props) {
   const {
     navigation,
     interactableIcon,
-    placeholderText,
+    placeholderText, // Mandatory
     isMultiLine,
-    onTextChange,
-    fieldKey,
+    onTextChange, // Mandatory
+    fieldKey, // Mandatory
     customCSS,
     passwordField,
     onBlur,
@@ -26,7 +26,8 @@ function InputField(props) {
     keyboardType = "default",
     info,
     half,
-    tooltipContent
+    tooltipContent,
+    value
   } = props;
 
   const [visibility, setVisibility] = useState(true);
@@ -58,6 +59,7 @@ function InputField(props) {
             onFocus={onFocus}
             keyboardType={keyboardType}
             numberOfLines={1}
+            value={value}
           />
         </View>
       )}

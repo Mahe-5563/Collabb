@@ -12,6 +12,7 @@ import poj_job_description from "../pages/client/poj_job_description";
 import poj_budget_req from "../pages/client/poj_budget_req";
 import poj_summary from "../pages/client/poj_summary";
 import TalentIndex from "../pages/talent";
+import ApplyJob from "../pages/talent/apply_job";
 
 /* 
   Page Animations:
@@ -91,6 +92,12 @@ const talentPages = [
     component: TalentIndex,
     active: true,
     animation: "",
+  },
+  {
+    name: "talent_apply_job_page",
+    component: ApplyJob,
+    active: true,
+    animation: "slide_from_right",
   },
 ];
 

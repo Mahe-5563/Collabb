@@ -13,42 +13,11 @@ import SecondaryNavbar from "../../components/navbar_sec";
 import PojBreadcrumb from "../../components/poj_breadcrumb";
 import { setPostJobDetails } from "../../../redux/actions/client";
 import { multiSelectStyles, summaryCard } from "../../css/interactables";
-
-// Job Description Keys...
-const jdKeys = [
-  { id: "1", key: "jobTitle", name: "Title of the Job" },
-  { id: "2", key: "startDate", name: "Start Date" },
-  { id: "3", key: "endDate", name: "End Date" },
-  { id: "4", key: "experience", name: "Experience" },
-  { id: "5", key: "skills", name: "Skills" },
-  { id: "6", key: "description", name: "Description" },
-];
-
-// Budget Requirement keys...
-const budgKeys = [
-  { id: "1", key: "paymentType", name: "Payment Type" },
-  { id: "2", key: "minAmt", name: "Min. Amt." },
-  { id: "3", key: "maxAmt", name: "Max. Amt." },
-  { id: "4", key: "amount", name: "Amount" },
-  { id: "5", key: "restraints", name: "Restraints" },
-];
+import { jdKeys, budgKeys } from "../../json/common";
+import { getSelectedDate } from "../../js/common";
 
 function PojSummary(props) {
   const { clientDetails, params } = props;
-
-  const getSelectedDate = (date) => {
-    const fullDate = new Date(date);
-    if (!isNaN(fullDate)) {
-      const dat = fullDate.getDate();
-      const month = fullDate.getMonth() + 1;
-      const year = fullDate.getFullYear();
-      return `${(fullDate.getDate() < 10 ? "0" : "") + dat}/${
-        (fullDate.getMonth() + 1 < 10 ? "0" : "") + month
-      }/${year}`;
-    } else {
-      return "";
-    }
-  };
 
   const submitDetails = () => {
     console.info(clientDetails.postJobDetails.budgetReq)
@@ -74,7 +43,7 @@ function PojSummary(props) {
               const data =
                 clientDetails?.postJobDetails?.jobDescription[jdItem.key];
               return (
-                <View id={jdItem.id} style={[setMargin(10).setMarginVertical]}>
+                <View id={jdItem.id} key={jdItem.id} style={[setMargin(10).setMarginVertical]}>
                   <Text style={summaryCard.textTitle}>
                     {jdItem.name}:
                   </Text>
