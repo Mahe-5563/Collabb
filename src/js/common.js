@@ -1,3 +1,5 @@
+import { ToastAndroid } from "react-native";
+
 export const getSelectedDate = (date) => {
   const fullDate = new Date(date);
   if (!isNaN(fullDate)) {
@@ -11,3 +13,8 @@ export const getSelectedDate = (date) => {
     return "";
   }
 };
+
+
+export const toastMessage = (message, duration = 5000) => {
+    ToastAndroid.show(message, duration);
+}

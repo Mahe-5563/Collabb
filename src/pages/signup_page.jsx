@@ -16,6 +16,7 @@ function Signup(props) {
   const { navigation, setUserDetails } = props;
   const [formValues, setFormValues] = useState({});
   const [checkValidity, setCheckValidity] = useState({});
+  const [signInUp, setSignInUp] = useState(false);
   //   const [isValidCred, setIsValidCred] = useState(true);
 
   const emailRegex =
@@ -65,6 +66,7 @@ function Signup(props) {
 
   const proceedWithSignup = () => {
     // Check for validity..
+    setSignInUp(true);
     let valid = true;
     const validityKeys = Object.keys(checkValidity);
     validityKeys.map(key => {
@@ -77,12 +79,14 @@ function Signup(props) {
       if(res.bool && valid) {
         setUserDetails(formValues);
       
+        setSignInUp(false);
         // Proceed to Identify purpose page..
         navigation.navigate(
           "identify_purpose",
           { back_key: props.route.key }
-        )
-      } else {
+          )
+        } else {
+        setSignInUp(false);
         console.info("Email exists!!");
       }
     })
@@ -196,7 +200,8 @@ function Signup(props) {
         <CTAButton
           dark
           halfWidth
-          title={"Signup"}
+          isDisabled={signInUp}
+          title={signInUp ? "Verifying..." : "Proceed"}
           onPress={proceedWithSignup}
           customCSS={[
             setMargin("auto").setMarginRight,

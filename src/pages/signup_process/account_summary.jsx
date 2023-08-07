@@ -1,7 +1,7 @@
 // Built-in
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Pressable, ScrollView, View, Text, Image } from "react-native";
+import { Pressable, ScrollView, View, Text, Image, } from "react-native";
 
 // User components
 import SecondaryNavbar from "../../components/navbar_sec";
@@ -20,6 +20,8 @@ import { multiSelectStyles, summaryCard } from "../../css/interactables";
 import { colors } from "../../css/colors";
 import CTAButton from "../../components/cta_button";
 import { apiCreateAccount } from "../../api/account_creation";
+import { toastMessage } from "../../js/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function AccountSummary(props) {
   const { route, navigation, userDetail } = props;
@@ -27,6 +29,7 @@ function AccountSummary(props) {
   const [summaryOrder, setSummaryOrder] = useState([]);
   const [summaryKeys, setSummaryKeys] = useState([]);
   const [summaryDetails, setSummaryDetails] = useState({});
+  const [createAccount, setCreateAccount] = useState(false);
 
   const userDetailsOrder = [
     { key: "field_first_name", title: "First Name" },
@@ -70,17 +73,39 @@ function AccountSummary(props) {
     );
   }, []);
 
-  const confirmDetails = () => {
-    // console.info("profileDetails: ", userDetail.profileDetails);
-
+  const confirmDetails = async () => {
+    setCreateAccount(true);
+    const userType = route.params.accountType;
     const userDetails = {
       ...userDetail.profileDetails,
       ...userDetail.userDetail,
-      type: route.params.accountType,
+      type: userType,
     };
+    // console.info("profileDetails: ", userDetails);
 
-    apiCreateAccount(userDetails, (response) => {
+    apiCreateAccount(userDetails, async (response) => {
       console.info("response: ", response);
+      setCreateAccount(false);
+      
+      toastMessage(response.message);
+      const userId = response?.res?.userid;
+      if(userId) {
+        console.info("UserId: ", userId);
+        await AsyncStorage.setItem("userId", userId);
+        if(userType == "client") {
+          // toastMessage(`Client: ${userId}`);
+          /* navigation.navigate(
+            "client_home_page",
+            {  }
+          ); */
+        } else if (userType == "talent") {
+          /* navigation.navigate(
+            "talent_home_page",
+            {  }
+          ); */
+          // toastMessage(`Talent: ${userId}`);
+        }
+      }
     });
   }
 
@@ -153,9 +178,9 @@ function AccountSummary(props) {
             const title = summaryItem.title;
             const data = summaryDetails[key];
             return (
-              <>
+              <View key={key}>
                 {data && (
-                  <View key={key} style={[setMargin(20).setMarginBottom]}>
+                  <View style={[setMargin(20).setMarginBottom]}>
                     <Text
                       style={[
                         summaryCard.textTitle,
@@ -167,7 +192,7 @@ function AccountSummary(props) {
                     <Text style={summaryCard.textContent}>{data}</Text>
                   </View>
                 )}
-              </>
+              </View>
             );
           })}
       </View>
@@ -212,9 +237,9 @@ function AccountSummary(props) {
             const title = summaryItem.title;
             const data = summaryDetails[key];
             return (
-              <>
+              <View key={key}>
                 {data && (
-                  <View key={key} style={[setMargin(20).setMarginBottom]}>
+                  <View style={[setMargin(20).setMarginBottom]}>
                     <Text
                       style={[
                         summaryCard.textTitle,
@@ -238,7 +263,7 @@ function AccountSummary(props) {
                     )}
                   </View>
                 )}
-              </>
+              </View>
             );
           })}
       </View>
@@ -246,7 +271,8 @@ function AccountSummary(props) {
       <CTAButton 
         dark
         halfWidth
-        title={"Confirm"}
+        isDisabled={createAccount}
+        title={createAccount ? "Creating Account..." :"Create Account"}
         customCSS={[
           setMargin(40).setMarginVertical,
           setMargin("auto").setMarginLeft,

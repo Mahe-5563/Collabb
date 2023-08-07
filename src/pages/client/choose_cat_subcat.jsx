@@ -34,6 +34,7 @@ import { freelanceCategories } from "../../json/cat_subcat";
 // import ToastMessage from "../../components/toast_message";
 import { multiSelectStyles, popupModal } from "../../css/interactables";
 import { setCategoryAndSubcategory } from "../../../redux/actions/client";
+import { toastMessage } from "../../js/common";
 
 function ClientChooseCatSubcat(props) {
   // console.info("Props: ", props);
@@ -46,13 +47,12 @@ function ClientChooseCatSubcat(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [categorySelection, setCategorySelection] = useState();
   const [categoryValueBool, setCategoryValueBool] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     if(clientDetails?.cateSubcateSelection && categoryValueBool) {
-      setShowToast(true);
-      ToastAndroid.show("Selection Success!", 5000);
+      // setShowToast(true);
+      // ToastAndroid.show("Selection Success!", 5000);
+      toastMessage("Selection Success!");
       navigation.navigate(
         "poj_job_description",
         {

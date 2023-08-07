@@ -18,7 +18,8 @@ import {
 } from "../css/common";
 import { textStyles } from "../css/interactables";
 import { colors } from "../css/colors";
-import { apiCreateAccount } from "../api/account_creation";
+import { apiCreateAccount, apiGetUserDetailsById } from "../api/account_creation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Login(props) {
   const [formValues, setFormValues] = useState({});
@@ -64,6 +65,26 @@ function Login(props) {
 
   const proceedWithLogin = () => {
     console.info("Login Button clicked!");
+  }
+
+  useEffect(() => checkForUser(), []);
+  
+  const checkForUser = async () => {
+    const userId = await AsyncStorage.getItem("userId");
+    // console.info(userId);
+    if(userId) {
+      apiGetUserDetailsById(userId, (response) => {
+        const userType = response?.res?.usertype;
+
+        if(userType == "client"){
+          props.navigation.navigate(
+            "client_home_page"
+          );
+        } else if (userType == "talent") {
+          props.navigation.navigate("talent_home_page");
+        }
+      })
+    }
   }
 
   return (

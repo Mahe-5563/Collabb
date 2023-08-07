@@ -9,9 +9,16 @@ export const apiCheckForUser = (userDetails, callback) => {
 }
 
 export const apiCreateAccount = (userDetails, callback) => {
-    console.info("userDetails: ", userDetails);
+    // console.info("userDetails: ", userDetails);
     axios
         .post('https://collabb-server.onrender.com/create-account', userDetails)
+        .then(res => callback(res.data))
+        .catch(fail => console.error("fail: ", fail));
+}
+
+export const apiGetUserDetailsById = (userId, callback) => {
+    axios
+        .get(`https://collabb-server.onrender.com/get-user-by-id?id=${userId}`)
         .then(res => callback(res.data))
         .catch(fail => console.error("fail: ", fail));
 }

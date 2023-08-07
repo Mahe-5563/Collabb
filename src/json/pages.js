@@ -102,7 +102,7 @@ const talentPages = [
 ];
 
 export const pages = [
-  // ...accountCreation,
-  // ...clientPages,
+  ...accountCreation,
+  ...clientPages,
   ...talentPages,
 ];
