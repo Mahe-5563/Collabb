@@ -6,25 +6,27 @@ import {
   Pressable,
 } from "react-native";
 import { Image } from "react-native";
+import { connect } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import LogoDark from "../../assets/images/logo_dark.png";
 import CTAButton from "../components/cta_button";
 import InputField from "../components/input_field";
+import LogoDark from "../../assets/images/logo_dark.png";
+import { setCurrentUserProfile } from "../../redux/actions/user";
 import {
   customValue,
   setMargin,
   orSplit,
   textColor,
 } from "../css/common";
-import { textStyles } from "../css/interactables";
 import { colors } from "../css/colors";
+import { textStyles } from "../css/interactables";
 import { apiCreateAccount, apiGetUserDetailsById } from "../api/account_creation";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Login(props) {
   const [formValues, setFormValues] = useState({});
   const [checkValidity, setCheckValidity] = useState({});
-  const [isValidCred, setIsValidCred] = useState(true);
+  const [isValidCred, setIsValidCred] = useState(true); // Yet to implement...
 
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -67,25 +69,34 @@ function Login(props) {
     console.info("Login Button clicked!");
   }
 
-  useEffect(() => checkForUser(), []);
-  
-  const checkForUser = async () => {
-    const userId = await AsyncStorage.getItem("userId");
-    // console.info(userId);
-    if(userId) {
-      apiGetUserDetailsById(userId, (response) => {
-        const userType = response?.res?.usertype;
-
-        if(userType == "client"){
-          props.navigation.navigate(
-            "client_home_page"
-          );
-        } else if (userType == "talent") {
-          props.navigation.navigate("talent_home_page");
-        }
-      })
+  // console.info("props: ", props.currentUser);
+  useEffect(() => {
+    
+    async function checkForUser () {
+      const userId = await AsyncStorage.getItem("userId");
+      console.info(userId);
+      if(userId) {
+        apiGetUserDetailsById(userId, (response) => {
+          const userType = response?.res?.usertype;
+          // console.info("Details: ", response.res);
+          props.setCurrentUserDetails(response.res);
+          if(userType == "client"){
+            props.navigation.navigate(
+              "client_home_page",
+            );
+          } else if (userType == "talent") {
+            props.navigation.navigate("talent_home_page");
+          }
+        })
+      }
     }
-  }
+    checkForUser();
+
+    // Manually set user id...
+    // AsyncStorage.setItem("userId", "64d68ff38a94dc2c39e74016");
+
+    // return () => {};
+  }, []);
 
   return (
     <ScrollView
@@ -222,4 +233,14 @@ function Login(props) {
   );
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  ...state.userDetail,
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUserDetails: currentUser => dispatch(setCurrentUserProfile(currentUser)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

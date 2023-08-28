@@ -15,14 +15,30 @@ import { setPostJobDetails } from "../../../redux/actions/client";
 import { multiSelectStyles, summaryCard } from "../../css/interactables";
 import { jdKeys, budgKeys } from "../../json/common";
 import { getSelectedDate } from "../../js/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiCreateJobPost } from "../../api/job_post";
 
 function PojSummary(props) {
   const { clientDetails, params } = props;
 
-  const submitDetails = () => {
-    console.info(clientDetails.postJobDetails.budgetReq)
-    console.info(clientDetails.postJobDetails.jobDescription)
-    ToastAndroid.show("Job posted successfully!", 5000);
+  const submitDetails = async () => {
+    // console.info('cateSubcateSelection: ', clientDetails.cateSubcateSelection);
+    // console.info('budgetReq: ', clientDetails.postJobDetails.budgetReq);
+    // console.info('jobDescription: ', clientDetails.postJobDetails.jobDescription);
+    const postJobObj = {
+      userId: await AsyncStorage.getItem("userId"),
+      category: clientDetails.cateSubcateSelection.category,
+      subcategory: clientDetails.cateSubcateSelection.subCategory,
+      budget: clientDetails.postJobDetails.budgetReq,
+      jobDescription: clientDetails.postJobDetails.jobDescription,
+    }
+    console.info("postJobObj: ", postJobObj);
+    apiCreateJobPost(postJobObj, (response) => {
+      console.info(response);
+      if(response.status == 200 && response.message == "Post job created successfully!") {
+        ToastAndroid.show("Job posted successfully!", 5000);
+      }
+    })
   }
 
   return (
@@ -43,7 +59,7 @@ function PojSummary(props) {
               const data =
                 clientDetails?.postJobDetails?.jobDescription[jdItem.key];
               return (
-                <View id={jdItem.id} key={jdItem.id} style={[setMargin(10).setMarginVertical]}>
+                <View id={jdItem.id} key={`jd_${jdItem.id}`} style={[setMargin(10).setMarginVertical]}>
                   <Text style={summaryCard.textTitle}>
                     {jdItem.name}:
                   </Text>
@@ -79,19 +95,21 @@ function PojSummary(props) {
             {budgKeys.map(budgItem => {
               const data = clientDetails?.postJobDetails?.budgetReq[budgItem.key];
               return (
-                <View 
+                <View
+                  key={`budg_${budgItem.id}`}
                   id={budgItem.id}
-                  style={[setMargin(10).setMarginVertical]}
                 >
                   {data &&
-                    <>
+                    <View
+                      style={[setMargin(10).setMarginVertical]}
+                    >
                       <Text style={summaryCard.textTitle}>
                         {budgItem.name}:
                       </Text>
                       <Text style={summaryCard.textContent}>
                         {data}
                       </Text>
-                    </>
+                    </View>
                   }
                 </View>
               )

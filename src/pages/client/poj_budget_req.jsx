@@ -167,6 +167,7 @@ function PojBudgetRequirements(props) {
                       const data = e.nativeEvent.text
                       handleOnEndEditing("minAmt", data)
                     }}
+                    keyboardType="numeric"
                   />
                   {formDataErrors.minAmt &&
                     <Text 
@@ -193,6 +194,7 @@ function PojBudgetRequirements(props) {
                       const data = e.nativeEvent.text
                       handleOnEndEditing("maxAmt", data)
                     }}
+                    keyboardType="numeric"
                   />
                   {formDataErrors.maxAmt &&
                     <Text 
@@ -217,6 +219,7 @@ function PojBudgetRequirements(props) {
                     const data = e.nativeEvent.text
                     handleOnEndEditing("amount", data)
                   }}
+                  keyboardType="numeric"
                 />
                 {formDataErrors.amount &&
                   <Text 

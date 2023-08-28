@@ -13,19 +13,19 @@ export const paymentType = [
 
 // Job Description Keys...
 export const jdKeys = [
-  { id: "1", key: "jobTitle", name: "Title of the Job" },
-  { id: "2", key: "startDate", name: "Start Date" },
-  { id: "3", key: "endDate", name: "End Date" },
-  { id: "4", key: "experience", name: "Experience" },
-  { id: "5", key: "skills", name: "Skills" },
-  { id: "6", key: "description", name: "Description" },
+  { id: "1", key: "jd_jobtitle", name: "Title of the Job" },
+  { id: "2", key: "jd_startdate", name: "Start Date" },
+  { id: "3", key: "jd_enddate", name: "End Date" },
+  { id: "4", key: "jd_experience", name: "Experience" },
+  { id: "5", key: "jd_skills", name: "Skills" },
+  { id: "6", key: "jd_description", name: "Description" },
 ];
 
 // Budget Requirement keys...
 export const budgKeys = [
-  { id: "1", key: "paymentType", name: "Payment Type" },
-  { id: "2", key: "minAmt", name: "Min. Amt." },
-  { id: "3", key: "maxAmt", name: "Max. Amt." },
-  { id: "4", key: "amount", name: "Amount" },
-  { id: "5", key: "restraints", name: "Restraints" },
+  { id: "1", key: "budget_paytype", name: "Payment Type" },
+  { id: "2", key: "budget_minamt", name: "Min. Amt." },
+  { id: "3", key: "budget_maxamt", name: "Max. Amt." },
+  { id: "4", key: "budget_amount", name: "Amount" },
+  { id: "5", key: "budget_restraints", name: "Restraints" },
 ];

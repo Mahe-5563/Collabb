@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, SafeAreaView, View, Text, Pressable, } from "react-native";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import NavbarHomepage from "../../components/navbar_homepage";
 import FixedBottomNav from "../../components/fixedbottom_nav";
 import { setMargin, setPadding, textSubheaders } from "../../css/common";
 import TalJobCard from "../../components/page_components/job_card_tal_home";
 import TalentFilterModal from "../../components/page_components/talent_filter_modal";
+import { connect } from "react-redux";
+import { setCurrentUserProfile, setCurrentUserProfileDetails } from "../../../redux/actions/user";
+import { apiGetUserProfile } from "../../api/users";
+import { apiGetJobPostsOnCategory } from "../../api/job_post";
 
 function TalentIndex(props) {
   const { navigation } = props;
@@ -18,34 +23,23 @@ function TalentIndex(props) {
     amount: "",
     startDate: "",
   });
+  const [jobList, setJobList] = useState([]);
+  
+  useEffect(() => {
+    // Get User profile details...
+    if(props.currentUser._id) {
+      apiGetUserProfile(props.currentUser._id, "talent", (result) => {
+        const talDetails = result.res.talentDetails;
+        props.setCurrentUserProfileDetails(talDetails);
 
-  const jobList = [
-    {
-      id: "1",
-      title: "Title 1",
-      date: "07/07/1997",
-    },
-    {
-      id: "2",
-      title: "Title 2",
-      date: "07/07/1997",
-    },
-    {
-      id: "3",
-      title: "Title 3",
-      date: "07/07/1997",
-    },
-    {
-      id: "4",
-      title: "Title 4",
-      date: "07/07/1997",
-    },
-    {
-      id: "5",
-      title: "Title 5",
-      date: "07/07/1997",
+        apiGetJobPostsOnCategory(talDetails?.category, (result) => {
+          // console.info(result.res)
+          setJobList(result.res);
+        })
+      })
     }
-  ]
+    // Get possible talent job posts...
+  }, []);
 
   const resetFilterData = () => {
     setFilterData(filterData);
@@ -90,29 +84,32 @@ function TalentIndex(props) {
             />
           </Pressable>
         </View>
-        {jobList.map(job => (
-          <Pressable
-            id={`job_id_${job.id}`}
-            key={`job_id_${job.id}`}
-            style={[ 
-              setMargin(20).setMarginBottom,
-              setMargin(5).setMarginHorizontal,
-            ]}
-            onPress={() => {
-              // console.info("Job: ", job);
-              navigation.navigate(
-                "talent_apply_job_page",
-                {
-                  jobDetails: job,
-                }
-              )
-            }}
-          >
-            <TalJobCard
-              {...job}
-            />
-          </Pressable>
-        ))}
+        {jobList.map(job => {
+          // console.info("job: ", job);
+          return (
+            <Pressable
+              id={`job_id_${job._id}`}
+              key={`job_id_${job._id}`}
+              style={[ 
+                setMargin(20).setMarginBottom,
+                setMargin(5).setMarginHorizontal,
+              ]}
+              onPress={() => {
+                // console.info("Job: ", job);
+                navigation.navigate(
+                  "talent_apply_job_page",
+                  {
+                    jobDetails: job,
+                  }
+                )
+              }}
+            >
+              <TalJobCard
+                {...job}
+              />
+            </Pressable>
+          )
+        })}
       </ScrollView>
       <TalentFilterModal
         showModal={showModal}
@@ -129,4 +126,15 @@ function TalentIndex(props) {
   );
 }
 
-export default TalentIndex;
+const mapStateToProps = (state) => ({
+  ...state.userDetail,
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUserDetails: currentUser => dispatch(setCurrentUserProfile(currentUser)),
+    setCurrentUserProfileDetails: currentUser => dispatch(setCurrentUserProfileDetails(currentUser)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TalentIndex);

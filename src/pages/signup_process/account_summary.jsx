@@ -81,7 +81,7 @@ function AccountSummary(props) {
       ...userDetail.userDetail,
       type: userType,
     };
-    // console.info("profileDetails: ", userDetails);
+    console.info("profileDetails: ", userDetails);
 
     apiCreateAccount(userDetails, async (response) => {
       console.info("response: ", response);

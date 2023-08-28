@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Modal, Text, Pressable, Animated } from "react-native";
-import { ProgressBar } from "@react-native-community/progress-bar-android";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import CTAButton from "../../components/cta_button";
 import { multiSelectStyles, popupModal } from "../../css/interactables";
-import { appFontFamily, setMargin, textHeaders } from "../../css/common";
+import { appFontFamily, setMargin, textHeaders, textSubheaders } from "../../css/common";
 import InputField from "../../components/input_field";
 
 function ApplyJobShrtDescription(props) {
@@ -18,6 +17,7 @@ function ApplyJobShrtDescription(props) {
     setSubmitting,
     showSuccessModal,
     setShowSuccessModal,
+    handleJobApply,
   } = props;
 
   // const [progress, setProgress] = useState(new Animated.Value(0));
@@ -81,6 +81,7 @@ function ApplyJobShrtDescription(props) {
                 dark
                 title={"Submit"}
                 onPress={() => {
+                  handleJobApply();
                   setSubmitting(true);
                   setShowModal(false);
                 }}
@@ -92,7 +93,7 @@ function ApplyJobShrtDescription(props) {
       <Modal
         transparent
         animationType="slide"
-        onRequestClose={() => setShowSuccessModal(!showModal)}
+        onRequestClose={() => setShowSuccessModal(!showSuccessModal)}
         visible={showSuccessModal}
       >
         <View style={popupModal.modalView}>
@@ -132,18 +133,23 @@ function ApplyJobShrtDescription(props) {
             <Text
               style={{
                 marginVertical: 10,
-                fontSize: textHeaders,
+                fontSize: textSubheaders,
                 fontFamily: appFontFamily,
                 textAlign: "center"
               }}
             >
               {"Please wait while the Client reviews your profile and contacts you."}
             </Text>
-            <ProgressBar 
-              // styleAttr="Horizontal"
-              // indeterminate={false}
-              // progress={0.5}
-            />
+            <Text
+              style={{
+                marginVertical: 10,
+                fontSize: 12,
+                fontFamily: appFontFamily,
+                textAlign: "center"
+              }}
+            >
+              {"You will be redirected to the home page in a jiffy!"}
+            </Text>
           </View>
         </View>
       </Modal>

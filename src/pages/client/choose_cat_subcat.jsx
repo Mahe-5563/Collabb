@@ -65,8 +65,8 @@ function ClientChooseCatSubcat(props) {
 
   const categoryAndSubCatSelection = (subcat) => {
     const obj = {
-      category: categorySelection.value,
-      subCategory: subcat.value
+      category: { id: categorySelection.id, label: categorySelection.label, value: categorySelection.value, },
+      subCategory: subcat
     };
     console.info("obj: ", obj);
     setCategoryAndSubcategory(obj);

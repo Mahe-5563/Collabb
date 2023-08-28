@@ -1,57 +1,47 @@
+import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Modal, Text } from "react-native";
 
+import { setMargin } from "../../css/common";
 import Navbar from "../../components/navbar";
 import CTAButton from "../../components/cta_button";
-import {
-  ctaButtons, multiSelectStyles, popupModal,
-} from "../../css/interactables";
-import {
-  setMargin,
-} from "../../css/common";
+import { ctaButtons } from "../../css/interactables";
 import { jdKeys, budgKeys } from "../../json/common";
+import { apiApplyForJobPost } from "../../api/job_post";
 import SummaryCard from "../../components/page_components/summary_card";
-import { Pressable } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import InputField from "../../components/input_field";
 import ApplyJobShrtDescription from "../../components/page_components/apply_job_shrt_desc";
 
 function ApplyJob(props) {
-  const { navigation } = props;
+  const { navigation, route } = props;
   const [jobDetails, setJobDetails] = useState();
   const [showModal, setShowModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const sampleData = {
-    budget: {
-      amount: "",
-      maxAmt: "20",
-      minAmt: "15",
-      paymentType: "Per Hour",
-      restraints: "",
-    },
-    jobdescription: {
-      description: "Description",
-      endDate: "2023-08-31T13:58:49.251Z",
-      experience: "Beginner",
-      jobTitle: "Hello world",
-      skills: [
-        { id: 1, label: "Option 1", value: "Option 1" },
-        { id: 2, label: "Option 2", value: "Option 2" },
-      ],
-      startDate: "2023-07-21T13:58:42.603Z",
-    },
-  };
-
   useEffect(() => {
-    getDetails(sampleData);
+    if (route?.params?.jobDetails) {
+      getDetails(route.params.jobDetails);
+    }
   }, []);
 
   const getDetails = (jobDetails) => {
     setJobDetails(jobDetails);
   };
+
+  const handleJobApply = () => {
+    apiApplyForJobPost(
+      jobDetails._id, 
+      { key: "applicants", value: props.currentUser._id }, 
+      (response) => {
+        console.info("Response: ", response);
+        setShowSuccessModal(true);
+        setTimeout(() => {
+          setShowSuccessModal(false);
+          navigation.navigate("talent_home_page")
+        }, 5000);
+      }
+    )
+  }
 
   return (
     <>
@@ -62,20 +52,20 @@ function ApplyJob(props) {
           setMargin(20).setMarginVertical,
         ]}
       >
-        {jobDetails && 
+        {jobDetails && (
           <>
-            <SummaryCard 
-              summaryObj={jobDetails.jobdescription}
+            <SummaryCard
+              summaryObj={jobDetails}
               summaryKeys={jdKeys}
               summaryTitle={"Job Description"}
             />
-            <SummaryCard 
-              summaryObj={jobDetails.budget}
+            <SummaryCard
+              summaryObj={jobDetails}
               summaryKeys={budgKeys}
               summaryTitle={"Budget Requirement"}
             />
           </>
-        }
+        )}
       </ScrollView>
       <View style={[ctaButtons.bottomCTAFixedContainer]}>
         <View
@@ -91,8 +81,7 @@ function ApplyJob(props) {
             title={submitting ? "Applying..." : "Apply for this Job"}
             onPress={() => {
               // console.info("Apply clicked!");
-              // setShowModal(true);
-              setShowSuccessModal(true);
+              setShowModal(true);
             }}
           />
         </View>
@@ -104,9 +93,14 @@ function ApplyJob(props) {
         setSubmitting={setSubmitting}
         showSuccessModal={showSuccessModal}
         setShowSuccessModal={setShowSuccessModal}
+        handleJobApply={handleJobApply}
       />
     </>
   );
 }
 
-export default ApplyJob;
+const mapStateToProps = (state) => ({
+  ...state.userDetail,
+});
+
+export default connect(mapStateToProps)(ApplyJob);

@@ -1,29 +1,77 @@
-
 import { View, Text, Pressable } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-import { faBriefcase, faEuroSign, faList, faFilter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBriefcase,
+  faEuroSign,
+  faList,
+  faFilter,
+} from "@fortawesome/free-solid-svg-icons";
 import { talentApplyStyles } from "../../css/interactables";
 
 function TalJobCard(props) {
-  const sectionStyle = { display: "flex", flexDirection: "row", marginBottom: 15, paddingRight: 10, };
+  // console.info("Props: ", props);
+  const {
+    budget_maxamt,
+    budget_minamt,
+    budget_paytype,
+    jd_startdate,
+    jd_jobtitle,
+    jd_description,
+    budget_amount,
+    job_subcategory,
+    createdAt,
+  } = props;
+  const sectionStyle = {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 15,
+    paddingRight: 10,
+  };
+
+  const getJobDate = (date) => {
+    let fullDate;
+    if(date) {
+      fullDate = `${new Date(date).getDate()}/${new Date(date).getMonth() + 1}/${new Date(date).getFullYear()}`
+    }
+
+    return fullDate;
+  }
 
   return (
     <>
       <View style={[talentApplyStyles.cardContainer]}>
-        <Text style={talentApplyStyles.date}>{"07/07/1997"}</Text>
-        <Text style={talentApplyStyles.title}>{"Title of the Job"}</Text>
+        <Text style={talentApplyStyles.date}>{getJobDate(createdAt) || ""}</Text>
+        <Text style={talentApplyStyles.title}>{jd_jobtitle}</Text>
         <View style={sectionStyle}>
           <FontAwesomeIcon icon={faBriefcase} size={22} />
-          <Text style={talentApplyStyles.textItem}>{"Web Design"}</Text>
+          <Text style={talentApplyStyles.textItem}>{job_subcategory.label}</Text>
         </View>
-        <View style={sectionStyle}>
-          <FontAwesomeIcon icon={faEuroSign} size={22} />
-          <Text style={talentApplyStyles.textItem}>{"20/hr"}</Text>
-        </View>
+        {budget_paytype.toLowerCase() == 'per hour' ?
+          <>
+            <View style={sectionStyle}>
+              <FontAwesomeIcon icon={faEuroSign} size={22} />
+              <Text style={talentApplyStyles.textItem}>Min: {budget_minamt}/{budget_paytype}</Text>
+            </View>
+            <View style={sectionStyle}>
+              <FontAwesomeIcon icon={faEuroSign} size={22} />
+              <Text style={talentApplyStyles.textItem}>Max: {budget_maxamt}/{budget_paytype}</Text>
+            </View>
+          </>
+          : 
+          <View style={sectionStyle}>
+            <FontAwesomeIcon icon={faEuroSign} size={22} />
+            <Text style={talentApplyStyles.textItem}>{budget_amount}/{budget_paytype}</Text>
+          </View>
+        }
         <View style={sectionStyle}>
           <FontAwesomeIcon icon={faList} size={22} />
-          <Text style={talentApplyStyles.textItem}>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum iaculis magna quis vestibulum. In vitae libero dapibus massa pellentesque molestie eu nec lectus. "}</Text>
+          <Text style={talentApplyStyles.textItem}>
+            {/* {
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum iaculis magna quis vestibulum. In vitae libero dapibus massa pellentesque molestie eu nec lectus. "
+            } */}
+            {jd_description}
+          </Text>
         </View>
       </View>
     </>

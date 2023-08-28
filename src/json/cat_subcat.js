@@ -1,64 +1,64 @@
 
 export const freelanceCategories = [
     {
-        id: "freelance_cat_1",
+        id: "freelance_programming",
         label: "Programming",
         value: "Programming",
         popular: true,
         subcategories: [
             {
-                id: "freelance_cat_1_1",
+                id: "freelance_subcat_web_app_dev",
                 label: "Web App Development",
                 value: "Web App Development",
             },
             {
-                id: "freelance_cat_1_2",
+                id: "freelance_subcat_web_maint",
                 label: "Website Maintenance",
                 value: "Website Maintenance",
             },
             {
-                id: "freelance_cat_1_3",
+                id: "freelance_subcat_blogs",
                 label: "Blogs",
                 value: "Blogs",
                 status: "new",
             },
             {
-                id: "freelance_cat_1_4",
+                id: "freelance_subcat_mobile_app_dev",
                 label: "Mobile App Development",
                 value: "Mobile App Development",
             },
             {
-                id: "freelance_cat_1_5",
+                id: "freelance_subcat_game_dev",
                 label: "Game Development",
                 value: "Game Development",
             },
             {
-                id: "freelance_cat_1_6",
+                id: "freelance_subcat_devops_cloud",
                 label: "Devops and Cloud",
                 value: "Devops and Cloud",
             },
             {
-                id: "freelance_cat_1_7",
+                id: "freelance_subcat_cyber_sec",
                 label: "Cybersecurity",
                 value: "Cybersecurity",
             },
             {
-                id: "freelance_cat_1_8",
+                id: "freelance_subcat_databases",
                 label: "Databases",
                 value: "Databases",
             },
             {
-                id: "freelance_cat_1_9",
+                id: "freelance_subcat_data_processing",
                 label: "Data Processing",
                 value: "Data Processing",
             },
             {
-                id: "freelance_cat_1_10",
+                id: "freelance_subcat_quality_assurance",
                 label: "Quality Assurance",
                 value: "Quality Assurance",
             },
             {
-                id: "freelance_cat_1_11",
+                id: "freelance_subcat_blockchain_crypto",
                 label: "Blockchain & Crypto",
                 value: "Blockchain & Crypto",
                 status: "new",
@@ -66,214 +66,214 @@ export const freelanceCategories = [
         ]
     },
     {
-        id: "freelance_cat_2",
+        id: "freelance_designing",
         label: "Designing",
         value: "Designing",
         popular: true,
         subcategories: [
             {
-                id: "freelance_cat_2_1",
+                id: "freelance_subcat_logo_icon_design",
                 label: "Logo and Icon Design",
                 value: "Logo and Icon Design",
             },
             {
-                id: "freelance_cat_2_2",
+                id: "freelance_subcat_game_art",
                 label: "Game Art",
                 value: "Game Art",
                 status: "new",
             },
             {
-                id: "freelance_cat_2_3",
+                id: "freelance_subcat_web_design",
                 label: "Website Design",
                 value: "Website Design",
             },
             {
-                id: "freelance_cat_2_4",
+                id: "freelance_subcat_mobile_app_design",
                 label: "Mobile App Design",
                 value: "Mobile App Design",
             },
             {
-                id: "freelance_cat_2_5",
+                id: "freelance_subcat_ux_design",
                 label: "User experience design",
                 value: "User experience design",
                 status: "new",
             },
             {
-                id: "freelance_cat_2_6",
+                id: "freelance_subcat_typo_fontface",
                 label: "Typography and Fontface",
                 value: "Typography and Fontface",
             },
             {
-                id: "freelance_cat_2_7",
+                id: "freelance_subcat_illust_graphic_design",
                 label: "Illustration and Graphic Design",
                 value: "Illustration and Graphic Design",
             },
             {
-                id: "freelance_cat_2_8",
+                id: "freelance_subcat_social_med_design",
                 label: "Social Media Design",
                 value: "Social Media Design",
             },
             {
-                id: "freelance_cat_2_9",
+                id: "freelance_subcat_print_design",
                 label: "Printing Design",
                 value: "Printing Design",
             },
             {
-                id: "freelance_cat_2_10",
+                id: "freelance_subcat_cover_design",
                 label: "Cover Design",
                 value: "Cover Design",
             },
             {
-                id: "freelance_cat_2_11",
+                id: "freelance_subcat_busi_cards_stationeries",
                 label: "Business Cards and Stationeries",
                 value: "Business Cards and Stationeries",
             },
             {
-                id: "freelance_cat_2_12",
+                id: "freelance_subcat_flyers_leaflets",
                 label: "Flyers and Leaflets",
                 value: "Flyers and Leaflets",
             },
             {
-                id: "freelance_cat_2_13",
+                id: "freelance_subcat_packaging_design",
                 label: "Packaging Designs",
                 value: "Packaging Designs",
             },
             {
-                id: "freelance_cat_2_14",
+                id: "freelance_subcat_brochure",
                 label: "Brochure Designs",
                 value: "Brochure Designs",
             },
             {
-                id: "freelance_cat_2_15",
+                id: "freelance_subcat_business_card_design",
                 label: "Business card designs",
                 value: "Business card designs",
             }
         ]
     },
     {
-        id: "freelance_cat_3",
+        id: "freelance_writing_transcripts",
         label: "Writing and Transcripts",
         value: "Writing and Transcripts",
         popular: true,
         subcategories: [
             {
-                id: "freelance_cat_3_1",
+                id: "freelance_subcat_lang_transl",
                 label: "Language Translations",
                 value: "Language Translations",
             },
             {
-                id: "freelance_cat_3_2",
+                id: "freelance_subcat_cv_writing",
                 label: "CV Writing",
                 value: "CV Writing",
             },
             {
-                id: "freelance_cat_3_3",
+                id: "freelance_subcat_editing",
                 label: "Editing",
                 value: "Editing",
             },
             {
-                id: "freelance_cat_3_4",
+                id: "freelance_subcat_medical_transcr",
                 label: "Medical Transcription",
                 value: "Medical Transcription",
             },
             {
-                id: "freelance_cat_3_5",
+                id: "freelance_subcat_transcr_serv",
                 label: "Transcription services",
                 value: "Transcription services",
             },
             {
-                id: "freelance_cat_3_6",
+                id: "freelance_subcat_website_copywriting",
                 label: "Website Copywriting",
                 value: "Website Copywriting",
             },
             {
-                id: "freelance_cat_3_7",
+                id: "freelance_subcat_writing_serv",
                 label: "Writing Services",
                 value: "Writing Services",
             },
         ]
     },
     {
-        id: "freelance_cat_4",
+        id: "freelance_digital_marketing",
         label: "Digital Marketing",
         value: "Digital Marketing",
         popular: true,
         subcategories: [
             {
-                id: "freelance_cat_4_1",
+                id: "freelance_subcat_social_media_markt",
                 label: "Social Media marketing",
                 value: "Social Media marketing",
             },
             {
-                id: "freelance_cat_4_2",
+                id: "freelance_subcat_content_markt",
                 label: "Content marketing",
                 value: "Content marketing",
             },
             {
-                id: "freelance_cat_4_3",
+                id: "freelance_subcat_email_markt",
                 label: "Email marketing",
                 value: "Email marketing",
             },
             {
-                id: "freelance_cat_4_4",
+                id: "freelance_subcat_seo",
                 label: "(SEOs) Search Engine Optimisations",
                 value: "(SEOs) Search Engine Optimisations",
             },
             {
-                id: "freelance_cat_4_5",
+                id: "freelance_subcat_markt_comm",
                 label: "Marketing Communications",
                 value: "Marketing Communications",
             },
             {
-                id: "freelance_cat_4_6",
+                id: "freelance_subcat_influencer_markt",
                 label: "Influencer Marketing",
                 value: "Influencer Marketing",
             },
             {
-                id: "freelance_cat_4_7",
+                id: "freelance_subcat_pay_per_clicks",
                 label: "Pay-per-clicks",
                 value: "Pay-per-clicks",
             },
             {
-                id: "freelance_cat_4_8",
+                id: "freelance_subcat_markt_analytics",
                 label: "Marketing Analytics",
                 value: "Marketing Analytics",
             }
         ]
     },
     {
-        id: "freelance_cat_5",
+        id: "freelance_multimedia",
         label: "Multimedia",
         value: "Multimedia",
         popular: true,
         subcategories: [
             {
-                id: "freelance_cat_5_1",
+                id: "freelance_subcat_brand_docu",
                 label: "Brand Documentary",
                 value: "Brand Documentary",
             },
             {
-                id: "freelance_cat_5_2",
+                id: "freelance_subcat_product_videos",
                 label: "Product Videos",
                 value: "Product Videos",
             },
             {
-                id: "freelance_cat_5_3",
+                id: "freelance_subcat_animations",
                 label: "Animations",
                 value: "Animations",
             },
             {
-                id: "freelance_cat_5_4",
+                id: "freelance_subcat_video_editing",
                 label: "Video Editing",
                 value: "Video Editing",
             },
             {
-                id: "freelance_cat_5_5",
+                id: "freelance_subcat_photoshop_editing",
                 label: "Photoshop editing",
                 value: "Photoshop editing",
             },
             {
-                id: "freelance_cat_5_6",
+                id: "freelance_subcat_promotional_video",
                 label: "Promotional Videos",
                 value: "Promotional Videos",
             }
@@ -281,83 +281,73 @@ export const freelanceCategories = [
         ]
     },
     {
-        id: "freelance_cat_6",
+        id: "freelance_legal_services",
         label: "Legal Services",
         value: "Legal Services",
         popular: true,
         subcategories: [
             {
-                id: "freelance_cat_6_1",
-                label: "Commercial Legal Service",
-                value: "Commercial Legal Service",
-            },
-            {
-                id: "freelance_cat_6_2",
-                label: "Debt Recovery & Collection",
-                value: "Debt Recovery & Collection",
-            },
-            {
-                id: "freelance_cat_6_3",
+                id: "freelance_subcat_franchising",
                 label: "Franchising",
                 value: "Franchising",
             },
             {
-                id: "freelance_cat_6_4",
+                id: "freelance_subcat_intellectual_property",
                 label: "Intellectual Property",
                 value: "Intellectual Property",
             },
             {
-                id: "freelance_cat_6_5",
+                id: "freelance_subcat_patent_filing",
                 label: "Patent Filing",
                 value: "Patent Filing",
             },
             {
-                id: "freelance_cat_6_6",
+                id: "freelance_subcat_mergers_acqui",
                 label: "Mergers and Acquisitions",
                 value: "Mergers and Acquisitions",
             },
             {
-                id: "freelance_cat_6_7",
+                id: "freelance_subcat_trademarks",
                 label: "Trademarks",
                 value: "Trademarks",
             },
             {
-                id: "freelance_cat_6_8",
+                id: "freelance_subcat_employment_law",
                 label: "Employment Law",
                 value: "Employment Law",
             },
             {
-                id: "freelance_cat_6_9",
+                id: "freelance_subcat_civil_law",
                 label: "Civil Law",
                 value: "Civil Law",
             },
             {
-                id: "freelance_cat_6_10",
+                id: "freelance_subcat_bankruptcy",
                 label: "Bankruptcy",
                 value: "Bankruptcy",
             },
             {
-                id: "freelance_cat_6_11",
+                id: "freelance_subcat_divorce",
                 label: "Divorce",
                 value: "Divorce",
             },
             {
-                id: "freelance_cat_6_12",
+                id: "freelance_subcat_family_lawyer",
                 label: "Family Lawyer",
                 value: "Family Lawyer",
             },
             {
-                id: "freelance_cat_6_13",
+                id: "freelance_subcat_estate_lawyer",
                 label: "Estate Lawyer",
                 value: "Estate Lawyer",
             },
             {
-                id: "freelance_cat_6_14",
+                id: "freelance_subcat_internation_law",
                 label: "Internation Law",
                 value: "Internation Law",
             },
             {
-                id: "freelance_cat_6_15",
+                id: "freelance_subcat_will_planning",
                 label: "Will planning",
                 value: "Will planning",
             }

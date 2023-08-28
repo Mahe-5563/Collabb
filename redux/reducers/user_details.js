@@ -1,8 +1,10 @@
-import { USER_DETAILS, PROFILE_DETAILS } from "../actions/types";
+import { USER_DETAILS, PROFILE_DETAILS, CURRENT_USER_PROFILE, CURRENT_USER_PROFILE_DETAILS } from "../actions/types";
 
 const initialState = {
     userDetail: {},
     profileDetails: {},
+    currentUser: {},
+    userProfile: {},
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -17,6 +19,16 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 profileDetails: action.payload,
+            }
+        case CURRENT_USER_PROFILE:
+            return {
+                ...state,
+                currentUser: action.payload,
+            }
+        case CURRENT_USER_PROFILE_DETAILS: 
+            return {
+                ...state,
+                userProfile: action.payload,
             }
         default:
             return state;

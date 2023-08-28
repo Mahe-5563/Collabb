@@ -33,6 +33,8 @@ function SummaryCard(props) {
       <View style={[summaryCard.cardBox]}>
         {summaryKeys?.map((summaryItem) => {
           const data = summaryObj[summaryItem.key];
+          // console.info("key: ", summaryItem.key);
+          // console.info("data: ", data);
           return (
             <View key={`summary_${summaryItem.id}`}>
               {data && 
@@ -40,12 +42,12 @@ function SummaryCard(props) {
                   style={[setMargin(10).setMarginVertical]}
                 >
                   <Text style={[summaryCard.textTitle]}>{summaryItem.name}</Text>
-                  {summaryItem.key == "startDate" ||
-                  summaryItem.key == "endDate" ? (
+                  {summaryItem.key == "jd_startdate" ||
+                  summaryItem.key == "jd_enddate" ? (
                     <Text style={summaryCard.textContent}>
                       {getSelectedDate(data)}
                     </Text>
-                  ) : summaryItem.key == "skills" ? (
+                  ) : summaryItem.key == "jd_skills" ? (
                     <View style={multiSelectStyles.selectedOptions}>
                       {data.map((datum) => (
                         <Text key={datum.id} style={summaryCard.chip}>
