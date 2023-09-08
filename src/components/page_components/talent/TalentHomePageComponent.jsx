@@ -4,12 +4,12 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { ScrollView, SafeAreaView, View, Text, Pressable } from "react-native";
 
-import NavbarHomepage from "../../navbar_homepage";
+import TalJobCard from "../job_card_tal_home";
+// import NavbarHomepage from "../../navbar_homepage";
+import TalentFilterModal from "../talent_filter_modal";
 import { apiGetUserProfile } from "../../../api/users";
 import { apiGetJobPostsOnCategory } from "../../../api/job_post";
 import { setMargin, setPadding, textSubheaders } from "../../../css/common";
-import TalJobCard from "../job_card_tal_home";
-import TalentFilterModal from "../talent_filter_modal";
 import {
   setCurrentUserProfile,
   setCurrentUserProfileDetails,
@@ -47,11 +47,11 @@ function TalentHomePageComp(props) {
 
   return (
     <>
-      <SafeAreaView>
+      {/* <SafeAreaView>
         <NavbarHomepage 
           {...props}
         />
-      </SafeAreaView>
+      </SafeAreaView> */}
       <ScrollView style={[
         setPadding(20).setPaddingHorizontal,
         setMargin(20).setMarginBottom

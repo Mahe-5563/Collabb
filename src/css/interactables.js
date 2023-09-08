@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "./colors";
-import { appFontFamily, appFontFamilyBold, appFontFamilyMedium, textHeaderLarge, textHeaders, textLabel, textSize, textSmall, textSubheaders } from "./common";
+import { appFontFamily, appFontFamilyBold, appFontFamilyMedium, setPadding, textHeaderLarge, textHeaderMedium, textHeaders, textLabel, textSize, textSmall, textSubheaders } from "./common";
 
 // Recursive Elements...
 const inputFieldBox = {
@@ -604,5 +604,42 @@ export const overlayDropdownStyles = StyleSheet.create({
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: colors.secondary_color
+    }
+})
+
+export const dashboardStyles = StyleSheet.create({
+    cardStyle: {
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        height: 250,
+        width: "49%",
+        backgroundColor: colors.primary_color_medium,
+        borderRadius: 5,
+        paddingHorizontal: 20,
+        paddingVertical: 30,
+        marginBottom: 10,
+    },
+    dashboardTitle: {
+        fontSize: textHeaderMedium,
+        marginTop: 20,
+        textAlign: "center",
+    },
+    jobCardStyle: {
+        backgroundColor: colors.primary_color_medium,
+        paddingVertical: 15,
+        paddingHorizontal: 13,
+        borderRadius: 5,
+        position: "relative",
+    },
+    iconPadding: setPadding(8).setPaddingVertical,
+    flexAlignment: {
+        display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+    },
+    cardContentText: {
+        fontFamily: appFontFamily, 
+        fontSize: textSize, 
+        marginLeft: 10,
     }
 })
