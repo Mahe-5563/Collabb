@@ -6,7 +6,7 @@ import { colors } from "../css/colors";
 import { setMargin } from "../css/common";
 import userImg from "../../assets/images/user.png";
 
-function NavbarHomepage({ navigation }) {
+function NavbarHomepage(props) {
   return (
     <SafeAreaView>
       <View style={[homepageNavStyle.container]}>
@@ -15,7 +15,11 @@ function NavbarHomepage({ navigation }) {
             homepageNavStyle.profileImgPressable
           ]}
           onPress={() => {
-            console.info("Profile Pic pressed!");
+            // console.info("Profile Pic pressed!");
+            props.navigation.navigate(
+              "profile_page",
+              { back_key: props.route.key }
+            )
           }}
         >
           <Image 
@@ -37,7 +41,7 @@ function NavbarHomepage({ navigation }) {
           >
               Hi There!
             </Text>
-          <Text style={[homepageNavStyle.titleBig]}>Maheshwar Arulraj</Text>
+          <Text style={[homepageNavStyle.titleBig]}>{props.currentUser.firstName} {props.currentUser.lastName}</Text>
         </View>
       </View>
     </SafeAreaView>

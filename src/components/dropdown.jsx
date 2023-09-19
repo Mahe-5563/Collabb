@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, View, Pressable, Text, Modal } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Pressable,
+  Text,
+  Modal,
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCaretDown, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Picker } from "@react-native-picker/picker";
 
 import { colors } from "../css/colors";
-import { dropdownStyles, multiSelectStyles, popupModal } from "../css/interactables";
-import { appFontFamily, textHeaders, textSize, textSubheaders } from "../css/common";
+import {
+  dropdownStyles,
+  multiSelectStyles,
+  popupModal,
+} from "../css/interactables";
+import {
+  appFontFamily,
+  textHeaders,
+  textSize,
+  textSubheaders,
+} from "../css/common";
 
 function DropdownComponent(props) {
-  const { 
+  const {
     prompt, // Mandatory
     items, // Mandatory
     stateValue, // Mandatory
@@ -23,24 +39,22 @@ function DropdownComponent(props) {
     <SafeAreaView>
       <View>
         <Pressable
-          style={[
-            dropdownStyles.dropdownView,
-            ...(customCSS ? customCSS : []),
-          ]}
+          style={[dropdownStyles.dropdownView, ...(customCSS ? customCSS : [])]}
           onPress={() => {
             setModalVisible(true);
           }}
         >
-          {stateValue ? 
-            <Text 
+          {stateValue ? (
+            <Text
               style={[
                 dropdownStyles.dropdownField,
                 dropdownStyles.dropdownTextField,
               ]}
             >
               {stateValue}
-            </Text> : 
-            <Text 
+            </Text>
+          ) : (
+            <Text
               style={[
                 dropdownStyles.dropdownField,
                 dropdownStyles.dropdownPlaceholderField,
@@ -48,13 +62,13 @@ function DropdownComponent(props) {
             >
               {prompt}
             </Text>
-          }
-          <FontAwesomeIcon 
-            icon={faCaretDown} 
+          )}
+          <FontAwesomeIcon
+            icon={faCaretDown}
             style={{
               marginBottom: "auto",
-              marginTop: "auto"
-            }} 
+              marginTop: "auto",
+            }}
           />
         </Pressable>
         <Modal
@@ -71,9 +85,9 @@ function DropdownComponent(props) {
                 onPress={() => setModalVisible(false)}
                 style={multiSelectStyles.closeIcon}
               >
-                <FontAwesomeIcon 
-                  icon={faTimes} 
-                  size={22} 
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  size={22}
                   color={colors.white}
                 />
               </Pressable>
@@ -83,31 +97,49 @@ function DropdownComponent(props) {
                     fontSize: textSubheaders,
                     fontFamily: appFontFamily,
                     marginBottom: 20,
-                    color: colors.light_color
+                    color: colors.light_color,
                   }}
                 >
                   {prompt}
                 </Text>
                 <ScrollView>
-                  {items && items.map(item => (
-                    <Pressable
-                      key={item.id}
-                      onPress={() => {
-                        onValueChange(item.value);
-                        setModalVisible(false);
-                      }}
-                      style={dropdownStyles.dropdownItems}
-                    >
-                      <Text
-                        style={{
-                          fontSize: textSize,
-                          fontFamily: appFontFamily,
+                  {items &&
+                    items.map((item) => (
+                      <Pressable
+                        key={item.id}
+                        onPress={() => {
+                          onValueChange(item.value);
+                          setModalVisible(false);
                         }}
+                        style={[
+                          dropdownStyles.dropdownItems,
+                          {
+                            ...(item.icon && { 
+                              display: "flex",
+                              flexDirection: "row",
+                            })
+                          }
+                        ]}
                       >
-                        {item.label}
-                      </Text>
-                    </Pressable>
-                  ))}
+                        <Text
+                          style={{
+                            fontSize: textSize,
+                            fontFamily: appFontFamily,
+                            ...(item.color && { color: item.color }),
+                            ...(item.icon && { marginRight: 10 }),
+                          }}
+                        >
+                          {item.label}
+                        </Text>
+                        {item.icon && (
+                          <FontAwesomeIcon
+                            icon={item.icon}
+                            color={item.color}
+                            size={textSize}
+                          />
+                        )}
+                      </Pressable>
+                    ))}
                 </ScrollView>
               </View>
             </View>

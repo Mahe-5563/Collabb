@@ -67,7 +67,7 @@ function ApplyJob(props) {
           </>
         )}
       </ScrollView>
-      <View style={[ctaButtons.bottomCTAFixedContainer]}>
+      {route.params.type != "view_application" && <View style={[ctaButtons.bottomCTAFixedContainer]}>
         <View
           style={{
             width: "80%",
@@ -85,7 +85,7 @@ function ApplyJob(props) {
             }}
           />
         </View>
-      </View>
+      </View>}
       <ApplyJobShrtDescription
         showModal={showModal}
         setShowModal={setShowModal}

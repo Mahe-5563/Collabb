@@ -643,3 +643,71 @@ export const dashboardStyles = StyleSheet.create({
         marginLeft: 10,
     }
 })
+
+export const profileSectionStyles = StyleSheet.create({
+    headerBackIcon: {
+        position: "absolute",
+        zIndex: 999,
+        left: 20,
+        top: 30,
+        backgroundColor: colors.primary_color_medium,
+        borderRadius: 50,
+    },
+    userIcon: {
+        width: 150,
+        height: 150,
+        position: "absolute",
+        top: -70,
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        borderRadius: 90,
+    },
+    userName: {
+        marginTop: 50,
+        fontSize: textHeaders,
+        fontFamily: appFontFamily,
+    },
+    userProfession: {
+        marginTop: 10,
+        fontSize: textSubheaders,
+        fontFamily: appFontFamily,
+    },
+    followersSection: {
+        borderWidth: 1,
+        borderColor: colors.grey_color,
+        borderRadius: 5,
+        width: "50%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        alignItems: "center",
+        padding: 10,
+    },
+    actionIconSection: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        paddingVertical: 10,
+    },
+    actionIcons: { 
+        alignItems: "center" 
+    },
+    actionIconTitle: {
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        marginTop: 7,
+    },
+    talentRateXPSectionBox: {
+        borderWidth: 1,
+        borderColor: colors.grey_color,
+        // width: "85%",
+        display: "flex",
+        flexDirection: "row",
+        marginRight: 20,
+        marginLeft: 20,
+        borderRadius: 5,
+    },
+    talentRateXPSection: {
+        padding: 5,
+        width: "50%"
+    }
+})

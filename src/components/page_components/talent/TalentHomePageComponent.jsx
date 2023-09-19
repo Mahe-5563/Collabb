@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { ScrollView, SafeAreaView, View, Text, Pressable } from "react-native";
+import { ScrollView, SafeAreaView, View, Text, Pressable, ActivityIndicator } from "react-native";
 
 import TalJobCard from "../job_card_tal_home";
 // import NavbarHomepage from "../../navbar_homepage";
@@ -14,6 +14,7 @@ import {
   setCurrentUserProfile,
   setCurrentUserProfileDetails,
 } from "../../../../redux/actions/user";
+import { colors } from "../../../css/colors";
 
 function TalentHomePageComp(props) {
   const { navigation } = props;
@@ -24,6 +25,7 @@ function TalentHomePageComp(props) {
     startDate: "",
   });
   const [jobList, setJobList] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     // Get User profile details...
@@ -31,10 +33,9 @@ function TalentHomePageComp(props) {
       apiGetUserProfile(props.currentUser._id, "talent", (result) => {
         const talDetails = result.res.talentDetails;
         props.setCurrentUserProfileDetails(talDetails);
-
         apiGetJobPostsOnCategory(talDetails?.category, (result) => {
-          // console.info(result.res)
-          setJobList(result.res);
+          setJobList(result.fullObj);
+          setLoader(false);
         });
       });
     }
@@ -52,56 +53,60 @@ function TalentHomePageComp(props) {
           {...props}
         />
       </SafeAreaView> */}
-      <ScrollView style={[
-        setPadding(20).setPaddingHorizontal,
-        setMargin(20).setMarginBottom
-      ]}>
-        <View
+      <ScrollView
         style={[
-          setPadding(20).setPaddingVertical,
-          {
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          },
+          setPadding(20).setPaddingHorizontal,
+          setMargin(20).setMarginBottom,
         ]}
       >
-        <Text
-          style={{
-            fontSize: textSubheaders,
-            width: "80%",
-          }}
+        <View
+          style={[
+            setPadding(20).setPaddingVertical,
+            {
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            },
+          ]}
         >
-          {"Find out what interests you today"}
-        </Text>
-        <Pressable
-          style={setPadding(20).setPadding}
-          onPress={() => setShowModal(true)}
-        >
-          <FontAwesomeIcon icon={faFilter} size={24} />
-        </Pressable>
-      </View>
-      {jobList.map((job) => {
-        // console.info("job: ", job);
-        return (
-          <Pressable
-            id={`job_id_${job._id}`}
-            key={`job_id_${job._id}`}
-            style={[
-              setMargin(20).setMarginBottom,
-              setMargin(5).setMarginHorizontal,
-            ]}
-            onPress={() => {
-              // console.info("Job: ", job);
-              navigation.navigate("talent_apply_job_page", {
-                jobDetails: job,
-              });
+          <Text
+            style={{
+              fontSize: textSubheaders,
+              width: "80%",
             }}
           >
-            <TalJobCard {...job} />
+            {"Find out what interests you today"}
+          </Text>
+          <Pressable
+            style={setPadding(20).setPadding}
+            onPress={() => setShowModal(true)}
+          >
+            <FontAwesomeIcon icon={faFilter} size={24} />
           </Pressable>
-        );
-      })}
+        </View>
+        {loader && 
+          <ActivityIndicator size={"large"} color={colors.secondary_color_medium} />
+        }
+        {!loader && jobList.map((job) => {
+          return (
+            <Pressable
+              id={`job_id_${job.jobDetail._id}`}
+              key={`job_id_${job.jobDetail._id}`}
+              style={[
+                setMargin(20).setMarginBottom,
+                setMargin(5).setMarginHorizontal,
+              ]}
+              onPress={() => {
+                // console.info("Job: ", job);
+                navigation.navigate("talent_apply_job_page", {
+                  jobDetails: job.jobDetail,
+                });
+              }}
+            >
+              <TalJobCard {...job.jobDetail} />
+            </Pressable>
+          );
+        })}
       </ScrollView>
       <TalentFilterModal
         showModal={showModal}

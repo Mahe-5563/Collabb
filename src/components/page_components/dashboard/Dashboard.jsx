@@ -22,10 +22,9 @@ import DashboardModals from "./dashboardModals";
   function Dashboard(props) {
     const [openModal, setOpenModal] = useState(false)
     const [modalType, setModalType] = useState("");
+    const [userType, setUserType] = useState();
     useEffect(() => {
-      
-      // console.info("props: ", props.userDetail.currentUser);
-      
+      setUserType(props?.userDetail?.currentUser?.usertype);
     }, [])
     
   
@@ -49,18 +48,23 @@ import DashboardModals from "./dashboardModals";
               icon={faFileLines}
               title={"View Applications"}
               onPress={() => {
-                ToastAndroid.show("View Applications", 500)
+                // ToastAndroid.show("View Applications", 500)
+                props.navigation.navigate(
+                  "talent_applications"
+                )
               }}
             />
-            <DashboardCard
-              icon={faBriefcase}
-              title={"Current Jobs"}
-              onPress={() => { 
-                setOpenModal(true);
-                setModalType("current_jobs");
-                // ToastAndroid.show("Current Jobs", 500) 
-              }}
-            />
+            {userType == "client" && 
+              <DashboardCard
+                icon={faBriefcase}
+                title={"Current Jobs"}
+                onPress={() => { 
+                  setOpenModal(true);
+                  setModalType("current_jobs");
+                  // ToastAndroid.show("Current Jobs", 500) 
+                }}
+              />
+            }
             <DashboardCard
               icon={faCircleCheck}
               title={"Completed Jobs"}
@@ -70,13 +74,16 @@ import DashboardModals from "./dashboardModals";
                 // ToastAndroid.show("Completed Jobs", 500) 
               }}
             />
-            <DashboardCard
-              icon={faStar}
-              title={"Follows & Favourites"}
-              onPress={() => { ToastAndroid.show("Follows & Favourites", 500) }}
-            />
+            {userType == "client" && 
+              <DashboardCard
+                icon={faStar}
+                title={"Follows & Favourites"}
+                onPress={() => { ToastAndroid.show("Follows & Favourites", 500) }}
+              />
+            }
           </View>
           <DashboardModals
+            {...props}
             modalType={modalType}
             openModal={openModal}
             setOpenModal={setOpenModal}

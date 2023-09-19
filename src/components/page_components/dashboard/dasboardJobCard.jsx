@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, View, Pressable, Text, ScrollView } from "react-native";
+import { Modal, View, Pressable, Text, ScrollView, ToastAndroid } from "react-native";
 import {
   faBriefcase,
   faEuroSign,
@@ -15,18 +15,14 @@ import {
 import {
   talentApplyStyles,
 } from "../../../css/interactables";
+import CTAButton from "../../cta_button";
 
 function DashboardJobCard(props) {
   const { 
-		budget_paytype,
-		budget_maxamt,
-		budget_minamt,
-		budget_restraints,
-		createdAt,
-		jd_description,
-		jd_jobtitle,
-		job_subcategory,
-		budget_amount,
+    jobDetail,
+    userDetail,
+    setOpenModal,
+    navigation,
 	} = props;
 
   const sectionStyle = {
@@ -49,32 +45,33 @@ function DashboardJobCard(props) {
 
   return (
     <View style={[talentApplyStyles.cardContainer, setMargin(20).setMarginBottom]}>
-      <Text style={talentApplyStyles.date}>{getJobDate(createdAt) || ""}</Text>
-      <Text style={talentApplyStyles.title}>{jd_jobtitle}</Text>
+      <Text style={talentApplyStyles.date}>{getJobDate(jobDetail.createdAt) || ""}</Text>
+      <Text style={talentApplyStyles.title}>{jobDetail.jd_jobtitle}</Text>
       <View style={sectionStyle}>
         <FontAwesomeIcon icon={faBriefcase} size={22} />
         <Text style={talentApplyStyles.textItem}>
-          {job_subcategory.label}
+          {jobDetail.job_subcategory.label}
         </Text>
       </View>
-			{/* <View style={sectionStyle}>
+      {/* This will be available once the client views the talent profile */}
+			<View style={sectionStyle}>
         <FontAwesomeIcon icon={faUser} size={22} />
         <Text style={talentApplyStyles.textItem}>
-          {"user name"}
+          {userDetail.firstName} {userDetail.lastName}
         </Text>
-      </View> */}
-      {budget_paytype?.toLowerCase() == "per hour" ? (
+      </View>
+      {jobDetail.budget_paytype?.toLowerCase() == "per hour" ? (
         <>
           <View style={sectionStyle}>
             <FontAwesomeIcon icon={faEuroSign} size={22} />
             <Text style={talentApplyStyles.textItem}>
-              Min: {budget_minamt}/{budget_paytype}
+              Min: {jobDetail.budget_minamt}/{jobDetail.budget_paytype}
             </Text>
           </View>
           <View style={sectionStyle}>
             <FontAwesomeIcon icon={faEuroSign} size={22} />
             <Text style={talentApplyStyles.textItem}>
-              Max: {budget_maxamt}/{budget_paytype}
+              Max: {jobDetail.budget_maxamt}/{jobDetail.budget_paytype}
             </Text>
           </View>
         </>
@@ -82,15 +79,48 @@ function DashboardJobCard(props) {
         <View style={sectionStyle}>
           <FontAwesomeIcon icon={faEuroSign} size={22} />
           <Text style={talentApplyStyles.textItem}>
-            {budget_amount}/{budget_paytype}
+            {jobDetail.budget_amount}/{jobDetail.budget_paytype}
           </Text>
         </View>
       )}
       <View style={sectionStyle}>
         <FontAwesomeIcon icon={faList} size={22} />
         <Text style={talentApplyStyles.textItem} numberOfLines={2}>
-          {jd_description}
+          {jobDetail.jd_description}
         </Text>
+      </View>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <View
+          style={{
+            width: "50%"
+          }}
+        >
+          <CTAButton
+            title={"Contact"}
+            onPress={() => { ToastAndroid.show("Contact", 1000) }}
+          />
+        </View>
+        <View
+          style={{
+            width: "50%"
+          }}
+        >
+          <CTAButton
+            title={"Job Desc."}
+            onPress={() => {
+              setOpenModal(false);
+              navigation.navigate("talent_apply_job_page", {
+                jobDetails: jobDetail,
+                type: "view_application"
+              });
+            }}
+          />
+        </View>
       </View>
     </View>
   );

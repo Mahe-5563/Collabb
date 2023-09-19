@@ -13,6 +13,8 @@ import poj_budget_req from "../pages/client/poj_budget_req";
 import poj_summary from "../pages/client/poj_summary";
 import TalentIndex from "../pages/talent";
 import ApplyJob from "../pages/talent/apply_job";
+import TalentProfile from "../pages/account/talentprofile";
+import talent_applications from "../pages/talent/talent_applications";
 
 /* 
   Page Animations:
@@ -99,10 +101,26 @@ const talentPages = [
     active: true,
     animation: "slide_from_right",
   },
+  {
+    name: "talent_applications",
+    component: talent_applications,
+    active: true,
+    animation: "slide_from_right",
+  },
 ];
+
+const commonPages = [
+  {
+    name: "profile_page",
+    component: TalentProfile,
+    active: true,
+    animation: "slide_from_right",
+  },
+]
 
 export const pages = [
   ...accountCreation,
   ...clientPages,
   ...talentPages,
+  ...commonPages,
 ];

@@ -20,7 +20,7 @@ function DashboardModals(props) {
 			setLoader(true);
 			apiGetJobPostsOnCategory(category, (response) => {
 				if(response.status == 200) setLoader(false);
-				const appliedJobPosts = response?.res.filter(post => post.applicants.includes(userId));
+				const appliedJobPosts = response?.fullObj.filter(post => post.jobDetail.applicants.includes(userId));
 				setJobPosts(appliedJobPosts);
 			})
 		}
@@ -69,8 +69,16 @@ function DashboardModals(props) {
 								
 								{!loader && jobPosts && 
 									<>
-										{jobPosts.map(post => (
-											<DashboardJobCard {...post} />
+										{jobPosts.map((post, index) => (
+											<View
+												key={`job_post_${index}`}
+											>
+												<DashboardJobCard 
+                          {...post} 
+                          setOpenModal={props.setOpenModal}
+                          navigation={props.navigation}
+                        />
+											</View>
 										))}
 									</>
 								}

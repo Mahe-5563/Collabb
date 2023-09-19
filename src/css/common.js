@@ -20,6 +20,7 @@ export const textLabel = 14;
 export const textSmall = 12;
 export const textHeaderLarge = 30;
 export const textHeaderMedium = 26;
+export const textContentSize = 24;
 export const marginCenter = { marginLeft: "auto", marginRight: "auto" };
 
 

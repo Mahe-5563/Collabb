@@ -95,7 +95,6 @@ function Login(props) {
     // Manually set user id...
     // AsyncStorage.setItem("userId", "64d68ff38a94dc2c39e74016");
 
-    // return () => {};
   }, []);
 
   return (
