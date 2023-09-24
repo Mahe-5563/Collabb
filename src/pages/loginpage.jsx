@@ -6,13 +6,11 @@ import {
   Pressable,
 } from "react-native";
 import { Image } from "react-native";
-import { connect } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import CTAButton from "../components/cta_button";
 import InputField from "../components/input_field";
 import LogoDark from "../../assets/images/logo_dark.png";
-import { setCurrentUserProfile } from "../../redux/actions/user";
 import {
   customValue,
   setMargin,
@@ -21,7 +19,7 @@ import {
 } from "../css/common";
 import { colors } from "../css/colors";
 import { textStyles } from "../css/interactables";
-import { apiCreateAccount, apiGetUserDetailsById } from "../api/account_creation";
+import { apiGetUserDetailsById } from "../api/account_creation";
 
 function Login(props) {
   const [formValues, setFormValues] = useState({});
@@ -69,7 +67,6 @@ function Login(props) {
     console.info("Login Button clicked!");
   }
 
-  // console.info("props: ", props.currentUser);
   useEffect(() => {
     
     async function checkForUser () {
@@ -79,13 +76,20 @@ function Login(props) {
         apiGetUserDetailsById(userId, (response) => {
           const userType = response?.res?.usertype;
           // console.info("Details: ", response.res);
-          props.setCurrentUserDetails(response.res);
           if(userType == "client"){
             props.navigation.navigate(
               "client_home_page",
+              {
+                userDetails: response?.res
+              }
             );
           } else if (userType == "talent") {
-            props.navigation.navigate("talent_home_page");
+            props.navigation.navigate(
+              "talent_home_page",
+              {
+                userDetails: response?.res
+              }
+            );
           }
         })
       }
@@ -93,7 +97,9 @@ function Login(props) {
     checkForUser();
 
     // Manually set user id...
-    // AsyncStorage.setItem("userId", "64d68ff38a94dc2c39e74016");
+    // client user id => 64d60f1124a6ebaa30914850
+    // talent user id => 64d68ff38a94dc2c39e74016
+    // AsyncStorage.setItem("userId", "64d60f1124a6ebaa30914850");
 
   }, []);
 
@@ -232,14 +238,4 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  ...state.userDetail,
-})
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentUserDetails: currentUser => dispatch(setCurrentUserProfile(currentUser)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

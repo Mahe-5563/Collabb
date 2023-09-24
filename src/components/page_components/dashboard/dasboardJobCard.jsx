@@ -23,6 +23,9 @@ function DashboardJobCard(props) {
     userDetail,
     setOpenModal,
     navigation,
+    userType,
+    modalType,
+    setOpenApplicationModal
 	} = props;
 
   const sectionStyle = {
@@ -54,12 +57,12 @@ function DashboardJobCard(props) {
         </Text>
       </View>
       {/* This will be available once the client views the talent profile */}
-			<View style={sectionStyle}>
+			{userDetail && <View style={sectionStyle}>
         <FontAwesomeIcon icon={faUser} size={22} />
         <Text style={talentApplyStyles.textItem}>
           {userDetail.firstName} {userDetail.lastName}
         </Text>
-      </View>
+      </View>}
       {jobDetail.budget_paytype?.toLowerCase() == "per hour" ? (
         <>
           <View style={sectionStyle}>
@@ -95,7 +98,7 @@ function DashboardJobCard(props) {
           flexDirection: "row",
         }}
       >
-        <View
+        {userType == "talent" && <View
           style={{
             width: "50%"
           }}
@@ -104,23 +107,42 @@ function DashboardJobCard(props) {
             title={"Contact"}
             onPress={() => { ToastAndroid.show("Contact", 1000) }}
           />
-        </View>
-        <View
-          style={{
-            width: "50%"
-          }}
-        >
-          <CTAButton
-            title={"Job Desc."}
-            onPress={() => {
-              setOpenModal(false);
-              navigation.navigate("talent_apply_job_page", {
-                jobDetails: jobDetail,
-                type: "view_application"
-              });
+        </View>}
+        {modalType !="application" && 
+          <View
+            style={{
+              width: userType == "talent" ? "50%" : "100%"
             }}
-          />
-        </View>
+          >
+            <CTAButton
+              title={userType == "talent" ? "Job Desc." : "Job Description"}
+              onPress={() => {
+                setOpenModal(false);
+                navigation.navigate("talent_apply_job_page", {
+                  jobDetails: jobDetail,
+                  type: "view_application"
+                });
+              }}
+            />
+          </View>
+        }
+        {userType == "client" && modalType =="application" && 
+          <View
+            style={{
+              width: "100%"
+            }}
+          >
+            <CTAButton
+              title={"View Applicants"}
+              onPress={() => {
+                setOpenApplicationModal(false);
+                navigation.navigate("talent_applications", {
+                  jobDetails: jobDetail,
+                });
+              }}
+            />
+          </View>
+        }
       </View>
     </View>
   );

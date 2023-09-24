@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Pressable,
-  SafeAreaView,
-} from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { ScrollView, View } from "react-native";
+import { connect } from "react-redux";
 
-import NavbarHomepage from "../../navbar_homepage";
 import ImgButton from "../../img_button";
 import btnImg from "../../../../assets/images/btnImg.png";
 import placeholderImg from "../../../../assets/images/placeholderImg.png";
-import { marginCenter, setMargin, setPadding } from "../../../css/common";
+import { setMargin, setPadding } from "../../../css/common";
 import SimilarTalents from "../similar_talents";
+import {
+  setCurrentUserProfile,
+  setCurrentUserProfileDetails,
+} from "../../../../redux/actions/user";
+import { apiGetUserProfile } from "../../../api/users";
 
 function ClientHomePageComp(props) {
   const { navigation } = props;
@@ -66,11 +61,24 @@ function ClientHomePageComp(props) {
     },
   ];
 
+  useEffect(() => {
+    // Get User profile details...
+    if (props.currentUser._id) {
+      apiGetUserProfile(props.currentUser._id, "client", (result) => {
+        // console.info("Client Details: ", result.res);
+        const talDetails = result.res.clientDetails;
+        props.setCurrentUserProfileDetails(talDetails);
+        /* apiGetJobPostsOnCategory(talDetails?.category, (result) => {
+          setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
+          setLoader(false);
+        }); */
+      });
+    }
+    // Get possible client job posts...
+  }, []);
+
   return (
     <>
-      <SafeAreaView>
-        <NavbarHomepage {...props} />
-      </SafeAreaView>
       <ScrollView style={[setPadding(20).setPadding]}>
         <View>
           {imgButtons.map((btn) => (
@@ -85,7 +93,7 @@ function ClientHomePageComp(props) {
         </View>
         <View
           style={{
-            paddingHorizontal: 20,
+            // paddingHorizontal: 20,
             marginTop: 20,
             paddingBottom: 40,
           }}
@@ -100,4 +108,17 @@ function ClientHomePageComp(props) {
   );
 }
 
-export default ClientHomePageComp;
+const mapStateToProps = (state) => ({
+  ...state.userDetail,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUserDetails: (currentUser) =>
+      dispatch(setCurrentUserProfile(currentUser)),
+    setCurrentUserProfileDetails: (currentUser) =>
+      dispatch(setCurrentUserProfileDetails(currentUser)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientHomePageComp);

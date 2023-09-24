@@ -12,6 +12,11 @@ function TalentIndex(props) {
   const { navigation } = props;
   const [currentPage, setCurrentPage] = useState(1);
 
+  useEffect(() => {
+    if(props?.route?.params?.userDetails)
+      props.setCurrentUserDetails(props?.route?.params?.userDetails);
+  }, [props?.route?.params])
+
   const changePage = (pageNo) => {
 
     switch (pageNo) {
@@ -50,7 +55,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
   return {
     setCurrentUserDetails: currentUser => dispatch(setCurrentUserProfile(currentUser)),
-    setCurrentUserProfileDetails: currentUser => dispatch(setCurrentUserProfileDetails(currentUser)),
+    // setCurrentUserProfileDetails: currentUser => dispatch(setCurrentUserProfileDetails(currentUser)),
   }
 }
 

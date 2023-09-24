@@ -34,7 +34,7 @@ function TalentHomePageComp(props) {
         const talDetails = result.res.talentDetails;
         props.setCurrentUserProfileDetails(talDetails);
         apiGetJobPostsOnCategory(talDetails?.category, (result) => {
-          setJobList(result.fullObj);
+          setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
           setLoader(false);
         });
       });

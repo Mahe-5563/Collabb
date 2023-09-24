@@ -23,7 +23,9 @@ import DashboardModals from "./dashboardModals";
     const [openModal, setOpenModal] = useState(false)
     const [modalType, setModalType] = useState("");
     const [userType, setUserType] = useState();
+    const [openApplicationModal, setOpenApplicationModal] = useState(false);
     useEffect(() => {
+      // console.info("Props: ", props);
       setUserType(props?.userDetail?.currentUser?.usertype);
     }, [])
     
@@ -49,9 +51,13 @@ import DashboardModals from "./dashboardModals";
               title={"View Applications"}
               onPress={() => {
                 // ToastAndroid.show("View Applications", 500)
-                props.navigation.navigate(
-                  "talent_applications"
-                )
+                if(userType == "talent") {
+                  props.navigation.navigate(
+                    "talent_applications"
+                  )
+                } else {
+                  setOpenApplicationModal(true)
+                }
               }}
             />
             {userType == "client" && 
@@ -89,6 +95,8 @@ import DashboardModals from "./dashboardModals";
             setOpenModal={setOpenModal}
             category={props?.userProfile?.category}
             userId={props?.userDetail?.currentUser?._id}
+            openApplicationModal={openApplicationModal}
+            setOpenApplicationModal={setOpenApplicationModal}
           />
         </ScrollView>
       </>

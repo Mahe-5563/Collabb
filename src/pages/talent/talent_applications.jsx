@@ -23,6 +23,8 @@ function TalentApplications(props) {
         setApplications(response.res);
         setLoader(false);
       })
+    } else if (userType == "client") {
+      // console.info("Props: ", props);
     }
   }, [userType])
 

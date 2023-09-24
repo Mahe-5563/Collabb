@@ -20,3 +20,10 @@ export const apiApplyForJobPost = (jobPostId, applicantDetails, callback) => {
         .then(res => callback(res.data))
         .catch(fail => console.info("fail: ", fail));
 }
+
+export const apiGetClientJobPost = (userid, callback) => {
+    axios
+        .get(`https://collabb-server-2.onrender.com/get-client-job-posts?userid=${userid}`)
+        .then(res => callback(res.data))
+        .catch(fail => console.error("fail: ", fail));
+}
