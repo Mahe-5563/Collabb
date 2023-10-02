@@ -24,24 +24,25 @@ import PojBreadcrumb from "../../components/poj_breadcrumb";
 import { setPostJobDetails } from "../../../redux/actions/client";
 
 function PojJobDescription(props) {
+  const { clientDetails } = props;
   // State to store form data.
   const [formData, setFormData] = useState({
-    jobTitle: "",
-    startDate: "",
-    endDate: "",
-    experience: "",
-    skills: "",
-    description: "",
+    jd_jobtitle: "",
+    jd_startdate: "",
+    jd_enddate: "",
+    jd_experience: "",
+    jd_skills: "",
+    jd_description: "",
   });
 
   // State to handle form data errors
   const [formErrors, setFormErrors] = useState({
-    jobTitle: "",
-    startDate: "",
-    endDate: "",
-    experience: "",
-    skills: "",
-    description: "",
+    jd_jobtitle: "",
+    jd_startdate: "",
+    jd_enddate: "",
+    jd_experience: "",
+    jd_skills: "",
+    jd_description: "",
   })
 
   // State to handle the array of skills.
@@ -55,8 +56,8 @@ function PojJobDescription(props) {
     setMargin(5).setMarginTop
   ];
 
-  // JSON data for experience and skills.
-  const experience = [
+  // JSON data for jd_experience and skills.
+  const jd_experience = [
     { id: 1, label: "Beginner", value: "Beginner" },
     { id: 2, label: "Intermediate", value: "Intermediate" },
     { id: 3, label: "Expert", value: "Expert" },
@@ -68,7 +69,7 @@ function PojJobDescription(props) {
 
   useEffect(() => {
     if (selectedSkills) {
-      handleInputValues("skills", selectedSkills)
+      handleInputValues("jd_skills", selectedSkills)
     }
   }, [selectedSkills]);
 
@@ -110,7 +111,7 @@ function PojJobDescription(props) {
     
     if(canProceed) {
       props.setPostJobDetails({
-        ...props.clientDetails.postJobDetails,
+        ...clientDetails.postJobDetails,
         jobDescription: formData,
       })
       props.navigation.navigate(
@@ -122,7 +123,10 @@ function PojJobDescription(props) {
 
   return (
     <>
-      <SecondaryNavbar {...props} />
+      <SecondaryNavbar 
+        {...props}
+        title={`${clientDetails?.cateSubcateSelection?.subCategory?.value} - ${clientDetails?.cateSubcateSelection?.category?.value}`}
+      />
       <ScrollView
         automaticallyAdjustKeyboardInsets={true}
       >
@@ -139,19 +143,19 @@ function PojJobDescription(props) {
               {...props}
               placeholderText={"Title of the Job *"}
               onTextChange={(text) => {
-                handleInputValues("jobTitle", text);
+                handleInputValues("jd_jobtitle", text);
               }}
               fieldKey={"poj_title_job"}
               onBlur={(e) => {
                 const data = e.nativeEvent.text
-                handleOnEndEditing("jobTitle", data)
+                handleOnEndEditing("jd_jobtitle", data)
               }}
             />
-            {formErrors.jobTitle &&
+            {formErrors.jd_jobtitle &&
               <Text 
                 style={errorMessageStyle}
               >
-                {formErrors.jobTitle}
+                {formErrors.jd_jobtitle}
               </Text>
             }
           </View>
@@ -173,16 +177,16 @@ function PojJobDescription(props) {
               <DatePicker
                 // half
                 label={"Start Date"}
-                date={formData.startDate}
+                date={formData.jd_startdate}
                 onChange={(date) => {
-                  handleInputValues("startDate", date)
+                  handleInputValues("jd_startdate", date)
                 }}
               />
-              {formErrors.startDate &&
+              {formErrors.jd_startdate &&
                 <Text 
                   style={errorMessageStyle}
                 >
-                  {formErrors.startDate}
+                  {formErrors.jd_startdate}
                 </Text>
               }
             </View>
@@ -194,17 +198,17 @@ function PojJobDescription(props) {
               <DatePicker
                 // half
                 label={"End Date (ETA)"}
-                date={formData.endDate}
+                date={formData.jd_enddate}
                 onChange={(date) => {
-                  handleInputValues("endDate", date)
+                  handleInputValues("jd_enddate", date)
                 }}
-                {...(formData.startDate && { minDate: formData.startDate })}
+                {...(formData.jd_startdate && { minDate: formData.jd_startdate })}
               />
-              {formErrors.endDate &&
+              {formErrors.jd_enddate &&
                 <Text 
                   style={errorMessageStyle}
                 >
-                  {formErrors.endDate}
+                  {formErrors.jd_enddate}
                 </Text>
               }
             </View>
@@ -212,17 +216,17 @@ function PojJobDescription(props) {
           <View style={[marginForFields]}>
             <DropdownComponent
               prompt={"Select necessary experience*"}
-              items={experience}
-              stateValue={formData.experience}
+              items={jd_experience}
+              stateValue={formData.jd_experience}
               onValueChange={(text) => {
-                handleInputValues("experience", text)
+                handleInputValues("jd_experience", text)
               }}
             />
-            {formErrors.experience &&
+            {formErrors.jd_experience &&
               <Text 
                 style={errorMessageStyle}
               >
-                {formErrors.experience}
+                {formErrors.jd_experience}
               </Text>
             }
           </View>
@@ -234,11 +238,11 @@ function PojJobDescription(props) {
               placeholder={"Select Required Skills*"}
               searchPlaceholder={"Search for a skill"}
             />
-            {formErrors.skills &&
+            {formErrors.jd_skills &&
               <Text 
                 style={errorMessageStyle}
               >
-                {formErrors.skills}
+                {formErrors.jd_skills}
               </Text>
             }
           </View>
@@ -247,19 +251,19 @@ function PojJobDescription(props) {
               isMultiLine
               placeholderText={"Give a short description about your project *"}
               onTextChange={(text) => {
-                handleInputValues("description", text)
+                handleInputValues("jd_description", text)
               }}
               fieldKey={"poj_project_description"}
               onBlur={(e) => {
                 const data = e.nativeEvent.text
-                handleOnEndEditing("description", data)
+                handleOnEndEditing("jd_description", data)
               }}
             />
-            {formErrors.description &&
+            {formErrors.jd_description &&
               <Text 
                 style={errorMessageStyle}
               >
-                {formErrors.description}
+                {formErrors.jd_description}
               </Text>
             }
           </View>

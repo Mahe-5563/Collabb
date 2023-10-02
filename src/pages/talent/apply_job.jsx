@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Modal, Text } from "react-native";
+import { ScrollView, View, Modal, Text, ToastAndroid } from "react-native";
 
 import { setMargin } from "../../css/common";
 import Navbar from "../../components/navbar";
@@ -35,6 +35,7 @@ function ApplyJob(props) {
       (response) => {
         console.info("Response: ", response);
         setShowSuccessModal(true);
+        ToastAndroid.show("Job applied successfully!", 2000);
         setTimeout(() => {
           setShowSuccessModal(false);
           navigation.navigate("talent_home_page")

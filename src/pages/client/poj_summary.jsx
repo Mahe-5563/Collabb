@@ -20,11 +20,9 @@ import { apiCreateJobPost } from "../../api/job_post";
 
 function PojSummary(props) {
   const { clientDetails, params } = props;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitDetails = async () => {
-    // console.info('cateSubcateSelection: ', clientDetails.cateSubcateSelection);
-    // console.info('budgetReq: ', clientDetails.postJobDetails.budgetReq);
-    // console.info('jobDescription: ', clientDetails.postJobDetails.jobDescription);
     const postJobObj = {
       userId: await AsyncStorage.getItem("userId"),
       category: clientDetails.cateSubcateSelection.category,
@@ -32,18 +30,25 @@ function PojSummary(props) {
       budget: clientDetails.postJobDetails.budgetReq,
       jobDescription: clientDetails.postJobDetails.jobDescription,
     }
-    console.info("postJobObj: ", postJobObj);
+    setIsSubmitting(true);
     apiCreateJobPost(postJobObj, (response) => {
       console.info(response);
       if(response.status == 200 && response.message == "Post job created successfully!") {
+        setIsSubmitting(false);
         ToastAndroid.show("Job posted successfully!", 5000);
+        props.navigation.navigate(
+          "client_home_page"
+        )
       }
     })
   }
 
   return (
     <>
-      <SecondaryNavbar {...props} />
+      <SecondaryNavbar 
+        {...props} 
+        title={`${clientDetails?.cateSubcateSelection?.subCategory?.value} - ${clientDetails?.cateSubcateSelection?.category?.value}`}
+      />
       <ScrollView>
         <View style={{ marginHorizontal: 10, marginVertical: 20 }}>
           <PojBreadcrumb activeStep={3} stepTitle={"Summary"} />
@@ -64,11 +69,11 @@ function PojSummary(props) {
                     {jdItem.name}:
                   </Text>
                   <>
-                    {jdItem.key == "startDate" || jdItem.key == "endDate" ? (
+                    {jdItem.key == "jd_startdate" || jdItem.key == "jd_enddate" ? (
                       <Text style={summaryCard.textContent}>
                         {getSelectedDate(data)}
                       </Text>
-                    ) : jdItem.key == "skills" ? (
+                    ) : jdItem.key == "jd_skills" ? (
                       <View style={multiSelectStyles.selectedOptions}>
                         {data.map((datum) => (
                           <Text key={datum.id} style={summaryCard.chip}>
@@ -125,7 +130,7 @@ function PojSummary(props) {
           <CTAButton
             dark
             halfWidth
-            title={"Proceed"}
+            title={isSubmitting ? "Creating..." : "Proceed"}
             onPress={submitDetails}
           />
         </View>

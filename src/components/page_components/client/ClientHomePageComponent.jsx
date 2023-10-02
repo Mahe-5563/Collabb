@@ -32,12 +32,7 @@ function ClientHomePageComp(props) {
       title: "Search Talents",
       btnBg: btnImg,
       onPress: function () {},
-    },
-    {
-      title: "Small scale Business",
-      btnBg: btnImg,
-      onPress: function () {},
-    },
+    }
   ];
 
   const similarTalents = [

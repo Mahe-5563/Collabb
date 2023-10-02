@@ -13,6 +13,7 @@ function UploadImage(props) {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
+      aspect: [1, 1],
     });
 
     uploadFunction(result);

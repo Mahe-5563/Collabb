@@ -22,6 +22,8 @@ export const navStyles = StyleSheet.create({
         color: colors.primary_color,
         fontSize: 28,
         fontFamily: appFontFamily,
+        marginTop: "auto",
+        marginBottom: "auto",
     },
     back: {
         margin: 15,
@@ -44,7 +46,17 @@ export const secondaryNavStyle = StyleSheet.create({
     backButton: {
         paddingHorizontal: 15,
         paddingVertical: 20,
-        width: 80,
+        // width: 80,
+        display: "flex",
+        flexDirection: "row",
+    },
+    title: {
+        fontSize: 22,
+        fontFamily: appFontFamily,
+        marginTop: "auto",
+        marginBottom: "auto",
+        marginLeft: 10,
+        marginRight: 15,
     }
 });
 

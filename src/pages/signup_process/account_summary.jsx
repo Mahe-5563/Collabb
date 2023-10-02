@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Pressable, ScrollView, View, Text, Image, } from "react-native";
+// import firebase from "firebase/compat";
+import { firebase } from "../../../firebase";
 
 // User components
 import SecondaryNavbar from "../../components/navbar_sec";
@@ -30,6 +32,7 @@ function AccountSummary(props) {
   const [summaryKeys, setSummaryKeys] = useState([]);
   const [summaryDetails, setSummaryDetails] = useState({});
   const [createAccount, setCreateAccount] = useState(false);
+  const [userType, setUserType] = useState();
 
   const userDetailsOrder = [
     { key: "field_first_name", title: "First Name" },
@@ -71,42 +74,74 @@ function AccountSummary(props) {
         ? clientOrder
         : ""
     );
+
+    setUserType(route?.params?.accountType);
   }, []);
 
-  const confirmDetails = async () => {
-    setCreateAccount(true);
-    const userType = route.params.accountType;
-    const userDetails = {
-      ...userDetail.profileDetails,
-      ...userDetail.userDetail,
-      type: userType,
-    };
-    console.info("profileDetails: ", userDetails);
-
-    apiCreateAccount(userDetails, async (response) => {
-      console.info("response: ", response);
-      setCreateAccount(false);
-      
-      toastMessage(response.message);
-      const userId = response?.res?.userid;
-      if(userId) {
-        console.info("UserId: ", userId);
-        await AsyncStorage.setItem("userId", userId);
-        if(userType == "client") {
-          // toastMessage(`Client: ${userId}`);
-          /* navigation.navigate(
-            "client_home_page",
-            {  }
-          ); */
-        } else if (userType == "talent") {
-          /* navigation.navigate(
-            "talent_home_page",
-            {  }
-          ); */
-          // toastMessage(`Talent: ${userId}`);
+  const confirmDetails = async (userDetails) => {
+    // console.info("profileDetails: ", userDetails);
+      apiCreateAccount(userDetails, async (response) => {
+        // console.info("response: ", response);
+        toastMessage(response.message);
+        const userId = response?.res?.userid;
+        if(userId) {
+          await AsyncStorage.setItem("userId", userId);
+          setCreateAccount(false);
+          if(userType == "client") {
+            // toastMessage(`Client: ${userId}`);
+            // navigation.navigate(
+            //   "client_home_page",
+            //   {  }
+            // );
+          } else if (userType == "talent") {
+            // navigation.navigate(
+            //   "talent_home_page",
+            //   {  }
+            // );
+            // toastMessage(`Talent: ${userId}`);
+          }
         }
+      });
+  }
+
+  const uploadImage = async (image) => {
+    const blob = await new Promise((resolve, reject) => {
+      // console.info(image);
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', image, true);
+      xhr.send(null);
+    })
+    // console.info(blob);
+    const ref = firebase.storage().ref().child(`images/${userDetail.userDetail.field_first_name}-${userDetail.userDetail.field_last_name}`);
+    const snapshot = ref.put(blob)
+    snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      ()=>{
+        setCreateAccount(true);
+      },
+      (error) => {
+        blob.close();
+        return 
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          blob.close();
+          let userDetails = {
+            ...userDetail.profileDetails,
+            ...userDetail.userDetail,
+            profile_photo: { uri: url },
+            type: userType,
+          };
+          confirmDetails(userDetails);
+        })
       }
-    });
+      )
   }
 
   return (
@@ -278,7 +313,7 @@ function AccountSummary(props) {
           setMargin("auto").setMarginLeft,
           setMargin("auto").setMarginRight,
         ]}
-        onPress={confirmDetails}
+        onPress={() => uploadImage(userDetail?.profileDetails?.profile_photo?.uri)}
       />
     </ScrollView>
   );

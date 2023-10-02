@@ -711,3 +711,36 @@ export const profileSectionStyles = StyleSheet.create({
         width: "50%"
     }
 })
+
+export const accordionStyles = StyleSheet.create({
+    categoriesAccTitle: {
+        marginHorizontal: 10,
+        borderBottomWidth: 1,
+        borderColor: colors.grey_color,
+        paddingHorizontal: 10,
+        paddingVertical: 20,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 10,
+    },
+    categoriesAccItem: {
+        fontSize: 20,
+        fontFamily: appFontFamily,
+    },
+    subcateAccTitle: {
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 15,
+        backgroundColor: colors.primary_color_medium,
+        borderRadius: 5,
+        marginBottom: 5,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    subcateAccItem: {
+        fontSize: 18,
+        fontFamily: appFontFamily,
+    }
+})

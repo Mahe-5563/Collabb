@@ -55,7 +55,7 @@ function DashboardModals(props) {
           const appliedJobPosts = response?.fullObj.filter((post) =>
             post.jobDetail.applicants.includes(userId)
           );
-          setJobPosts(appliedJobPosts);
+          setJobPosts(appliedJobPosts.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
         });
       }
     }

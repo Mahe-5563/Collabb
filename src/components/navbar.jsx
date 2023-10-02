@@ -17,6 +17,10 @@ function Navbar(props) {
     <SafeAreaView style={navStyles.navbar}>
       <View style={navStyles.leftSection}>
         <Pressable
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
           onPress={() => {
             navigation.goBack(props?.route?.params?.back_key);
           }}
@@ -27,10 +31,10 @@ function Navbar(props) {
             color={colors.primary_color}
             size={28}
           />
+          <Text numberOfLines={1} style={navStyles.text}>
+            {title}
+          </Text>
         </Pressable>
-        <Text numberOfLines={1} style={navStyles.text}>
-          {title}
-        </Text>
       </View>
       {goToHome && homePage && (
         <Pressable

@@ -8,10 +8,15 @@ import {
   Modal,
   TouchableHighlight,
   ToastAndroid,
+  TouchableOpacity,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+  InteractionManager,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faCaretDown, faCaretUp, faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import {
@@ -32,7 +37,7 @@ import SearchField from "../../components/search_field";
 import newLogo from "../../../assets/icons/new-logo.png";
 import { freelanceCategories } from "../../json/cat_subcat";
 // import ToastMessage from "../../components/toast_message";
-import { multiSelectStyles, popupModal } from "../../css/interactables";
+import { accordionStyles, multiSelectStyles, popupModal } from "../../css/interactables";
 import { setCategoryAndSubcategory } from "../../../redux/actions/client";
 import { toastMessage } from "../../js/common";
 
@@ -43,10 +48,21 @@ function ClientChooseCatSubcat(props) {
     setCategoryAndSubcategory,
     navigation,
   } = props;
+
+  let scrollRef = useRef();
+
   const [searchValue, setSearchValue] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [categorySelection, setCategorySelection] = useState();
+  const [categorySelection, setCategorySelection] = useState({});
   const [categoryValueBool, setCategoryValueBool] = useState(false);
+  const [accordionIndex, setAccordionIndex] = useState();
+
+  useEffect(() => {
+    if(Platform.OS == "android") {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }, [])
+  
 
   useEffect(() => {
     if(clientDetails?.cateSubcateSelection && categoryValueBool) {
@@ -68,7 +84,7 @@ function ClientChooseCatSubcat(props) {
       category: { id: categorySelection.id, label: categorySelection.label, value: categorySelection.value, },
       subCategory: subcat
     };
-    console.info("obj: ", obj);
+    // console.info("obj: ", obj);
     setCategoryAndSubcategory(obj);
     setCategoryValueBool(true);
   }
@@ -106,8 +122,8 @@ function ClientChooseCatSubcat(props) {
       >
         {"Choose one of our Popular Categories"}
       </Text>
-      <ScrollView style={[setPadding(10).setPaddingVertical]}>
-        {freelanceCategories.map((category) => (
+      <ScrollView style={[setPadding(10).setPaddingVertical]} ref={scrlRef => scrollRef = scrlRef} >
+        {/* {freelanceCategories.map((category) => (
           <ImgButton
             key={`imgbutton_${category.id}`}
             bgImg={btnImg}
@@ -119,6 +135,59 @@ function ClientChooseCatSubcat(props) {
             }}
             customCSS={[setMargin(25).setMarginBottom]}
           />
+        ))} */}
+        {freelanceCategories.map((category, index) => (
+          <>
+            <TouchableOpacity
+              key={`category_${category.id}`}
+              id={`category_${category.id}`}
+              activeOpacity={0.4}
+              style={accordionStyles.categoriesAccTitle}
+              onPress={() => {
+                // Provide animation for ease in and ease out of the Accordion
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                if(categorySelection?.id == category.id) {
+                  setCategorySelection({});
+                  setAccordionIndex();
+                } else {
+                  setAccordionIndex(index);
+                  setCategorySelection(category);
+                  scrollRef.scrollTo(`#category_${category.id}`);
+                }
+              }}
+            >
+              <Text
+                style={accordionStyles.categoriesAccItem}
+              >
+                {category.label}
+              </Text>
+              <FontAwesomeIcon 
+                style={{ marginTop: "auto", marginBottom: "auto" }}
+                size={22}
+                icon={categorySelection?.id == category.id ? faCaretUp : faCaretDown}
+              />
+            </TouchableOpacity>
+            {accordionIndex == index && categorySelection?.subcategories?.map(subcate => 
+              <Pressable
+                key={`subcategory_${subcate.id}`}
+                style={accordionStyles.subcateAccTitle}
+                onPress={() => {
+                  categoryAndSubCatSelection(subcate);
+                }}
+              >
+                <Text
+                  style={accordionStyles.subcateAccItem}
+                >
+                  {subcate.label}
+                </Text>
+                <FontAwesomeIcon 
+                  style={{ marginTop: "auto", marginBottom: "auto", }}
+                  icon={faAngleRight} 
+                  size={16}
+                />
+              </Pressable>
+            )}
+          </>
         ))}
       </ScrollView>
       <Modal
@@ -146,7 +215,7 @@ function ClientChooseCatSubcat(props) {
               <ScrollView
                 style={popupModal.subcategoryContainer}
               >
-                {categorySelection.subcategories.map(subcate => (
+                {categorySelection?.subcategories?.map(subcate => (
                   <TouchableHighlight
                     key={subcate.id}
                     onPress={() => {

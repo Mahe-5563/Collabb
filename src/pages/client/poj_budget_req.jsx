@@ -24,20 +24,21 @@ import { textStyles } from "../../css/interactables";
 import { paymentType } from "../../json/common";
 
 function PojBudgetRequirements(props) {
+  const { clientDetails } = props;
   const [formData, setFormData] = useState({
-    paymentType: "",
-    minAmt: "",
-    maxAmt: "",
-    amount: "",
-    restraints: ""
+    budget_paytype: "",
+    budget_minamt: "",
+    budget_maxamt: "",
+    budget_amount: "",
+    budget_restraints: ""
   });
 
   const [formDataErrors, setFormDataErrors] = useState({
-    paymentType: "",
-    minAmt: "",
-    maxAmt: "",
-    amount: "",
-    restraints: ""
+    budget_paytype: "",
+    budget_minamt: "",
+    budget_maxamt: "",
+    budget_amount: "",
+    budget_restraints: ""
   });
 
   const marginForFields = setMargin(10).setMarginVertical;
@@ -75,23 +76,23 @@ function PojBudgetRequirements(props) {
     let canProceed = true;
     console.info("formData: ", formData);
     
-    if(!formData.paymentType) {
-      handleInputValues("paymentType", formData.paymentType)
+    if(!formData.budget_paytype) {
+      handleInputValues("budget_paytype", formData.budget_paytype)
       canProceed = false
     };
     
-    if((formData.paymentType.toLowerCase() == "per hour" && 
-      (!formData.minAmt || !formData.maxAmt))) {
+    if((formData.budget_paytype.toLowerCase() == "per hour" && 
+      (!formData.budget_minamt || !formData.budget_maxamt))) {
       
       canProceed = false;
-      if(!formData.minAmt) handleInputValues("minAmt", formData.minAmt);
-      else handleInputValues("maxAmt", formData.maxAmt);
+      if(!formData.budget_minamt) handleInputValues("budget_minamt", formData.budget_minamt);
+      else handleInputValues("budget_maxamt", formData.budget_maxamt);
 
     } else if (
-      (formData.paymentType.toLowerCase() == "project" || formData.paymentType == "") 
-      && !formData.amount) {
+      (formData.budget_paytype.toLowerCase() == "project" || formData.budget_paytype == "") 
+      && !formData.budget_amount) {
       canProceed = false;
-      handleInputValues("amount", formData.amount);
+      handleInputValues("budget_amount", formData.budget_amount);
     }
 
     if(canProceed) {
@@ -111,7 +112,10 @@ function PojBudgetRequirements(props) {
 
   return (
     <>
-      <SecondaryNavbar {...props} />
+      <SecondaryNavbar 
+        {...props} 
+        title={`${clientDetails?.cateSubcateSelection?.subCategory?.value} - ${clientDetails?.cateSubcateSelection?.category?.value}`}
+      />
       <ScrollView>
         <View style={{ marginHorizontal: 10, marginVertical: 20 }}>
           <PojBreadcrumb activeStep={2} stepTitle={"Budget Requirement"} />
@@ -125,30 +129,30 @@ function PojBudgetRequirements(props) {
             <DropdownComponent 
               prompt={"Payment Type*"}
               items={paymentType}
-              stateValue={formData.paymentType}
+              stateValue={formData.budget_paytype}
               onValueChange={(text) => {
-                handleInputValues("paymentType", text)
+                handleInputValues("budget_paytype", text)
               }}
             />
-            {formDataErrors.paymentType &&
+            {formDataErrors.budget_paytype &&
               <Text 
                 style={errorMessageStyle}
               >
-                {formDataErrors.paymentType}
+                {formDataErrors.budget_paytype}
               </Text>
             }
           </View>
           <View 
             style={[
               marginForFields,
-              ...(formData.paymentType == "Per Hour" ? [{
+              ...(formData.budget_paytype == "Per Hour" ? [{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between"
               }]: [])
             ]}
           >
-            {formData.paymentType == "Per Hour" ?
+            {formData.budget_paytype == "Per Hour" ?
               <>
                 <View
                   style={{
@@ -160,20 +164,20 @@ function PojBudgetRequirements(props) {
                     interactableIcon={faEuroSign}
                     placeholderText={"Min Amt.*"}
                     onTextChange={(text) => {
-                      handleInputValues("minAmt", text)
+                      handleInputValues("budget_minamt", text)
                     }}
                     fieldKey={"poj_budg_minamt"}
                     onBlur={(e) => {
                       const data = e.nativeEvent.text
-                      handleOnEndEditing("minAmt", data)
+                      handleOnEndEditing("budget_minamt", data)
                     }}
                     keyboardType="numeric"
                   />
-                  {formDataErrors.minAmt &&
+                  {formDataErrors.budget_minamt &&
                     <Text 
                       style={errorMessageStyle}
                     >
-                      {formDataErrors.minAmt}
+                      {formDataErrors.budget_minamt}
                     </Text>
                   }
                 </View>
@@ -187,20 +191,20 @@ function PojBudgetRequirements(props) {
                     interactableIcon={faEuroSign}
                     placeholderText={"Max Amt.*"}
                     onTextChange={(text) => {
-                      handleInputValues("maxAmt", text);
+                      handleInputValues("budget_maxamt", text);
                     }}
                     fieldKey={"poj_budg_maxamt"}
                     onBlur={(e) => {
                       const data = e.nativeEvent.text
-                      handleOnEndEditing("maxAmt", data)
+                      handleOnEndEditing("budget_maxamt", data)
                     }}
                     keyboardType="numeric"
                   />
-                  {formDataErrors.maxAmt &&
+                  {formDataErrors.budget_maxamt &&
                     <Text 
                       style={errorMessageStyle}
                     >
-                      {formDataErrors.maxAmt}
+                      {formDataErrors.budget_maxamt}
                     </Text>
                   }
                 </View>
@@ -212,20 +216,20 @@ function PojBudgetRequirements(props) {
                   interactableIcon={faEuroSign}
                   placeholderText={"Project Amount*"}
                   onTextChange={(text) => {
-                    handleInputValues("amount", text);
+                    handleInputValues("budget_amount", text);
                   }}
                   fieldKey={"poj_budg_amount"}
                   onBlur={(e) => {
                     const data = e.nativeEvent.text
-                    handleOnEndEditing("amount", data)
+                    handleOnEndEditing("budget_amount", data)
                   }}
                   keyboardType="numeric"
                 />
-                {formDataErrors.amount &&
+                {formDataErrors.budget_amount &&
                   <Text 
                     style={errorMessageStyle}
                   >
-                    {formDataErrors.amount}
+                    {formDataErrors.budget_amount}
                   </Text>
                 }
               </>
@@ -236,15 +240,15 @@ function PojBudgetRequirements(props) {
               isMultiLine
               placeholderText={"Do you have any restraints on the budget for your project?"}
               onTextChange={(text) => {
-                handleInputValues("restraints", text);
+                handleInputValues("budget_restraints", text);
               }}
               fieldKey={"poj_budget_restraints"}
             />
-            {formDataErrors.restraints &&
+            {formDataErrors.budget_restraints &&
               <Text 
                 style={errorMessageStyle}
               >
-                {formDataErrors.restraints}
+                {formDataErrors.budget_restraints}
               </Text>
             }
           </View>

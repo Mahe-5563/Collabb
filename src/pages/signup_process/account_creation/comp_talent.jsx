@@ -23,7 +23,9 @@ import { faEuroSign } from "@fortawesome/free-solid-svg-icons";
 function ComponentTalentAccount(props) {
   const [formValues, setFormValues] = useState({
     category: "",
+    category_id: "",
     sub_category: "",
+    sub_category_id: "",
     location: "",
     description: "",
     skills: "",
@@ -34,10 +36,11 @@ function ComponentTalentAccount(props) {
   });
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
 
   const cats_n_subcats = [
     ...freelanceCategories,
-    ...smallScaleBusinessCategories,
+    // ...smallScaleBusinessCategories,
   ];
 
   const payType = [
@@ -163,9 +166,11 @@ function ComponentTalentAccount(props) {
             items={cats_n_subcats}
             prompt={"Select your category *"}
             onValueChange={(value) => {
+              console.info("value: ", value);
               setFormValues(prevValue => ({
                 ...prevValue,
                 category: value,
+                category_id: cats_n_subcats.filter(cat => cat.value == value)[0].id,
               }))
             }}
             stateValue={formValues.category}
@@ -181,6 +186,7 @@ function ComponentTalentAccount(props) {
               setFormValues(prevValue => ({
                 ...prevValue,
                 sub_category: value,
+                sub_category_id: subcategories.filter(cat => cat.value == value)[0].id,
               }))
             }}
             stateValue={formValues.sub_category}
@@ -309,13 +315,18 @@ function ComponentTalentAccount(props) {
       <CTAButton
         dark
         halfWidth
-        title={"Proceed"}
+        title={submitting ? "Proceeding" : "Proceed"}
+        isDisabled={submitting}
         customCSS={[
           setMargin(40).setMarginVertical,
           setMargin("auto").setMarginLeft,
           setMargin("auto").setMarginRight,
         ]}
-        onPress={() => props.proceedToSummary(formValues)}
+        onPress={() => {
+          setSubmitting(true);
+          props.proceedToSummary(formValues)
+          setSubmitting(false);
+        }}
       />
     </ScrollView>
   );

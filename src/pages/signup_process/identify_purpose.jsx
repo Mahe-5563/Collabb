@@ -50,7 +50,7 @@ function IdentifyPurpose(props) {
               });
             }}
             customCSS={[
-              setMargin("10%").setMarginBottom,
+              setMargin("2%").setMarginBottom,
             ]}
           />
           <ImgButton
