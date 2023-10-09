@@ -137,10 +137,13 @@ function ClientChooseCatSubcat(props) {
           />
         ))} */}
         {freelanceCategories.map((category, index) => (
-          <>
+          <View
+            key={`category_${category.id}`}
+            id={`category_${category.id}`}
+          >
             <TouchableOpacity
-              key={`category_${category.id}`}
-              id={`category_${category.id}`}
+              // key={`category_${category.id}`}
+              // id={`category_${category.id}`}
               activeOpacity={0.4}
               style={accordionStyles.categoriesAccTitle}
               onPress={() => {
@@ -187,7 +190,7 @@ function ClientChooseCatSubcat(props) {
                 />
               </Pressable>
             )}
-          </>
+          </View>
         ))}
       </ScrollView>
       <Modal

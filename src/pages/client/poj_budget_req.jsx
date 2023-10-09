@@ -118,7 +118,7 @@ function PojBudgetRequirements(props) {
       />
       <ScrollView>
         <View style={{ marginHorizontal: 10, marginVertical: 20 }}>
-          <PojBreadcrumb activeStep={2} stepTitle={"Budget Requirement"} />
+          <PojBreadcrumb activeStep={2} stepTitle={"Budget Range"} />
         </View>
         <View
           style={{

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, Pressable } from "react-native";
+import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+
+import { colors } from "../css/colors";
+import { getSelectedDate } from "../js/common";
 import { inputStyles } from "../css/interactables";
 import { appFontFamilyBold, setPadding, textSize } from "../css/common";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { colors } from "../css/colors";
 
 function DatePicker(props) {
   const { 
@@ -16,18 +18,6 @@ function DatePicker(props) {
     minDate
   } = props;
   const [show, setShow] = useState(false);
-
-  const getSelectedDate = (date) => {
-    const fullDate = new Date(date);
-    if(!isNaN(fullDate)) {
-      const dat = fullDate.getDate();
-      const month = fullDate.getMonth()+1;
-      const year = fullDate.getFullYear();
-      return `${((fullDate.getDate()) < 10 ? "0" : "") + dat}/${((fullDate.getMonth() + 1) < 10 ? "0" : "") + month}/${year}`;
-    } else {
-      return "";
-    }
-  }
 
   return (
     <SafeAreaView

@@ -2,8 +2,9 @@
  * List of all the pages in the application.
  */
 import ClientChooseCatSubcat from "../pages/client/choose_cat_subcat";
-import Login from "../pages/loginpage";
+import FirstPage from "../pages/firstpage";
 import Signup from "../pages/signup_page";
+import LoginPage from "../pages/login_page";
 import account_creation from "../pages/signup_process/account_creation";
 import AccountSummary from "../pages/signup_process/account_summary";
 import IdentifyPurpose from "../pages/signup_process/identify_purpose";
@@ -13,8 +14,10 @@ import poj_budget_req from "../pages/client/poj_budget_req";
 import poj_summary from "../pages/client/poj_summary";
 import TalentIndex from "../pages/talent";
 import ApplyJob from "../pages/talent/apply_job";
-import TalentProfile from "../pages/account/talentprofile";
 import talent_applications from "../pages/talent/talent_applications";
+import talentApplyProfile from "../pages/account/talentApplyProfile";
+import clientprofile from "../pages/account/clientprofile";
+import talentprofile from "../pages/account/talentprofile";
 
 /* 
   Page Animations:
@@ -31,8 +34,13 @@ import talent_applications from "../pages/talent/talent_applications";
 
 const accountCreation = [
   {
+    name: "firstpage",
+    component: FirstPage,
+    active: true,
+  },
+  {
     name: "login",
-    component: Login,
+    component: LoginPage,
     active: true,
   },
   {
@@ -111,8 +119,20 @@ const talentPages = [
 
 const commonPages = [
   {
-    name: "profile_page",
-    component: TalentProfile,
+    name: "talent_profile_page",
+    component: talentprofile,
+    active: true,
+    animation: "slide_from_right",
+  },
+  {
+    name: "talent_apply_profile_page",
+    component: talentApplyProfile,
+    active: true,
+    animation: "slide_from_right",
+  },
+  {
+    name: "client_profile_page",
+    component: clientprofile,
     active: true,
     animation: "slide_from_right",
   },

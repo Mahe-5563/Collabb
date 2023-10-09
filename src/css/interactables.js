@@ -269,6 +269,16 @@ export const buttons = StyleSheet.create({
     },
     attachButtonText: {
         fontSize: 22
+    },
+    dashboardButtons : {
+        ...boxShadow,
+        borderWidth: 1,
+        borderColor: colors.secondary_color,
+        width: "100%",
+        paddingHorizontal: 15,
+        paddingVertical: 20,
+        borderRadius: 5,
+        backgroundColor: colors.primary_color_medium
     }
 })
 
@@ -560,16 +570,16 @@ export const talentApplyStyles = StyleSheet.create({
     cardContainer: {
         shadowColor: colors.secondary_color ,
         elevation: 3,
-        padding: 20,
+        paddingHorizontal: 20,
+        paddingTop: 30,
+        paddingBottom: 20,
         borderRadius: 5,
-        // borderWidth: 1,
-        // borderColor: colors.secondary_color,
         position: "relative",
         backgroundColor: colors.primary_color_medium
     },
     title: {
         fontSize: textSubheaders,
-        fontFamily: appFontFamily,
+        fontFamily: appFontFamilyBold,
         marginBottom: 20,
     },
     textItem: {
@@ -743,4 +753,14 @@ export const accordionStyles = StyleSheet.create({
         fontSize: 18,
         fontFamily: appFontFamily,
     }
+})
+
+export const applicationCard = StyleSheet.create({
+    applicationProfileImg : {
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: colors.secondary_color_medium
+    },
 })

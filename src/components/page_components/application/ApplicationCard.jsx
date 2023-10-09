@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faEuroSign, faList, faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import { faEuroSign, faList, faBriefcase, faClock, faThumbsUp, faBan, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 import { talentApplyStyles } from "../../../css/interactables";
-import { setMargin } from "../../../css/common";
+import { appFontFamily, setMargin } from "../../../css/common";
+import { colors } from "../../../css/colors";
+import { getDate } from "../../../js/common";
 
 function ApplicationCard(props) {
+  const [applStatus, setApplStatus] = useState();
   const { 
     createdAt,
     jd_jobtitle,
@@ -16,13 +19,17 @@ function ApplicationCard(props) {
     budget_maxamt,
     budget_amount,
     jd_description,
+    currentUser,
+    applicants,
+    type,
   } = props;
-  console.info("Props: ", props);
-
-  useEffect(() => {
-    
-  }, [])
   
+  useEffect(() => {
+
+    if(currentUser && applicants) {
+      setApplStatus(applicants?.filter(applicant => applicant.userid == currentUser._id)[0]);
+    }
+  }, [currentUser, applicants])
 
   const sectionStyle = {
     display: "flex",
@@ -31,23 +38,11 @@ function ApplicationCard(props) {
     paddingRight: 10,
   };
 
-  const getJobDate = (date) => {
-    let fullDate;
-    if (date) {
-      fullDate = `${(new Date(date).getDate() < 10 && new Date(date).getDate() > 0 ? "0" : "") + new Date(date).getDate()}/${(new Date(date).getMonth() + 1 < 10 ? "0" : "") + (new Date(date).getMonth() + 1)}/${new Date(date).getFullYear()}`;
-    }
-
-    return fullDate;
-  };
-
   return (
     <>
       <View
         style={[talentApplyStyles.cardContainer, setMargin(20).setMarginBottom]}
       >
-        <Text style={talentApplyStyles.date}>
-          {getJobDate(createdAt) || ""}
-        </Text>
         <Text style={talentApplyStyles.title}>{jd_jobtitle}</Text>
         <View style={sectionStyle}>
           <FontAwesomeIcon icon={faBriefcase} size={22} />
@@ -83,6 +78,44 @@ function ApplicationCard(props) {
           <Text style={talentApplyStyles.textItem} numberOfLines={2}>
             {jd_description}
           </Text>
+        </View>
+        <View
+          style={{
+            borderTopWidth: 1,
+            paddingTop: 10,
+            borderColor: colors.primary_color_dark
+          }}
+        >
+          <Text style={talentApplyStyles.textItem} numberOfLines={2}>
+            Applied On: {getDate(applStatus?.dateOfAppl) || ""}
+          </Text>
+          <View
+            style={{
+              display:"flex",
+              flexDirection: "row",
+              marginTop: 10,
+            }}
+          >
+            <Text style={talentApplyStyles.textItem} numberOfLines={2}>
+              Status:
+            </Text>
+            <View
+              style={{
+                marginLeft: 10,
+                backgroundColor: 
+                  applStatus?.status == "Accept" ? 
+                    "rgba(46, 198, 52, 0.7)" 
+                    : applStatus?.status == "Reject" ?
+                      "rgba(202, 33, 33, 0.7)" 
+                      : "rgba(237, 137, 62, 0.7)",
+                paddingVertical: 3,
+                paddingHorizontal: 7,
+                borderRadius: 6,
+              }}
+            >
+              <Text style={{ color: colors.white, fontFamily: appFontFamily }}> {applStatus?.status} </Text>
+            </View>
+          </View>
         </View>
       </View>
     </>

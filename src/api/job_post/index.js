@@ -27,3 +27,17 @@ export const apiGetClientJobPost = (userid, callback) => {
         .then(res => callback(res.data))
         .catch(fail => console.error("fail: ", fail));
 }
+
+export const apiUpdateJobStatus = (jobId, applicant, status, callback) => {
+    axios
+        .patch(`https://collabb-server-2.onrender.com/update-job-status?id=${jobId}`, { applicant, status })
+        .then(res => { callback(res.data) })
+        .catch(fail => console.error("fail: ", fail));
+}
+
+export const apiApplyForJob = (jobPostId, applicant, callback) => {
+    axios
+        .patch(`https://collabb-server-2.onrender.com/apply-for-job?id=${jobPostId}`, { applicant })
+        .then(res => callback(res.data))
+        .catch(fail => console.info("fail: ", fail));
+}

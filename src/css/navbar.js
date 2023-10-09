@@ -80,6 +80,7 @@ export const homepageNavStyle = StyleSheet.create({
         color: colors.primary_color,
         fontSize: 28,
         fontFamily: appFontFamily,
+        // width: "80%"
     },
     profileImgPressable: {
         alignItems: "flex-end",
@@ -87,6 +88,9 @@ export const homepageNavStyle = StyleSheet.create({
     profileImg: {
         height: 60,
         width: 60,
+        borderWidth: 1,
+        borderColor: colors.primary_color_dark,
+        borderRadius: 50,
     }
 })
 

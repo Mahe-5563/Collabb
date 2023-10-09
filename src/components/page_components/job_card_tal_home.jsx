@@ -6,8 +6,11 @@ import {
   faEuroSign,
   faList,
   faFilter,
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { talentApplyStyles } from "../../css/interactables";
+import { setPadding } from "../../css/common";
+import { getDate } from "../../js/common";
 
 function TalJobCard(props) {
   // console.info("Props: ", props);
@@ -40,12 +43,16 @@ function TalJobCard(props) {
 
   return (
     <>
-      <View style={[talentApplyStyles.cardContainer]}>
-        <Text style={talentApplyStyles.date}>{getJobDate(createdAt) || ""}</Text>
+      <View style={[talentApplyStyles.cardContainer, setPadding(30).setPaddingTop]}>
+        <Text style={[talentApplyStyles.date]}>{getDate(createdAt) || ""}</Text>
         <Text style={talentApplyStyles.title}>{jd_jobtitle}</Text>
         <View style={sectionStyle}>
           <FontAwesomeIcon icon={faBriefcase} size={22} />
           <Text style={talentApplyStyles.textItem}>{job_subcategory.label}</Text>
+        </View>
+        <View style={sectionStyle}>
+          <FontAwesomeIcon icon={faClock} size={22} />
+          <Text style={talentApplyStyles.textItem}>Pay by {budget_paytype}</Text>
         </View>
         {budget_paytype.toLowerCase() == 'per hour' ?
           <>
@@ -66,10 +73,10 @@ function TalJobCard(props) {
         }
         <View style={sectionStyle}>
           <FontAwesomeIcon icon={faList} size={22} />
-          <Text style={talentApplyStyles.textItem}>
-            {/* {
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum iaculis magna quis vestibulum. In vitae libero dapibus massa pellentesque molestie eu nec lectus. "
-            } */}
+          <Text 
+            style={talentApplyStyles.textItem}
+            numberOfLines={3}
+          >
             {jd_description}
           </Text>
         </View>

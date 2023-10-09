@@ -18,3 +18,12 @@ export const getSelectedDate = (date) => {
 export const toastMessage = (message, duration = 5000) => {
     ToastAndroid.show(message, duration);
 }
+
+export const getDate = (date) => {
+  let fullDate;
+  if (date) {
+    fullDate = `${(new Date(date).getDate() < 10 && new Date(date).getDate() > 0 ? "0" : "") + new Date(date).getDate()}/${(new Date(date).getMonth() + 1 < 10 ? "0" : "") + (new Date(date).getMonth() + 1)}/${new Date(date).getFullYear()}`;
+  }
+
+  return fullDate;
+}

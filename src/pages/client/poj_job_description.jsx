@@ -22,6 +22,7 @@ import DropdownComponent from "../../components/dropdown";
 import SecondaryNavbar from "../../components/navbar_sec";
 import PojBreadcrumb from "../../components/poj_breadcrumb";
 import { setPostJobDetails } from "../../../redux/actions/client";
+import { experienceLevel } from "../../json/experience";
 
 function PojJobDescription(props) {
   const { clientDetails } = props;
@@ -56,12 +57,7 @@ function PojJobDescription(props) {
     setMargin(5).setMarginTop
   ];
 
-  // JSON data for jd_experience and skills.
-  const jd_experience = [
-    { id: 1, label: "Beginner", value: "Beginner" },
-    { id: 2, label: "Intermediate", value: "Intermediate" },
-    { id: 3, label: "Expert", value: "Expert" },
-  ];
+  // JSON data for skills.
   const skills = [
     { id: 1, label: "Option 1", value: "Option 1" },
     { id: 2, label: "Option 2", value: "Option 2" },
@@ -216,7 +212,7 @@ function PojJobDescription(props) {
           <View style={[marginForFields]}>
             <DropdownComponent
               prompt={"Select necessary experience*"}
-              items={jd_experience}
+              items={experienceLevel}
               stateValue={formData.jd_experience}
               onValueChange={(text) => {
                 handleInputValues("jd_experience", text)

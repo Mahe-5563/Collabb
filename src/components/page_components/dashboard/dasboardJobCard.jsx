@@ -16,6 +16,7 @@ import {
   talentApplyStyles,
 } from "../../../css/interactables";
 import CTAButton from "../../cta_button";
+import { getDate } from "../../../js/common";
 
 function DashboardJobCard(props) {
   const { 
@@ -35,20 +36,9 @@ function DashboardJobCard(props) {
     paddingRight: 10,
   };
 
-  const getJobDate = (date) => {
-    let fullDate;
-    if (date) {
-      fullDate = `${new Date(date).getDate()}/${
-        new Date(date).getMonth() + 1
-      }/${new Date(date).getFullYear()}`;
-    }
-
-    return fullDate;
-  };
-
   return (
     <View style={[talentApplyStyles.cardContainer, setMargin(20).setMarginBottom]}>
-      <Text style={talentApplyStyles.date}>{getJobDate(jobDetail.createdAt) || ""}</Text>
+      <Text style={talentApplyStyles.date}>{getDate(jobDetail.createdAt) || ""}</Text>
       <Text style={talentApplyStyles.title}>{jobDetail.jd_jobtitle}</Text>
       <View style={sectionStyle}>
         <FontAwesomeIcon icon={faBriefcase} size={22} />
@@ -120,7 +110,8 @@ function DashboardJobCard(props) {
                 setOpenModal(false);
                 navigation.navigate("talent_apply_job_page", {
                   jobDetails: jobDetail,
-                  type: "view_application"
+                  type: "view_application",
+                  usertype: "client"
                 });
               }}
             />

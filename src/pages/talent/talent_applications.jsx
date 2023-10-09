@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import { colors } from "../../css/colors";
 import Navbar from "../../components/navbar";
 import { setPadding } from "../../css/common";
-import apiGetTalentApplications from "../../api/applications";
+import { apiGetAllAppliedTalents, apiGetTalentApplications } from "../../api/applications";
 import ApplicationCard from "../../components/page_components/application/ApplicationCard";
+import TalentApplicationCard from "../../components/page_components/application/TalentApplicationCard";
 
 function TalentApplications(props) {
   const [userType, setUserType] = useState();
@@ -15,16 +16,27 @@ function TalentApplications(props) {
 
   useEffect(() => {
     setUserType(props?.userDetail?.currentUser?.usertype);
+    // console.info(props.userDetail.currentUser);
   }, []);
 
   useEffect(() => {
     if(userType == "talent") {
+      // console.info("props: ", props.userDetail.currentUser);
       apiGetTalentApplications(props?.userDetail?.currentUser?._id, (response) => {
         setApplications(response.res);
         setLoader(false);
       })
     } else if (userType == "client") {
-      // console.info("Props: ", props);
+      const applicantss = props?.route?.params?.jobDetails?.applicants;
+      let applicantids = [];
+      applicantss.forEach(applicant => {
+        applicantids.push(applicant.userid);
+      });
+      apiGetAllAppliedTalents(applicantids, (response) => {
+        // console.info("response: ", response);
+        setApplications(response.res);
+        setLoader(false);
+      })
     }
   }, [userType])
 
@@ -38,19 +50,41 @@ function TalentApplications(props) {
       </SafeAreaView>
       <ScrollView style={[setPadding(20).setPadding]}>
         {loader && <ActivityIndicator size={"large"} color={colors.secondary_color} />}
-        {!loader && applications?.map((application, index) => (
-          <Pressable
-            key={`application_${index}`}
-            onPress={() => {
-              props.navigation.navigate("talent_apply_job_page", {
-                jobDetails: application,
-                type: "view_application"
-              });
-            }}
-          >
-            <ApplicationCard {...application} />
-          </Pressable>
-        ))}
+        {!loader && applications?.map((application, index) => {
+          return (
+            <Pressable
+              key={`application_${index}`}
+              onPress={() => {
+                if(userType == "client") {
+                  props.navigation.navigate("talent_apply_profile_page", {
+                    application,
+                    jobDetails: props?.route?.params?.jobDetails,
+                    type: "view_application"
+                  });
+                } else {
+                  props.navigation.navigate("talent_apply_job_page", {
+                    jobDetails: application,
+                    type: "view_application",
+                    usertype: "talent"
+                  });
+                }
+              }}
+            >
+              {userType == "client" ? 
+                <TalentApplicationCard
+                  {...application}
+                  jobDetails={props?.route?.params?.jobDetails}
+                />
+              : 
+                <ApplicationCard 
+                  {...application} 
+                  currentUser={props?.userDetail?.currentUser}
+                  type="applications"
+                />
+              }
+            </Pressable>
+          )
+        })}
       </ScrollView>
     </>
   );

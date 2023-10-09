@@ -94,7 +94,7 @@ function PojSummary(props) {
           <Text
             style={[summaryCard.textTitle, setMargin(20).setMarginHorizontal]}
           >
-            {"Budget Requirements"}
+            {"Budget Range"}
           </Text>
           <View style={[summaryCard.cardBox]}>
             {budgKeys.map(budgItem => {
@@ -132,6 +132,7 @@ function PojSummary(props) {
             halfWidth
             title={isSubmitting ? "Creating..." : "Proceed"}
             onPress={submitDetails}
+            isDisabled={isSubmitting}
           />
         </View>
       </ScrollView>

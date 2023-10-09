@@ -9,9 +9,7 @@ import { profileSectionStyles } from "../../../css/interactables";
 import { appFontFamily, textHeaders, textLabel, textSize, textSubheaders } from "../../../css/common";
 
 function ProfileUserTitle(props) {
-  const { userProfile, currentUser } = props;
-  // console.info("currentUser.profileUri: ", currentUser.profileUri);
-  // const userImage = {uri: `data:image/jpg;base64,${currentUser.profileUri}`} || userImg
+  const { userProfile, currentUser, userType } = props;
   return (
     <SafeAreaView>
       <View
@@ -21,7 +19,7 @@ function ProfileUserTitle(props) {
         }}
       >
         <Image
-          source={userImg} // Need to find a fix for the ImagePicker uri and base64
+          source={{ uri: currentUser?.profileUri }} // Need to find a fix for the ImagePicker uri and base64
           style={profileSectionStyles.userIcon}
         />
         <View
@@ -33,9 +31,9 @@ function ProfileUserTitle(props) {
         >
           <Image 
             source={{
-              uri: `https://flagcdn.com/80x60/${userProfile.locationcode.toLowerCase()}.png`,
+              uri: `https://flagcdn.com/80x60/${userProfile?.locationcode?.toLowerCase()}.png`,
             }}
-            alt={userProfile.location}
+            alt={userProfile?.location}
             resizeMethod="scale"
             style={{
               width: 35,
@@ -49,45 +47,45 @@ function ProfileUserTitle(props) {
               top: 5,
             }}
           >
-            {userProfile.location}
+            {userProfile?.location}
           </Text>
         </View>
-        <Text
-          style={profileSectionStyles.userName}
-        >
-          {currentUser.firstName} {currentUser.lastName}
+        <Text style={profileSectionStyles.userName}>
+          {currentUser?.firstName} {currentUser?.lastName}
         </Text>
-        <Text
-          style={profileSectionStyles.userProfession}
-        >
-          {userProfile.subcategory}
-        </Text>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            marginTop: 20,
-          }}
-        >
-          <FontAwesomeIcon 
-            icon={faCircle} 
-            color={colors.success_color} 
-            size={textSize}
+        {userType == "talent" && 
+          <Text style={profileSectionStyles.userProfession}>
+            {userProfile?.subcategory}
+          </Text>
+        }
+        {userType == "client" && 
+          <View
             style={{
-              marginTop: "auto",
-              marginBottom: "auto",
-              marginRight: 10,
-            }}
-          />
-          <Text
-            style={{
-              fontSize: textSize,
-              fontFamily: appFontFamily,
+              display: "flex",
+              flexDirection: "row",
+              marginTop: 20,
             }}
           >
-            Open To Work
-          </Text>
-        </View>
+            <FontAwesomeIcon 
+              icon={faCircle} 
+              color={colors.success_color} 
+              size={textSize}
+              style={{
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginRight: 10,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: textSize,
+                fontFamily: appFontFamily,
+              }}
+            >
+              Open To Work
+            </Text>
+          </View>
+        }
       </View>
     </SafeAreaView>
   );

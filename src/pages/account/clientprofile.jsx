@@ -9,7 +9,8 @@ import ProfileHeader from "../../components/page_components/profile/profile_head
 import ProfileUserTitle from "../../components/page_components/profile/profile_user_title";
 import ProfileActionSection from "../../components/page_components/profile/profile_action_section";
 
-function TalentProfile(props) {
+function ClientProfile(props) {
+  console.info("Client profile props: ", props);
   return (
     <SafeAreaView>
       <Pressable
@@ -25,15 +26,15 @@ function TalentProfile(props) {
       </Pressable>
       <ScrollView>
         <ProfileHeader
-          userType={"talent"}
+          userType={"client"}
         />
         <ProfileUserTitle
           {...props}
-          userType={"talent"}
+          userType={"client"}
         />
         <ProfileActionSection
           {...props}
-          userType={"talent"}
+          userType={"client"}
         />
       </ScrollView>
     </SafeAreaView>
@@ -51,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TalentProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientProfile);

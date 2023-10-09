@@ -1,17 +1,17 @@
 export const experienceLevel = [
     {
         id: "experiencelevel_1",
-        label: "Beginner",
-        value: "Beginner"
+        label: "Entry level",
+        value: "Entry level"
     },
     {
         id: "experiencelevel_2",
-        label: "Intermediate",
-        value: "Intermediate"
+        label: "Mid level",
+        value: "Mid level"
     },
     {
         id: "experiencelevel_3",
-        label: "Professional",
-        value: "Professional"
+        label: "Experienced",
+        value: "Experienced"
     }
 ]

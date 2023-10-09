@@ -39,13 +39,11 @@ function DashboardModals(props) {
 
   useEffect(() => {
     if (openModal || openApplicationModal) {
-      // console.info("props: ", props);
       if (props.currentUser.usertype == "client") {
         setLoader(true);
         apiGetClientJobPost(userId, (response) => {
-          // console.info("response: ", response);
+          console.info("response: ", response);
           if (response.status == 200) setLoader(false);
-          // const appliedJobPosts = response?.res
           setJobPosts(response?.res);
         });
       } else if (props.currentUser.usertype == "talent") {
@@ -151,7 +149,7 @@ function DashboardModals(props) {
                   color: colors.secondary_color_medium,
                 }}
               >
-                {"Select Job Post"}
+                {"Select your job post"}
               </Text>
               <ScrollView
                 style={{

@@ -8,6 +8,7 @@ import userImg from "../../assets/images/user.png";
 
 function NavbarHomepage(props) {
   const currentUserType = props?.currentUser?.usertype;
+  // console.info("user: ", props.currentUser);
   return (
     <SafeAreaView>
       <View style={[homepageNavStyle.container]}>
@@ -16,22 +17,22 @@ function NavbarHomepage(props) {
             homepageNavStyle.profileImgPressable
           ]}
           onPress={() => {
-            // console.info("Profile Pic pressed!");
+            console.info("Profile Pic pressed!", currentUserType);
             if(currentUserType == "talent") {
               props.navigation.navigate(
-                "profile_page",
+                "talent_profile_page",
                 { back_key: props.route.key }
               )
             } else if (currentUserType == "client") {
-              /* props.navigation.navigate(
-                "profile_page",
+              props.navigation.navigate(
+                "client_profile_page",
                 { back_key: props.route.key }
-              ) */
+              )
             }
           }}
         >
           <Image 
-            source={userImg}
+            source={props.currentUser.profileUri ? { uri: props?.currentUser?.profileUri } : userImg}
             style={homepageNavStyle.profileImg}
           />
         </Pressable>

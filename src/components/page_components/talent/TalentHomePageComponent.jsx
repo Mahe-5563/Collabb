@@ -29,20 +29,19 @@ function TalentHomePageComp(props) {
 
   useEffect(() => {
     // Get User profile details...
-    if (props.currentUser._id) {
+    if (props?.currentUser?._id) {
       apiGetUserProfile(props.currentUser._id, "talent", (result) => {
-        const talDetails = result.res.talentDetails;
-        props.setCurrentUserProfileDetails(talDetails);
-        // console.info("talDetails: ", talDetails);
+        const talDetails = result?.res?.talentDetails;
+        console.info("talDetails: ", talDetails);
         apiGetJobPostsOnCategory(talDetails?.category, (result) => {
-          // console.info("Result: ", result);
           setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
           setLoader(false);
         });
+        props.setCurrentUserProfileDetails(talDetails);
       });
     }
     // Get possible talent job posts...
-  }, []);
+  }, [props?.currentUser]);
 
   const resetFilterData = () => {
     setFilterData(filterData);
@@ -89,7 +88,7 @@ function TalentHomePageComp(props) {
         {loader && 
           <ActivityIndicator size={"large"} color={colors.secondary_color_medium} />
         }
-        {!loader && jobList.map((job) => {
+        {!loader && jobList && jobList.map((job) => {
           return (
             <Pressable
               id={`job_id_${job.jobDetail._id}`}
@@ -99,7 +98,6 @@ function TalentHomePageComp(props) {
                 setMargin(5).setMarginHorizontal,
               ]}
               onPress={() => {
-                // console.info("Job: ", job);
                 navigation.navigate("talent_apply_job_page", {
                   jobDetails: job.jobDetail,
                 });

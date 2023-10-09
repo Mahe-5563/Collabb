@@ -29,7 +29,7 @@ function TalentFilterModal(props) {
   const [tempFilterData, setTempFilterData] = useState(filterData);
 
   useEffect(() => {
-    console.info("tempFilterData: ", tempFilterData);
+    // console.info("tempFilterData: ", tempFilterData);
   }, [tempFilterData])
   
 
@@ -159,7 +159,7 @@ function TalentFilterModal(props) {
               <DatePicker 
                 label={"Estimated Start Date"}
                 onChange={(date) => { 
-                  console.info(date) 
+                  // console.info(date) 
                   setTempFilterData(prevState => ({
                     ...prevState,
                     startDate: date,

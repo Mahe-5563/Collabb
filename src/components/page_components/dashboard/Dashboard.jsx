@@ -2,22 +2,23 @@ import {
     ScrollView,
     View,
     Text,
-    Image,
-    Pressable,
-    SafeAreaView,
-    ToastAndroid,
+    TouchableOpacity,
   } from "react-native";
   import React, { useState, useEffect } from "react";
   import { connect } from "react-redux";
   
   import {
-    setPadding,
+    appFontFamily,
+    setMargin,
+    setPadding, textContentSize,
   } from "../../../css/common";
 //   import Navbar from "../../components/navbar";
 import NavbarHomepage from "../../navbar_homepage";
 import DashboardCard from "./dashboardCard";
 import { faBriefcase, faCircleCheck, faFileLines, faStar } from "@fortawesome/free-solid-svg-icons";
 import DashboardModals from "./dashboardModals";
+import { colors } from "../../../css/colors";
+import { buttons } from "../../../css/interactables";
   
   function Dashboard(props) {
     const [openModal, setOpenModal] = useState(false)
@@ -46,7 +47,70 @@ import DashboardModals from "./dashboardModals";
               flexWrap: "wrap"
             }}
           >
-            <DashboardCard
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
+              onPress={() => {
+                if(userType == "talent") {
+                  props.navigation.navigate(
+                    "talent_applications"
+                  )
+                } else {
+                  setOpenApplicationModal(true)
+                }
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: textContentSize,
+                  fontFamily: appFontFamily
+                }}
+              >
+                {"View Applications"}
+              </Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity
+              activeOpacity={0.5}
+              style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
+              onPress={() => {
+                if(userType == "talent") {
+                  props.navigation.navigate(
+                    "talent_applications"
+                  )
+                } else {
+                  setOpenApplicationModal(true)
+                }
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: textContentSize,
+                  fontFamily: appFontFamily
+                }}
+              >
+                {"View Applications"}
+              </Text>
+            </TouchableOpacity> */}
+            {userType == "client" && 
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
+                onPress={() => { 
+                  setOpenModal(true);
+                  setModalType("current_jobs");
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: textContentSize,
+                    fontFamily: appFontFamily
+                  }}
+                >
+                  Current Jobs
+                </Text>
+              </TouchableOpacity>
+            }
+            {/* <DashboardCard
               icon={faFileLines}
               title={"View Applications"}
               onPress={() => {
@@ -86,7 +150,7 @@ import DashboardModals from "./dashboardModals";
                 title={"Follows & Favourites"}
                 onPress={() => { ToastAndroid.show("Follows & Favourites", 500) }}
               />
-            }
+            } */}
           </View>
           <DashboardModals
             {...props}

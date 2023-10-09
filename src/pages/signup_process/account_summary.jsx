@@ -81,24 +81,22 @@ function AccountSummary(props) {
   const confirmDetails = async (userDetails) => {
     // console.info("profileDetails: ", userDetails);
       apiCreateAccount(userDetails, async (response) => {
-        // console.info("response: ", response);
-        toastMessage(response.message);
-        const userId = response?.res?.userid;
+        console.info("response: ", response);
+        const userId = response?.res?.userDetail?._id;
         if(userId) {
+          toastMessage(response.message);
           await AsyncStorage.setItem("userId", userId);
           setCreateAccount(false);
           if(userType == "client") {
-            // toastMessage(`Client: ${userId}`);
-            // navigation.navigate(
-            //   "client_home_page",
-            //   {  }
-            // );
+            navigation.navigate(
+              "client_home_page",
+              { userDetails: response?.res?.userDetail }
+            );
           } else if (userType == "talent") {
-            // navigation.navigate(
-            //   "talent_home_page",
-            //   {  }
-            // );
-            // toastMessage(`Talent: ${userId}`);
+            navigation.navigate(
+              "talent_home_page",
+              { userDetails: response?.res?.userDetail }
+            );
           }
         }
       });

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default function apiGetTalentApplications (userid, callback) {
+export function apiGetTalentApplications (userid, callback) {
     // axios.get(``)
     axios({
         baseURL: `https://collabb-server-2.onrender.com/`,
@@ -14,4 +14,27 @@ export default function apiGetTalentApplications (userid, callback) {
     }).catch(fail => {
         console.info("fail: ", fail);
     })
+}
+
+export function apiGetAllAppliedTalents (applicants, callback) {
+    // console.info(applicants);
+    axios({
+        baseURL: `https://collabb-server-2.onrender.com/`,
+        url: "get-all-users",
+        method: "POST",
+        data: {
+            applicants: applicants,
+        }
+    }).then(res => {
+        callback(res.data)
+    }).catch(fail => {
+        console.info("fail: ", fail);
+    })
+}
+
+export function apiUpdateCurrentProfileStatus (talentid, status, callback) {
+    axios
+        .patch(`https://collabb-server-2.onrender.com/update-current-status?id=${talentid}`, { status })
+        .then(res => callback(res.data))
+        .catch(fail => console.info("fail: ", fail));
 }
