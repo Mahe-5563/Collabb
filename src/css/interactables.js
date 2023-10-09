@@ -452,6 +452,7 @@ export const summaryCard = StyleSheet.create({
     textTitle: {
         fontFamily: appFontFamilyBold,
         fontSize: textSubheaders,
+        marginBottom: 5,
     },
     textContent: {
         fontFamily: appFontFamily,
@@ -464,6 +465,27 @@ export const summaryCard = StyleSheet.create({
         fontSize: textSize,
         borderRadius: 5,
         marginRight: 10,
+        marginBottom: 5,
+    },
+    editJDBtn: {
+        marginTop: 20,
+        marginLeft: 20,
+        display: "flex",
+        flexDirection: "row",
+    },
+    editJDView: {
+        // ...boxShadow,
+        paddingHorizontal: 25,
+        paddingVertical: 15,
+        borderWidth: 1,
+        borderColor: colors.secondary_color_medium,
+        borderRadius: 5,
+        display: "flex",
+        flexDirection: "row"
+    },
+    editJDTitle: {
+        fontFamily: appFontFamily,
+        fontSize: textSize,
     }
 });
 
@@ -571,7 +593,7 @@ export const talentApplyStyles = StyleSheet.create({
         shadowColor: colors.secondary_color ,
         elevation: 3,
         paddingHorizontal: 20,
-        paddingTop: 30,
+        paddingTop: 50,
         paddingBottom: 20,
         borderRadius: 5,
         position: "relative",
@@ -593,6 +615,23 @@ export const talentApplyStyles = StyleSheet.create({
         position: "absolute",
         right: 7,
         top: 7,
+    },
+    applicantBox: {
+        position: "absolute",
+        top: 7,
+        left: 20,
+        borderWidth: 1,
+        borderColor: colors.light_color,
+        display: "flex",
+        flexDirection: "row",
+        backgroundColor: colors.blue_light,
+        padding: 5,
+        borderRadius: 5,
+    },
+    applicantCount: {
+        fontSize: textSubheaders,
+        fontFamily: appFontFamilyBold,
+        color: colors.white
     }
 })
 

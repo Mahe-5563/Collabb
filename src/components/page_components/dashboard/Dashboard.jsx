@@ -69,29 +69,43 @@ import { buttons } from "../../../css/interactables";
                 {"View Applications"}
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              activeOpacity={0.5}
-              style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
-              onPress={() => {
-                if(userType == "talent") {
-                  props.navigation.navigate(
-                    "talent_applications"
-                  )
-                } else {
-                  setOpenApplicationModal(true)
-                }
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: textContentSize,
-                  fontFamily: appFontFamily
+            {userType == "client" &&
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
+                onPress={() => {
+                  
                 }}
               >
-                {"View Applications"}
-              </Text>
-            </TouchableOpacity> */}
-            {userType == "client" && 
+                <Text
+                  style={{
+                    fontSize: textContentSize,
+                    fontFamily: appFontFamily
+                  }}
+                >
+                  {"Completed Jobs"}
+                </Text>
+              </TouchableOpacity>
+            }
+            {userType == "client" &&
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
+                onPress={() => {
+                  
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: textContentSize,
+                    fontFamily: appFontFamily
+                  }}
+                >
+                  {"Favourites"}
+                </Text>
+              </TouchableOpacity>
+            }
+            {/* {userType == "client" && 
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
@@ -109,7 +123,7 @@ import { buttons } from "../../../css/interactables";
                   Current Jobs
                 </Text>
               </TouchableOpacity>
-            }
+            } */}
             {/* <DashboardCard
               icon={faFileLines}
               title={"View Applications"}

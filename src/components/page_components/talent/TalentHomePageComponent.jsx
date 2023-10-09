@@ -22,7 +22,8 @@ function TalentHomePageComp(props) {
   const [filterData, setFilterData] = useState({
     paymentType: {},
     amount: "",
-    startDate: "",
+    // startDate: "",
+    duration: "",
   });
   const [jobList, setJobList] = useState([]);
   const [loader, setLoader] = useState(true);

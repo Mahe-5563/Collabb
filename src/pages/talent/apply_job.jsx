@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Modal, Text, ToastAndroid } from "react-native";
+import { ScrollView, View, Modal, Text, ToastAndroid, Pressable } from "react-native";
 
 import {
   appFontFamily,
@@ -17,6 +17,8 @@ import SummaryCard from "../../components/page_components/summary_card";
 import ApplyJobShrtDescription from "../../components/page_components/apply_job_shrt_desc";
 import { colors } from "../../css/colors";
 import { getDate } from "../../js/common";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 function ApplyJob(props) {
   const { navigation, route } = props;
@@ -30,6 +32,7 @@ function ApplyJob(props) {
     if (route?.params?.jobDetails) {
       getDetails(route.params.jobDetails);
     }
+    console.info("Props: ", props);
   }, []);
 
   useEffect(() => {
@@ -66,7 +69,7 @@ function ApplyJob(props) {
   return (
     <>
       <Navbar {...props} title={"Job Description"} />
-      {route?.params?.type == "view_application" && route?.params?.usertype == "client" && (
+      {route?.params?.type == "view_application" && route?.params?.usertype == "talent" && (
         <View style={[ summaryCard.cardBox, { marginTop: 30, position: "relative" } ]}>
           <View style={{ display: "flex", flexDirection: "row" }}>
             <Text
@@ -112,10 +115,21 @@ function ApplyJob(props) {
           </View>
         </View>
       )}
+      {route?.params?.type == "view_application" && route?.params?.usertype == "client" && (
+        <Pressable style={[summaryCard.editJDBtn]}>
+          <View style={[summaryCard.editJDView]}
+          >
+            <FontAwesomeIcon icon={faEdit} size={textSize} style={[setMargin(10).setMarginRight]}/>
+            <Text style={[summaryCard.editJDTitle]}>
+              Edit Job Description
+            </Text>
+          </View>
+        </Pressable>
+      )}
       <ScrollView
         style={[
           // setPadding(20).setPaddingVertical,
-          setMargin(20).setMarginVertical,
+          setMargin(20).setMarginBottom,
         ]}
       >
         {jobDetails && (
@@ -169,6 +183,7 @@ function ApplyJob(props) {
 
 const mapStateToProps = (state) => ({
   ...state.userDetail,
+  ...state.currentUser,
 });
 
 export default connect(mapStateToProps)(ApplyJob);

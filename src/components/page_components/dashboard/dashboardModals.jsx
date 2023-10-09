@@ -127,6 +127,7 @@ function DashboardModals(props) {
         </View>
       </Modal>
 
+      {/* Applications Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -154,7 +155,7 @@ function DashboardModals(props) {
               <ScrollView
                 style={{
                   marginVertical: 16,
-                  maxHeight: 350,
+                  maxHeight: 400,
                 }}
               >
                 {loader && (

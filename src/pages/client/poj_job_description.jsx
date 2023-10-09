@@ -22,15 +22,16 @@ import DropdownComponent from "../../components/dropdown";
 import SecondaryNavbar from "../../components/navbar_sec";
 import PojBreadcrumb from "../../components/poj_breadcrumb";
 import { setPostJobDetails } from "../../../redux/actions/client";
-import { experienceLevel } from "../../json/experience";
+import { experienceLevel, durationOfJob } from "../../json/experience";
 
 function PojJobDescription(props) {
   const { clientDetails } = props;
   // State to store form data.
   const [formData, setFormData] = useState({
     jd_jobtitle: "",
-    jd_startdate: "",
-    jd_enddate: "",
+    // jd_startdate: "",
+    // jd_enddate: "",
+    jd_duration: "",
     jd_experience: "",
     jd_skills: "",
     jd_description: "",
@@ -39,8 +40,9 @@ function PojJobDescription(props) {
   // State to handle form data errors
   const [formErrors, setFormErrors] = useState({
     jd_jobtitle: "",
-    jd_startdate: "",
-    jd_enddate: "",
+    // jd_startdate: "",
+    // jd_enddate: "",
+    jd_duration: "",
     jd_experience: "",
     jd_skills: "",
     jd_description: "",
@@ -165,7 +167,7 @@ function PojJobDescription(props) {
               },
             ]}
           >
-            <View
+            {/* <View
               style={{
                 width: "48%"
               }}
@@ -207,7 +209,24 @@ function PojJobDescription(props) {
                   {formErrors.jd_enddate}
                 </Text>
               }
-            </View>
+            </View> */}
+          </View>
+          <View style={[marginForFields]}>
+            <DropdownComponent
+              prompt={"Select duration of the project*"}
+              items={durationOfJob}
+              stateValue={formData.jd_duration}
+              onValueChange={(text) => {
+                handleInputValues("jd_duration", text)
+              }}
+            />
+            {formErrors.jd_duration &&
+              <Text 
+                style={errorMessageStyle}
+              >
+                {formErrors.jd_duration}
+              </Text>
+            }
           </View>
           <View style={[marginForFields]}>
             <DropdownComponent

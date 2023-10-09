@@ -6,10 +6,12 @@ import {
   faList,
   faTimes,
   faUser,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import {
+  appFontFamilyBold,
 	setMargin,
 } from "../../../css/common";
 import {
@@ -17,6 +19,7 @@ import {
 } from "../../../css/interactables";
 import CTAButton from "../../cta_button";
 import { getDate } from "../../../js/common";
+import { colors } from "../../../css/colors";
 
 function DashboardJobCard(props) {
   const { 
@@ -36,8 +39,24 @@ function DashboardJobCard(props) {
     paddingRight: 10,
   };
 
+  console.info("jobDetail: ", );
+
   return (
     <View style={[talentApplyStyles.cardContainer, setMargin(20).setMarginBottom]}>
+      {userType == "client" && modalType =="application" && jobDetail?.applicants?.length > 0 &&
+        <Pressable 
+          style={talentApplyStyles.applicantBox}
+          onPress={() => {
+            setOpenApplicationModal(false);
+            navigation.navigate("talent_applications", {
+              jobDetails: jobDetail,
+            });
+          }}
+        >
+          <FontAwesomeIcon icon={faUsers} size={22} style={[ setMargin(10).setMarginRight ]} color={colors.white} />
+          <Text style={[talentApplyStyles.applicantCount]}>{jobDetail?.applicants?.length} </Text>
+        </Pressable>
+      }
       <Text style={talentApplyStyles.date}>{getDate(jobDetail.createdAt) || ""}</Text>
       <Text style={talentApplyStyles.title}>{jobDetail.jd_jobtitle}</Text>
       <View style={sectionStyle}>
@@ -53,7 +72,7 @@ function DashboardJobCard(props) {
           {userDetail.firstName} {userDetail.lastName}
         </Text>
       </View>}
-      {jobDetail.budget_paytype?.toLowerCase() == "per hour" ? (
+      {/* {jobDetail.budget_paytype?.toLowerCase() == "per hour" ? (
         <>
           <View style={sectionStyle}>
             <FontAwesomeIcon icon={faEuroSign} size={22} />
@@ -75,7 +94,7 @@ function DashboardJobCard(props) {
             {jobDetail.budget_amount}/{jobDetail.budget_paytype}
           </Text>
         </View>
-      )}
+      )} */}
       <View style={sectionStyle}>
         <FontAwesomeIcon icon={faList} size={22} />
         <Text style={talentApplyStyles.textItem} numberOfLines={2}>
@@ -120,18 +139,38 @@ function DashboardJobCard(props) {
         {userType == "client" && modalType =="application" && 
           <View
             style={{
-              width: "100%"
+              width: "100%",
+              display: "flex",
+              flexDirection: "row"
             }}
           >
-            <CTAButton
-              title={"View Applicants"}
-              onPress={() => {
-                setOpenApplicationModal(false);
-                navigation.navigate("talent_applications", {
-                  jobDetails: jobDetail,
-                });
-              }}
-            />
+            <View style={{ width: "50%" }}>
+              <CTAButton
+                title={"Applicants"}
+                onPress={() => {
+                  setOpenApplicationModal(false);
+                  navigation.navigate("talent_applications", {
+                    jobDetails: jobDetail,
+                  });
+                }}
+              />
+            </View>
+            <View style={{ width: "50%" }}>
+              <CTAButton
+                title={"Job Desc."}
+                onPress={() => {
+                  setOpenApplicationModal(false);
+                  /* navigation.navigate("talent_applications", {
+                    jobDetails: jobDetail,
+                  }); */
+                  navigation.navigate("talent_apply_job_page", {
+                    jobDetails: jobDetail,
+                    type: "view_application",
+                    usertype: "client"
+                  });
+                }}
+              />
+            </View>
           </View>
         }
       </View>

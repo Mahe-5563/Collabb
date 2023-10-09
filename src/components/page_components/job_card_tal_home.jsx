@@ -18,7 +18,7 @@ function TalJobCard(props) {
     budget_maxamt,
     budget_minamt,
     budget_paytype,
-    jd_startdate,
+    // jd_startdate,
     jd_jobtitle,
     jd_description,
     budget_amount,

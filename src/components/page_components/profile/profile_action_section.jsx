@@ -64,7 +64,7 @@ function FollowersSection(props) {
   );
 }
 
-function ActionIconSection() {
+function ActionIconSection(props) {
   return (
     <View
       style={[
@@ -72,13 +72,13 @@ function ActionIconSection() {
         setMargin(20).setMarginBottom,
       ]}
     >
-      <Pressable
+      {/* <Pressable
         style={[profileSectionStyles.actionIcons]}
         onPress={() => ToastAndroid.show("Follow Clicked", 2000)}
       >
         <FontAwesomeIcon icon={faUserPlus} size={40} />
         <Text style={[profileSectionStyles.actionIconTitle]}>Follow</Text>
-      </Pressable>
+      </Pressable> */}
       {/* <Pressable
         style={[profileSectionStyles.actionIcons]}
         onPress={() => ToastAndroid.show("Add Note Clicked", 2000)}
@@ -483,7 +483,7 @@ function RatingsReviewsSection() {
 
 function ProfileActionSection(props) {
   const { currentUser, userProfile, status, jobDetails, userType } = props;
-  // console.info("userProfile: ", userProfile);
+  console.info("userProfile: ", props);
   return (
     <View style={{ marginTop: 20 }}>
       {((userType == "client" && status == "talentApply") || (userType == "talent")) && 

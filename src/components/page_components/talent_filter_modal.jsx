@@ -16,6 +16,7 @@ import InputField from "../input_field";
 import DatePicker from "../date_picker";
 import CTAButton from "../cta_button";
 import { text } from "@fortawesome/fontawesome-svg-core";
+import { durationOfJob } from "../../json/experience";
 
 function TalentFilterModal(props) {
   const { 
@@ -156,7 +157,7 @@ function TalentFilterModal(props) {
                 setMargin(20).setMarginTop,
               ]}
             >
-              <DatePicker 
+              {/* <DatePicker 
                 label={"Estimated Start Date"}
                 onChange={(date) => { 
                   // console.info(date) 
@@ -166,6 +167,17 @@ function TalentFilterModal(props) {
                   }))
                 }}
                 date={tempFilterData.startDate}
+              /> */}
+              <OverlayDropdown
+                items={durationOfJob}
+                placeholderText={"Select duration of project"}
+                selectedOption={tempFilterData.duration}
+                setSelectedOption={(selItem) => {
+                  setTempFilterData(prevStat => ({
+                    ...prevStat,
+                    duration: selItem,
+                  }));
+                }}
               />
             </View>
           </View>
