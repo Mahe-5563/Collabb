@@ -11,3 +11,15 @@ export const apiGetUserProfile = (userid, accounttype, callback) => {
       callback(fail);
     })
 }
+
+export const apiGetTalents = (filters, callback) => {
+  axios({
+    baseURL: "https://collabb-server-2.onrender.com",
+    url: "/get-talents",
+    params: {
+      ...filters,
+    }
+  })
+  .then(res => callback(res.data))
+  .catch(fail => console.error(fail))
+}

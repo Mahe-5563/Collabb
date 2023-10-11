@@ -26,13 +26,18 @@ import {
 import { colors } from "../../../css/colors";
 
 function TalentApplicationCard(props) {
-  const { jobDetails } = props;
+  const { jobDetails, search_talent } = props;
   const [applicationDetail, setApplicationDetail] = useState();
   const [jobStatus, setJobStatus] = useState();
 
   useEffect(() => {
-    let userKey = Object.keys(props)[0];
-    setApplicationDetail(props[userKey]);
+    // console.info("TalentApplicationCard (props): ", props);
+    if(search_talent) {
+      setApplicationDetail(props);  
+    } else {
+      let userKey = Object.keys(props)[0];
+      setApplicationDetail(props[userKey]);
+    }
   }, []);
 
   useEffect(() => {

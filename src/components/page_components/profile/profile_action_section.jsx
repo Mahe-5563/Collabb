@@ -31,7 +31,7 @@ import {
 } from "../../../css/interactables";
 import CTAButton from "../../cta_button";
 import DropdownComponent from "../../dropdown";
-import { apiUpdateJobStatus } from "../../../api/job_post";
+import { apiUpdateApplicantStatus } from "../../../api/job_post";
 import { apiUpdateCurrentProfileStatus } from "../../../api/applications";
 
 function FollowersSection(props) {
@@ -198,7 +198,7 @@ function AcceptTalentSection(props) {
               dark
               title={"Accept"}
               onPress={() => {
-                apiUpdateJobStatus(
+                apiUpdateApplicantStatus(
                   jobDetails._id,
                   currentUser._id,
                   "Accept",
@@ -216,7 +216,7 @@ function AcceptTalentSection(props) {
             <CTAButton
               title={"Reject"}
               onPress={() => {
-                apiUpdateJobStatus(
+                apiUpdateApplicantStatus(
                   jobDetails._id,
                   currentUser._id,
                   "Reject",

@@ -41,7 +41,7 @@ function FirstPage(props) {
      * 
      */
     // Manually set user id...
-    AsyncStorage.setItem("userId", "65199b3ddf213b73178fcd2e");
+    // AsyncStorage.setItem("userId", "65199b3ddf213b73178fcd2e");
 
     async function checkForUser () {
       const userId = await AsyncStorage.getItem("userId");

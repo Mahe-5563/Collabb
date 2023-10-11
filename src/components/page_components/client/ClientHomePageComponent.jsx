@@ -31,7 +31,12 @@ function ClientHomePageComp(props) {
     {
       title: "Search Talents",
       btnBg: btnImg,
-      onPress: function () {},
+      onPress: function () {
+        navigation.navigate(
+          "search_talents",
+          { back_key: props.route.key }
+        )
+      },
     }
   ];
 

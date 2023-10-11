@@ -18,6 +18,7 @@ import talent_applications from "../pages/talent/talent_applications";
 import talentApplyProfile from "../pages/account/talentApplyProfile";
 import clientprofile from "../pages/account/clientprofile";
 import talentprofile from "../pages/account/talentprofile";
+import search_talents from "../pages/client/search_talents";
 
 /* 
   Page Animations:
@@ -91,6 +92,12 @@ const clientPages = [
   {
     name: "poj_summary",
     component: poj_summary,
+    active: true,
+    animation: "slide_from_right",
+  },
+  {
+    name: "search_talents",
+    component: search_talents,
     active: true,
     animation: "slide_from_right",
   },

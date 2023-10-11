@@ -60,6 +60,7 @@ function InputField(props) {
             keyboardType={keyboardType}
             numberOfLines={1}
             value={value}
+            onSubmitEditing={() => console.info("submitted!")}
           />
         </View>
       )}

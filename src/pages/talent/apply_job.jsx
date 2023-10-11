@@ -19,6 +19,7 @@ import { colors } from "../../css/colors";
 import { getDate } from "../../js/common";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import DropdownComponent from "../../components/dropdown";
 
 function ApplyJob(props) {
   const { navigation, route } = props;
@@ -48,9 +49,7 @@ function ApplyJob(props) {
     }
   }, [props.currentUser, route?.params?.jobDetails]);
 
-  const getDetails = (jobDetails) => {
-    setJobDetails(jobDetails);
-  };
+  const getDetails = (jobDetails) => setJobDetails(jobDetails);
 
   const handleJobApply = () => {
     apiApplyForJob(jobDetails._id, props.currentUser._id, (response) => {
@@ -112,17 +111,33 @@ function ApplyJob(props) {
           </View>
         </View>
       )}
-      {route?.params?.type == "view_application" && route?.params?.usertype == "client" && (
-        <Pressable style={[summaryCard.editJDBtn]}>
-          <View style={[summaryCard.editJDView]}
-          >
+      {/* {route?.params?.type == "view_application" && route?.params?.usertype == "client" && (
+        <Pressable 
+          style={[summaryCard.editJDBtn]}
+          onPress={() => {
+            ToastAndroid.show("Not yet functional", 3000)
+          }}
+        >
+          <View style={[summaryCard.editJDView]}>
             <FontAwesomeIcon icon={faEdit} size={textSize} style={[setMargin(10).setMarginRight]}/>
             <Text style={[summaryCard.editJDTitle]}>
-              Edit Job Description
+              {"Edit Job Description"}
             </Text>
           </View>
         </Pressable>
       )}
+      {route?.params?.type == "view_application" && route?.params?.usertype == "client" && (
+        <View
+          style={{ marginHorizontal: 20, }}
+        >
+          <DropdownComponent 
+            // prompt
+            // items
+            // stateValue
+            // onValueChange
+          />
+        </View>
+      )} */}
       <ScrollView
         style={[
           // setPadding(20).setPaddingVertical,
