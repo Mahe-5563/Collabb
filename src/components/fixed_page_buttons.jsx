@@ -6,7 +6,6 @@ import SecondaryNavbar from "../../components/navbar_sec";
 
 function FixedPageButtons(props) {
   const { navigation } = props;
-  console.info("Props: ", props.route.params);
   
   return (
     <View>

@@ -75,7 +75,6 @@ function Signup(props) {
       }
     })
     apiCheckForUser(formValues, (res) => {
-      // console.info("response: ", res);
       if(res.bool && valid) {
         setUserDetails(formValues);
       
@@ -87,7 +86,6 @@ function Signup(props) {
           )
         } else {
         setSignInUp(false);
-        console.info("Email exists!!");
       }
     })
 

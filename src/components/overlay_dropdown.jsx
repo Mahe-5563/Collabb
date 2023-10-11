@@ -62,7 +62,6 @@ function OverlayDropdown (props) {
             <Pressable
               key={`list_item_${listItem.id}`}
               onPress={() => {
-                // console.info(listItem);
                 setOpenOverlay(false);
                 setSelectedOption(listItem);
               }}

@@ -43,7 +43,6 @@ function IdentifyPurpose(props) {
             bgImg={ButtonImg}
             title={"Post Jobs"}
             onPress={() => { 
-              // console.info("Post Jobs clicked!");
               props.navigation.navigate("account_creation", {
                 back_key: props.route.key,
                 type: "client"
@@ -57,7 +56,6 @@ function IdentifyPurpose(props) {
             bgImg={ButtonImg}
             title={"Provide a Service"}
             onPress={() => { 
-              // console.info("Provide a service clicked!");
               props.navigation.navigate("account_creation", {
                 back_key: props.route.key,
                 type: "talent"

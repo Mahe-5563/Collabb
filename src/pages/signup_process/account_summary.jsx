@@ -79,9 +79,7 @@ function AccountSummary(props) {
   }, []);
 
   const confirmDetails = async (userDetails) => {
-    // console.info("profileDetails: ", userDetails);
       apiCreateAccount(userDetails, async (response) => {
-        console.info("response: ", response);
         const userId = response?.res?.userDetail?._id;
         if(userId) {
           toastMessage(response.message);
@@ -104,7 +102,6 @@ function AccountSummary(props) {
 
   const uploadImage = async (image) => {
     const blob = await new Promise((resolve, reject) => {
-      // console.info(image);
       const xhr = new XMLHttpRequest();
       xhr.onload = function() {
         resolve(xhr.response);
@@ -116,7 +113,6 @@ function AccountSummary(props) {
       xhr.open('GET', image, true);
       xhr.send(null);
     })
-    // console.info(blob);
     const ref = firebase.storage().ref().child(`images/${userDetail.userDetail.field_first_name}-${userDetail.userDetail.field_last_name}`);
     const snapshot = ref.put(blob)
     snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,

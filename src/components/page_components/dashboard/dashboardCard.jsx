@@ -14,7 +14,6 @@ import { faFileLines } from "@fortawesome/free-solid-svg-icons";
 import { marginCenter, setMargin } from "../../../css/common";
 
 function DashboardCard(props) {
-  // console.info("Props: ", props);
   const { 
 		navigation,
 		icon,

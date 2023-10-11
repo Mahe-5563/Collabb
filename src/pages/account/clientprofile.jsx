@@ -10,7 +10,6 @@ import ProfileUserTitle from "../../components/page_components/profile/profile_u
 import ProfileActionSection from "../../components/page_components/profile/profile_action_section";
 
 function ClientProfile(props) {
-  console.info("Client profile props: ", props);
   return (
     <SafeAreaView>
       <Pressable

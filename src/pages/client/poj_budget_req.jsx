@@ -74,8 +74,6 @@ function PojBudgetRequirements(props) {
   const proceedToBudget = () => {
 
     let canProceed = true;
-    console.info("formData: ", formData);
-    
     if(!formData.budget_paytype) {
       handleInputValues("budget_paytype", formData.budget_paytype)
       canProceed = false

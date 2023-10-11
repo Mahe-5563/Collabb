@@ -30,7 +30,6 @@ function TalentFilterModal(props) {
   const [tempFilterData, setTempFilterData] = useState(filterData);
 
   useEffect(() => {
-    // console.info("tempFilterData: ", tempFilterData);
   }, [tempFilterData])
   
 
@@ -138,7 +137,7 @@ function TalentFilterModal(props) {
                 : 
                 <View>
                   <InputField
-                    placeholderText={"Amount"}
+                    placeholderText={"Amount (in Euros)"}
                     onTextChange={(text) => {
                       setTempFilterData(prevState => ({
                         ...prevState,
@@ -160,7 +159,6 @@ function TalentFilterModal(props) {
               {/* <DatePicker 
                 label={"Estimated Start Date"}
                 onChange={(date) => { 
-                  // console.info(date) 
                   setTempFilterData(prevState => ({
                     ...prevState,
                     startDate: date,
@@ -196,7 +194,6 @@ function TalentFilterModal(props) {
               onPress={() => { 
                 setFilterData(tempFilterData);
                 setShowModal(false);
-                console.info("Saved!");
               }}
             />
           </View>

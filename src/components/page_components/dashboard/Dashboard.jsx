@@ -26,7 +26,6 @@ import { buttons } from "../../../css/interactables";
     const [userType, setUserType] = useState();
     const [openApplicationModal, setOpenApplicationModal] = useState(false);
     useEffect(() => {
-      // console.info("Props: ", props);
       setUserType(props?.userDetail?.currentUser?.usertype);
     }, [])
     

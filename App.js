@@ -45,7 +45,6 @@ export default function App() {
       if(userId) {
         apiGetUserDetailsById(userId, (response) => {
           const userType = response?.res?.usertype;
-          // console.info("Details: ", response.res);
           if(userType == "client"){
             /* props.navigation.navigate(
               "client_home_page",

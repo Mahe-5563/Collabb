@@ -58,10 +58,10 @@ function ClientHomePageComp(props) {
 
   useEffect(() => {
     // Get User profile details...
-    if (props.currentUser._id) {
-      apiGetUserProfile(props.currentUser._id, "client", (result) => {
-        // console.info("Client Details: ", result.res);
-        const talDetails = result.res.clientDetails;
+    if (props?.currentUser?._id) {
+      apiGetUserProfile(props?.currentUser?._id, "client", (result) => {
+        const talDetails = result?.res?.clientDetails;
+        // console.info(talDetails);
         props.setCurrentUserProfileDetails(talDetails);
         /* apiGetJobPostsOnCategory(talDetails?.category, (result) => {
           setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
@@ -70,7 +70,7 @@ function ClientHomePageComp(props) {
       });
     }
     // Get possible client job posts...
-  }, []);
+  }, [props?.currentUser]);
 
   return (
     <>

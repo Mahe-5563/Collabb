@@ -452,17 +452,29 @@ export const summaryCard = StyleSheet.create({
     textTitle: {
         fontFamily: appFontFamilyBold,
         fontSize: textSubheaders,
-        marginBottom: 5,
+        // marginBottom: 5,
     },
     textContent: {
         fontFamily: appFontFamily,
         fontSize: textSize,
+        marginBottom: 5,
     },
     chip: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         backgroundColor: colors.primary_complementary_medium,
         fontSize: textSize,
+        borderRadius: 5,
+        marginRight: 10,
+        marginBottom: 5,
+    },
+    chipBtn: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        backgroundColor: colors.primary_complementary_dark,
+        fontSize: textSize,
+        borderColor: colors.primary_complementary_medium,
+        borderWidth: 1,
         borderRadius: 5,
         marginRight: 10,
         marginBottom: 5,
@@ -632,6 +644,22 @@ export const talentApplyStyles = StyleSheet.create({
         fontSize: textSubheaders,
         fontFamily: appFontFamilyBold,
         color: colors.white
+    },
+    talentApplied: {
+        position: "absolute",
+        borderColor: colors.secondary_color_medium,
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        fontSize: textSize,
+        fontFamily: appFontFamily,
+        backgroundColor: colors.blue_medium,
+        color: colors.white,
+        borderRadius: 5,
+        top: -10,
+        left: 5,
+    },
+    applicantAccepted: {
+        backgroundColor: colors.success_color,
     }
 })
 

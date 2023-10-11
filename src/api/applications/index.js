@@ -9,7 +9,6 @@ export function apiGetTalentApplications (userid, callback) {
             userid
         }
     }).then(res => {
-        // console.info("res: ", res.data);
         callback(res.data);
     }).catch(fail => {
         console.info("fail: ", fail);
@@ -17,7 +16,6 @@ export function apiGetTalentApplications (userid, callback) {
 }
 
 export function apiGetAllAppliedTalents (applicants, callback) {
-    // console.info(applicants);
     axios({
         baseURL: `https://collabb-server-2.onrender.com/`,
         url: "get-all-users",

@@ -97,8 +97,6 @@ function PojJobDescription(props) {
   const proceedToBudget = () => {
 
     let canProceed = true;
-    console.info("formData: ", formData);
-    console.info("formErrors: ", formErrors);
     const formDataKeys = Object.keys(formData);
     for(let i = 0; i<formDataKeys.length; i++) {
       handleOnEndEditing(formDataKeys[i], formData[formDataKeys[i]]);

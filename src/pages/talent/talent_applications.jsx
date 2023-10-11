@@ -16,12 +16,10 @@ function TalentApplications(props) {
 
   useEffect(() => {
     setUserType(props?.userDetail?.currentUser?.usertype);
-    // console.info(props.userDetail.currentUser);
   }, []);
 
   useEffect(() => {
     if(userType == "talent") {
-      // console.info("props: ", props.userDetail.currentUser);
       apiGetTalentApplications(props?.userDetail?.currentUser?._id, (response) => {
         setApplications(response.res);
         setLoader(false);
@@ -33,7 +31,6 @@ function TalentApplications(props) {
         applicantids.push(applicant.userid);
       });
       apiGetAllAppliedTalents(applicantids, (response) => {
-        // console.info("response: ", response);
         setApplications(response.res);
         setLoader(false);
       })

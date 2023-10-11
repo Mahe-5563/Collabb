@@ -32,7 +32,6 @@ function ApplyJob(props) {
     if (route?.params?.jobDetails) {
       getDetails(route.params.jobDetails);
     }
-    console.info("Props: ", props);
   }, []);
 
   useEffect(() => {
@@ -54,9 +53,7 @@ function ApplyJob(props) {
   };
 
   const handleJobApply = () => {
-    console.info("props: ", props.currentUser);
     apiApplyForJob(jobDetails._id, props.currentUser._id, (response) => {
-      // console.info("Response: ", response);
       setShowSuccessModal(true);
       ToastAndroid.show("Job applied successfully!", 2000);
       setTimeout(() => {
@@ -161,7 +158,6 @@ function ApplyJob(props) {
               isDisabled={submitting}
               title={submitting ? "Applying..." : "Apply for this Job"}
               onPress={() => {
-                // console.info("Apply clicked!");
                 setShowModal(true);
               }}
             />

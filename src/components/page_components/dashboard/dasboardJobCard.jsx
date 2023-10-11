@@ -32,6 +32,15 @@ function DashboardJobCard(props) {
     setOpenApplicationModal
 	} = props;
 
+  const [isAccepted, setIsAccepted] = useState(false);
+
+  useEffect(() => {
+    if(jobDetail?.applicants?.length > 0) {
+      setIsAccepted(jobDetail?.applicants?.filter(applicant => applicant.status == "Accept").length > 0);
+    }
+  }, [jobDetail.applicants])
+  
+
   const sectionStyle = {
     display: "flex",
     flexDirection: "row",
@@ -39,11 +48,9 @@ function DashboardJobCard(props) {
     paddingRight: 10,
   };
 
-  console.info("jobDetail: ", );
-
   return (
     <View style={[talentApplyStyles.cardContainer, setMargin(20).setMarginBottom]}>
-      {userType == "client" && modalType =="application" && jobDetail?.applicants?.length > 0 &&
+      {(!isAccepted) && (userType == "client" && modalType =="application" && jobDetail?.applicants?.length > 0) &&
         <Pressable 
           style={talentApplyStyles.applicantBox}
           onPress={() => {
@@ -56,6 +63,19 @@ function DashboardJobCard(props) {
           <FontAwesomeIcon icon={faUsers} size={22} style={[ setMargin(10).setMarginRight ]} color={colors.white} />
           <Text style={[talentApplyStyles.applicantCount]}>{jobDetail?.applicants?.length} </Text>
         </Pressable>
+      }
+      {isAccepted && 
+        <View 
+          style={[talentApplyStyles.applicantBox, { backgroundColor: colors.success_color, borderColor: colors.success_color }]}
+          onPress={() => {
+            setOpenApplicationModal(false);
+            navigation.navigate("talent_applications", {
+              jobDetails: jobDetail,
+            });
+          }}
+        >
+          <Text style={[talentApplyStyles.applicantCount]}>Accepted! </Text>
+        </View>
       }
       <Text style={talentApplyStyles.date}>{getDate(jobDetail.createdAt) || ""}</Text>
       <Text style={talentApplyStyles.title}>{jobDetail.jd_jobtitle}</Text>

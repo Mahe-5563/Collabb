@@ -42,7 +42,6 @@ import { setCategoryAndSubcategory } from "../../../redux/actions/client";
 import { toastMessage } from "../../js/common";
 
 function ClientChooseCatSubcat(props) {
-  // console.info("Props: ", props);
   const {
     clientDetails,
     setCategoryAndSubcategory,
@@ -84,7 +83,6 @@ function ClientChooseCatSubcat(props) {
       category: { id: categorySelection.id, label: categorySelection.label, value: categorySelection.value, },
       subCategory: subcat
     };
-    // console.info("obj: ", obj);
     setCategoryAndSubcategory(obj);
     setCategoryValueBool(true);
   }
@@ -129,7 +127,6 @@ function ClientChooseCatSubcat(props) {
             bgImg={btnImg}
             title={category.label}
             onPress={() => {
-              // console.info(category)
               setCategorySelection(category);
               setModalVisible(true);
             }}
@@ -222,7 +219,6 @@ function ClientChooseCatSubcat(props) {
                   <TouchableHighlight
                     key={subcate.id}
                     onPress={() => {
-                      // console.info(subcate)
                       categoryAndSubCatSelection(subcate);
                     }}
                     underlayColor={colors.primary_color_medium}

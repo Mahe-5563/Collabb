@@ -54,7 +54,6 @@ function SimilarTalents(props) {
                 top: 10,
               }}
               onPress={() => {
-                console.info("tried to favourite!");
                 setFollowing(!following);
               }}
             >

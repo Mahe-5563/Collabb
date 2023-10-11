@@ -8,7 +8,6 @@ import userImg from "../../assets/images/user.png";
 
 function NavbarHomepage(props) {
   const currentUserType = props?.currentUser?.usertype;
-  // console.info("user: ", props.currentUser);
   return (
     <SafeAreaView>
       <View style={[homepageNavStyle.container]}>
@@ -17,7 +16,6 @@ function NavbarHomepage(props) {
             homepageNavStyle.profileImgPressable
           ]}
           onPress={() => {
-            console.info("Profile Pic pressed!", currentUserType);
             if(currentUserType == "talent") {
               props.navigation.navigate(
                 "talent_profile_page",

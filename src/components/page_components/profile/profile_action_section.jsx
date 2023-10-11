@@ -203,7 +203,6 @@ function AcceptTalentSection(props) {
                   currentUser._id,
                   "Accept",
                   (response) => {
-                    console.info("Response: ", response);
                     if(response.message == "Status updated successfully!") {
                       ToastAndroid.show(response.message, 2000);
                       setJobStatus("Accept")
@@ -222,7 +221,6 @@ function AcceptTalentSection(props) {
                   currentUser._id,
                   "Reject",
                   (response) => {
-                    console.info("Response: ", response);
                     if(response.message == "Status updated successfully!") {
                       ToastAndroid.show(response.message, 2000);
                       setJobStatus("Reject")
@@ -318,7 +316,6 @@ function StatusDropdownSection(props) {
         onValueChange={(value) => {
           const key = items.filter(item => item.value == value)[0].key;
           apiUpdateCurrentProfileStatus(userProfile.userid, key, (response) => {
-            console.info("Reponse: ", response);
             if(response.resp.acknowledged) {
               setCurrentStatus(value);
             }
@@ -343,21 +340,23 @@ function StatusDropdownSection(props) {
 function ProfileDetailsSection(props) {
   return (
     <View>
-      <View>
-        <Text style={summaryCard.textTitle}>Skills:</Text>
-        <View
-          style={[
-            multiSelectStyles.selectedOptions,
-            setMargin(10).setMarginVertical,
-          ]}
-        >
-          {props?.userProfile?.skills?.map((skill, index) => (
-            <Text key={`summary_${index}`} style={summaryCard.chip}>
-              {skill?.label}
-            </Text>
-          ))}
+      {props.currentUser.usertype == "talent" && 
+        <View>
+          <Text style={summaryCard.textTitle}>Skills:</Text>
+          <View
+            style={[
+              multiSelectStyles.selectedOptions,
+              setMargin(10).setMarginVertical,
+            ]}
+          >
+            {props?.userProfile?.skills?.map((skill, index) => (
+              <Text key={`summary_${index}`} style={summaryCard.chip}>
+                {skill?.label}
+              </Text>
+            ))}
+          </View>
         </View>
-      </View>
+      }
       <View>
         <Text style={summaryCard.textTitle}>Description:</Text>
         <View style={[setMargin(10).setMarginVertical]}>
@@ -483,7 +482,7 @@ function RatingsReviewsSection() {
 
 function ProfileActionSection(props) {
   const { currentUser, userProfile, status, jobDetails, userType } = props;
-  console.info("userProfile: ", props);
+  // console.info("ProfileActionSection (props): ", props);
   return (
     <View style={{ marginTop: 20 }}>
       {((userType == "client" && status == "talentApply") || (userType == "talent")) && 
@@ -499,7 +498,10 @@ function ProfileActionSection(props) {
       {userType == "talent" && <TalentRateXPSection userProfile={userProfile} />}
 
       <View style={[summaryCard.cardBox]}>
-        <ProfileDetailsSection userProfile={userProfile} />
+        <ProfileDetailsSection 
+          userProfile={userProfile}
+          currentUser={currentUser}
+        />
       </View>
       {/* <View>
         <RatingsReviewsSection />

@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { ScrollView, SafeAreaView, View, Text, Pressable, ActivityIndicator } from "react-native";
+import { ScrollView, SafeAreaView, View, Text, Pressable, ActivityIndicator, RefreshControl } from "react-native";
 
 import TalJobCard from "../job_card_tal_home";
 // import NavbarHomepage from "../../navbar_homepage";
@@ -27,17 +27,15 @@ function TalentHomePageComp(props) {
   });
   const [jobList, setJobList] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     // Get User profile details...
     if (props?.currentUser?._id) {
       apiGetUserProfile(props.currentUser._id, "talent", (result) => {
+        setLoader(true);
         const talDetails = result?.res?.talentDetails;
-        console.info("talDetails: ", talDetails);
-        apiGetJobPostsOnCategory(talDetails?.category, (result) => {
-          setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
-          setLoader(false);
-        });
+        getJobPosts(talDetails?.category)
         props.setCurrentUserProfileDetails(talDetails);
       });
     }
@@ -47,6 +45,22 @@ function TalentHomePageComp(props) {
   const resetFilterData = () => {
     setFilterData(filterData);
   };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setLoader(true);
+    setJobList([]);
+    getJobPosts(props.userProfile.category);
+  }
+
+  const getJobPosts = (category) => {
+    apiGetJobPostsOnCategory(category, (result) => {
+      // const jobs = result.fullObj;
+      setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
+      setRefreshing(false);
+      setLoader(false);
+    });
+  }
 
   return (
     <>
@@ -60,6 +74,12 @@ function TalentHomePageComp(props) {
           setPadding(20).setPaddingHorizontal,
           setMargin(20).setMarginBottom,
         ]}
+        refreshControl={
+          <RefreshControl 
+            onRefresh={onRefresh} 
+            refreshing={refreshing}
+          />
+        }
       >
         <View
           style={[
@@ -89,7 +109,7 @@ function TalentHomePageComp(props) {
         {loader && 
           <ActivityIndicator size={"large"} color={colors.secondary_color_medium} />
         }
-        {!loader && jobList && jobList.map((job) => {
+        {(!loader) && jobList && jobList.map((job) => {
           return (
             <Pressable
               id={`job_id_${job.jobDetail._id}`}
@@ -104,7 +124,10 @@ function TalentHomePageComp(props) {
                 });
               }}
             >
-              <TalJobCard {...job.jobDetail} />
+              <TalJobCard 
+                {...job.jobDetail}
+                currentUserId={props.currentUser._id}
+              />
             </Pressable>
           );
         })}

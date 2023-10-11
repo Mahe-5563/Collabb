@@ -42,9 +42,8 @@ function DashboardModals(props) {
       if (props.currentUser.usertype == "client") {
         setLoader(true);
         apiGetClientJobPost(userId, (response) => {
-          console.info("response: ", response);
           if (response.status == 200) setLoader(false);
-          setJobPosts(response?.res);
+          setJobPosts(response?.res?.sort((a, b) => (+new Date(b.createdAt)) - (+new Date(a.createdAt))));
         });
       } else if (props.currentUser.usertype == "talent") {
         setLoader(true);

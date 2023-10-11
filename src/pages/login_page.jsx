@@ -140,7 +140,6 @@ function LoginPage(props) {
           setMargin("auto").setMarginRight,
         ]}
         onPress={() => {
-          console.info("Forgot password!");
         }}
       >
         <Text

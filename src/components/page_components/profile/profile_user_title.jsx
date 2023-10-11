@@ -10,6 +10,7 @@ import { appFontFamily, textHeaders, textLabel, textSize, textSubheaders } from 
 
 function ProfileUserTitle(props) {
   const { userProfile, currentUser, userType } = props;
+  // console.info("ProfileUserTitle (props): ", props);
   return (
     <SafeAreaView>
       <View
@@ -58,7 +59,7 @@ function ProfileUserTitle(props) {
             {userProfile?.subcategory}
           </Text>
         }
-        {userType == "client" && 
+        {currentUser.usertype == "talent" && 
           <View
             style={{
               display: "flex",

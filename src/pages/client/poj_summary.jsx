@@ -32,7 +32,6 @@ function PojSummary(props) {
     }
     setIsSubmitting(true);
     apiCreateJobPost(postJobObj, (response) => {
-      console.info(response);
       if(response.status == 200 && response.message == "Post job created successfully!") {
         setIsSubmitting(false);
         ToastAndroid.show("Job posted successfully!", 5000);

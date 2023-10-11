@@ -166,7 +166,6 @@ function ComponentTalentAccount(props) {
             items={cats_n_subcats}
             prompt={"Select your category *"}
             onValueChange={(value) => {
-              console.info("value: ", value);
               setFormValues(prevValue => ({
                 ...prevValue,
                 category: value,

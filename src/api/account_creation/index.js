@@ -9,7 +9,6 @@ export const apiCheckForUser = (userDetails, callback) => {
 }
 
 export const apiCreateAccount = (userDetails, callback) => {
-    // console.info("userDetails: ", userDetails);
     axios
         .post('https://collabb-server-2.onrender.com/create-account', userDetails)
         .then(res => callback(res.data))

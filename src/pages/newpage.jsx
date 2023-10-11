@@ -18,7 +18,6 @@ function NewPage(props) {
     // const [selectedOptions, setSelectedOptions] = useState([]);
 
     /* useEffect(() => {
-      // console.info("selectedOptions => ", selectedOptions)
     }, [selectedOptions]) */
   
   const options = [

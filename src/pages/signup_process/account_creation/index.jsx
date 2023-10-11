@@ -19,8 +19,6 @@ function AccountCreation(props) {
   useEffect(() => setAccountType(route?.params?.type), [route?.params?.type]);
 
   const proceedToSummary = (formValues) => {
-    console.info("formValues: ", formValues);
-
     const formKeys = Object.keys(formValues);
     let missingFields = "";
     let nonMandatoryFields = [ "website" ]
@@ -43,7 +41,6 @@ function AccountCreation(props) {
     if(missingFields) {
       Alert.alert("Oops!", "The following mandatory fields are missing:\n\n"+ missingFields);
     } else {
-      console.info("YAYY!!!");
       setProfileDetails(formValues);
       navigation.navigate("account_summary", { accountType });
     }
