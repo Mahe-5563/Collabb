@@ -13,6 +13,13 @@ function TalentIndex(props) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    if(props?.route?.params?.pageNo) {
+      console.info("Page No: ", props?.route?.params?.pageNo);
+      setCurrentPage(props?.route?.params?.pageNo);
+    }
+  }, [props?.route?.params?.pageNo])
+
+  useEffect(() => {
     if(props?.route?.params?.userDetails)
       props.setCurrentUserDetails(props?.route?.params?.userDetails);
   }, [props?.route?.params])
@@ -23,7 +30,7 @@ function TalentIndex(props) {
       case 1:
         return <TalentHomePageComponent {...props} />
       case 2:
-        return <Dashboard {...props} />
+        return <Dashboard {...props} setCurrentPage={setCurrentPage} />
       case 3:
         return <Text>Message Box</Text>
       case 4:

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Modal, Text, ToastAndroid, Pressable } from "react-native";
+import { ScrollView, View, Modal, Text, ToastAndroid, Pressable, Alert } from "react-native";
 
 import {
   appFontFamily,
@@ -11,14 +11,12 @@ import {
 import Navbar from "../../components/navbar";
 import CTAButton from "../../components/cta_button";
 import { ctaButtons, summaryCard } from "../../css/interactables";
-import { jdKeys, budgKeys } from "../../json/common";
-import { apiApplyForJobPost, apiApplyForJob } from "../../api/job_post";
+import { jdKeys, budgKeys, job_status_json } from "../../json/common";
+import { apiApplyForJob, apiUpdateJobStatus } from "../../api/job_post";
 import SummaryCard from "../../components/page_components/summary_card";
 import ApplyJobShrtDescription from "../../components/page_components/apply_job_shrt_desc";
 import { colors } from "../../css/colors";
 import { getDate } from "../../js/common";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import DropdownComponent from "../../components/dropdown";
 
 function ApplyJob(props) {
@@ -28,6 +26,7 @@ function ApplyJob(props) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState();
+  const [jobStatusState, setJobStatusState] = useState();
 
   useEffect(() => {
     if (route?.params?.jobDetails) {
@@ -47,7 +46,13 @@ function ApplyJob(props) {
         )[0]
       );
     }
+
+    if(route?.params?.jobDetails?.job_status) {
+      setJobStatusState(route?.params?.jobDetails?.job_status);
+    }
+
   }, [props.currentUser, route?.params?.jobDetails]);
+  
 
   const getDetails = (jobDetails) => setJobDetails(jobDetails);
 
@@ -61,6 +66,37 @@ function ApplyJob(props) {
       }, 3000);
     });
   };
+
+  const handleJobStatusChange = (status) => {
+    console.info("Status: ", status);
+    Alert.alert(
+      "Are you sure you want to update your status?",
+      "Once the status is updated, you cannot revert it.",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            apiUpdateJobStatus(route?.params?.jobDetails._id, status, (response) => {
+              setJobStatusState(status);
+              console.info("Job status update: ", response.res)
+            })        
+          },
+          style: "default"
+        },
+        {
+          text: "No",
+          onPress: () => {
+
+          },
+          style: "cancel"
+        }
+      ]
+    )
+    /* apiUpdateJobStatus(route?.params?.jobDetails._id, status, (response) => {
+      setJobStatusState(status);
+      console.info("Job status update: ", response.res)
+    }) */
+  }
 
   return (
     <>
@@ -125,19 +161,19 @@ function ApplyJob(props) {
             </Text>
           </View>
         </Pressable>
-      )}
-      {route?.params?.type == "view_application" && route?.params?.usertype == "client" && (
+      )} */}
+      {route?.params?.type == "view_application" && route?.params?.usertype == "client" && route?.params?.jobstatus_accepted == true && (
         <View
-          style={{ marginHorizontal: 20, }}
+          style={{ marginHorizontal: 20, marginTop: 20, }}
         >
           <DropdownComponent 
-            // prompt
-            // items
-            // stateValue
-            // onValueChange
+            prompt={"Select your job status"}
+            items={job_status_json}
+            stateValue={jobStatusState}
+            onValueChange={(value) => handleJobStatusChange(value)}
           />
         </View>
-      )} */}
+      )}
       <ScrollView
         style={[
           // setPadding(20).setPaddingVertical,

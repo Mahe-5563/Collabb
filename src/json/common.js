@@ -30,3 +30,9 @@ export const budgKeys = [
   { id: "4", key: "budget_amount", name: "Amount (in Euros)" },
   { id: "5", key: "budget_restraints", name: "Restraints" },
 ];
+
+export const job_status_json = [
+  // { id: 1, key: "justnow", value: "justnow" },
+  { id: 2, label: "working", value: "working" },
+  { id: 3, label: "completed", value: "completed" },
+]

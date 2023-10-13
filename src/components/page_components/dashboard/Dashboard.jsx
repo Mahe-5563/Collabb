@@ -29,6 +29,13 @@ import { buttons } from "../../../css/interactables";
       setUserType(props?.userDetail?.currentUser?.usertype);
     }, [])
     
+    /* useEffect(() => {
+      if(props?.route?.params?.pageNo) {
+        console.info("Page No: ", props?.route?.params?.pageNo);
+        // props.setCurrentPage(props?.route?.params?.pageNo);
+      }
+    }, [props?.route?.params?.pageNo]) */
+    
   
     return (
       <>
@@ -55,7 +62,14 @@ import { buttons } from "../../../css/interactables";
                     "talent_applications"
                   )
                 } else {
-                  setOpenApplicationModal(true)
+                  props.navigation.navigate(
+                    "job_post",
+                    {
+                      userId: props?.userDetail?.currentUser?._id,
+                      pageType: "justnow"
+                    }
+                  )
+                  // setOpenApplicationModal(true)
                 }
               }}
             >
@@ -65,7 +79,7 @@ import { buttons } from "../../../css/interactables";
                   fontFamily: appFontFamily
                 }}
               >
-                {"View Applications"}
+                {"Recent Jobs"}
               </Text>
             </TouchableOpacity>
             {userType == "client" &&
@@ -73,7 +87,37 @@ import { buttons } from "../../../css/interactables";
                 activeOpacity={0.5}
                 style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
                 onPress={() => {
-                  
+                  props.navigation.navigate(
+                    "job_post",
+                    {
+                      userId: props?.userDetail?.currentUser?._id,
+                      pageType: "working"
+                    }
+                  )
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: textContentSize,
+                    fontFamily: appFontFamily
+                  }}
+                >
+                  {"Active Jobs"}
+                </Text>
+              </TouchableOpacity>
+            }
+            {userType == "client" &&
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
+                onPress={() => {
+                  props.navigation.navigate(
+                    "job_post",
+                    {
+                      userId: props?.userDetail?.currentUser?._id,
+                      pageType: "completed"
+                    }
+                  )
                 }}
               >
                 <Text
@@ -100,7 +144,7 @@ import { buttons } from "../../../css/interactables";
                     fontFamily: appFontFamily
                   }}
                 >
-                  {"Favourites"}
+                  {"Favourite Talents"}
                 </Text>
               </TouchableOpacity>
             }

@@ -59,7 +59,7 @@ function ProfileUserTitle(props) {
             {userProfile?.subcategory}
           </Text>
         }
-        {currentUser.usertype == "talent" && 
+        {currentUser?.usertype == "talent" && 
           <View
             style={{
               display: "flex",

@@ -340,7 +340,7 @@ function StatusDropdownSection(props) {
 function ProfileDetailsSection(props) {
   return (
     <View>
-      {props.currentUser.usertype == "talent" && 
+      {props?.currentUser?.usertype == "talent" && 
         <View>
           <Text style={summaryCard.textTitle}>Skills:</Text>
           <View
