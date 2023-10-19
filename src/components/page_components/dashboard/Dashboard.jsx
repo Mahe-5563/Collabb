@@ -3,6 +3,7 @@ import {
     View,
     Text,
     TouchableOpacity,
+    ToastAndroid,
   } from "react-native";
   import React, { useState, useEffect } from "react";
   import { connect } from "react-redux";
@@ -79,7 +80,7 @@ import { buttons } from "../../../css/interactables";
                   fontFamily: appFontFamily
                 }}
               >
-                {"Recent Jobs"}
+                {userType == "talent" ? "My Applied Jobs" : "Active Jobs"}
               </Text>
             </TouchableOpacity>
             {userType == "client" &&
@@ -102,7 +103,7 @@ import { buttons } from "../../../css/interactables";
                     fontFamily: appFontFamily
                   }}
                 >
-                  {"Active Jobs"}
+                  {"Ongoing Jobs"}
                 </Text>
               </TouchableOpacity>
             }
@@ -135,7 +136,7 @@ import { buttons } from "../../../css/interactables";
                 activeOpacity={0.5}
                 style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
                 onPress={() => {
-                  
+                  ToastAndroid.show("Under development!", 3000);
                 }}
               >
                 <Text

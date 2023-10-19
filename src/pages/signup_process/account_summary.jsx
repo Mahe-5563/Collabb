@@ -185,7 +185,7 @@ function AccountSummary(props) {
         >
           Personal Details
         </Text>
-        <Pressable
+        {/* <Pressable
           style={[
             setMargin("auto").setMarginLeft,
             setMargin("auto").setMarginTop,
@@ -196,7 +196,7 @@ function AccountSummary(props) {
           }}
         >
           <FontAwesomeIcon icon={faPenToSquare} size={22} />
-        </Pressable>
+        </Pressable> */}
       </View>
 
       <View style={summaryCard.cardBox}>

@@ -33,6 +33,7 @@ function TalentApplications(props) {
       apiGetTalentApplications(
         props?.userDetail?.currentUser?._id,
         (response) => {
+          // response.res.applicants.filter
           setApplications(response.res);
           setLoader(false);
         }

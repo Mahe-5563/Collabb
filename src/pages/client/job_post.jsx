@@ -35,15 +35,16 @@ function JobPost(props) {
 
   const getJobPost = (userId, pageType) => {
     apiGetClientJobPost(userId, (response) => {
-      if (response.status == 200) setLoader(false);
       const jobPostsFilter = 
-        response.res
-          .filter(post => post.job_status == pageType)
-          .sort( (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt) );
+      response.res
+      .filter(post => post.job_status == pageType)
+      .sort( (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt) );
       setJobPosts(jobPostsFilter);
+      if (response.status == 200) setLoader(false);
     });
   }
 
+  console.info("")
   return (
     <>
       <SafeAreaView>
@@ -57,7 +58,7 @@ function JobPost(props) {
         refreshControl={
           <RefreshControl 
             refreshing={isRefreshing}
-            onRefresh={() => { setLoader(true); getJobPost(props?.route?.params?.userId) }}
+            onRefresh={() => { setLoader(true); getJobPost(props?.route?.params?.userId, props?.route?.params?.pageType) }}
           />
         }
       >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, ToastAndroid, View } from "react-native";
 import { connect } from "react-redux";
 
 import ImgButton from "../../img_button";
@@ -32,10 +32,11 @@ function ClientHomePageComp(props) {
       title: "Search Talents",
       btnBg: btnImg,
       onPress: function () {
-        navigation.navigate(
-          "search_talents",
-          { back_key: props.route.key }
-        )
+        ToastAndroid.show("Under development!", 3000);
+        // navigation.navigate(
+        //   "search_talents",
+        //   { back_key: props.route.key }
+        // )
       },
     }
   ];

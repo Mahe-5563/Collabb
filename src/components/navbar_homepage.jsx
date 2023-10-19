@@ -11,7 +11,7 @@ function NavbarHomepage(props) {
   return (
     <SafeAreaView>
       <View style={[homepageNavStyle.container]}>
-        <Pressable
+        {/* <Pressable
           style={[
             homepageNavStyle.profileImgPressable
           ]}
@@ -33,7 +33,7 @@ function NavbarHomepage(props) {
             source={props.currentUser.profileUri ? { uri: props?.currentUser?.profileUri } : userImg}
             style={homepageNavStyle.profileImg}
           />
-        </Pressable>
+        </Pressable> */}
         <View
           style={{
             position: "absolute",

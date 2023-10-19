@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, SafeAreaView, ScrollView, Text, ToastAndroid, View } from "react-native";
 import { fixedBottomNavbar } from "../css/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faChartColumn, faCircleUser, faHouse, faMessage } from "@fortawesome/free-solid-svg-icons";
@@ -9,8 +9,11 @@ import { colors } from "../css/colors";
 function FixedBottomNav(props) {
   const { 
     setCurrentPage,
-    currentPage
+    currentPage,
+    userDetails,
   } = props;
+
+  console.info("Fixed bottom nav (props):", props);
 
   const menuItems = [
     {
@@ -47,10 +50,43 @@ function FixedBottomNav(props) {
             ...(item.id == currentPage ? [ fixedBottomNavbar.activeItem ] : []),
           ]}
           onPress={() => {
-            console.info(`${item.title} pressed!`);
-            setCurrentPage(item.id);
+            if(item.id == 3) {
+              ToastAndroid.show("Under Development!", 3000);
+            } else {
+              if(item.id == 4) {
+                if(userDetails?.usertype == "talent") {
+                  props.navigation.navigate(
+                    "talent_profile_page",
+                    { back_key: props.route.key }
+                  )
+                } else if (currentUserType == "client") {
+                  props.navigation.navigate(
+                    "client_profile_page",
+                    { back_key: props.route.key }
+                  )
+                }
+              } else {
+                console.info(`${item.title} pressed!`);
+                setCurrentPage(item.id);
+              }
+            }
           }}
         >
+          {item.id == 4 ?
+          <Image 
+            source={{ uri: userDetails?.profileUri }}
+            style={[
+              {
+                height: 25,
+                width: 25,
+                borderRadius: 50,
+              },
+              setMargin("auto").setMarginLeft,
+              setMargin("auto").setMarginRight,
+              setMargin(4).setMarginBottom,
+            ]}
+          />
+          :
           <FontAwesomeIcon 
             icon={item.icon}
             size={20}
@@ -60,7 +96,7 @@ function FixedBottomNav(props) {
               setMargin(8).setMarginBottom,
             ]}
             color={currentPage == item.id ? colors.primary_color : colors.secondary_color}
-          />
+          />}
           <Text style={{ 
             fontFamily: appFontFamily,
             textAlign: "center",

@@ -47,10 +47,13 @@ function TalentIndex(props) {
         <NavbarHomepage {...props}/>
       </SafeAreaView>
       {changePage(currentPage)}
-      <FixedBottomNav 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {props?.route?.params?.userDetails && 
+        <FixedBottomNav 
+          {...props}
+          userDetails={props?.route?.params?.userDetails}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />}
     </>
   );
 }

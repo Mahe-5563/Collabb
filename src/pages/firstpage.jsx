@@ -41,35 +41,36 @@ function FirstPage(props) {
      * 
      */
     // Manually set user id...
-    // AsyncStorage.setItem("userId", "65199b3ddf213b73178fcd2e");
-
-    async function checkForUser () {
-      const userId = await AsyncStorage.getItem("userId");
-      console.info(userId);
-      if(userId) {
-        apiGetUserDetailsById(userId, (response) => {
-          const userType = response?.res?.usertype;
-          if(userType == "client"){
-            props.navigation.navigate(
-              "client_home_page",
-              {
-                userDetails: response?.res
-              }
-            );
-          } else if (userType == "talent") {
-            props.navigation.navigate(
-              "talent_home_page",
-              {
-                userDetails: response?.res
-              }
-            );
-          }
-        })
-      }
-    }
+    // AsyncStorage.setItem("userId", "651c328bfbdf0b55d9a793c4");
     checkForUser();
 
   }, []);
+
+  async function checkForUser () {
+    const userId =  await AsyncStorage.getItem("userId");
+    console.info(userId);
+    if(userId) {
+      apiGetUserDetailsById(userId, (response) => {
+        const userType = response?.res?.usertype;
+        console.info(userType);
+        if(userType == "client"){
+          props.navigation.navigate(
+            "client_home_page",
+            {
+              userDetails: response?.res
+            }
+          );
+        } else if (userType == "talent") {
+          props.navigation.navigate(
+            "talent_home_page",
+            {
+              userDetails: response?.res
+            }
+          );
+        }
+      })
+    }
+  }
 
   return (
     <View
@@ -97,9 +98,10 @@ function FirstPage(props) {
           dark
           title={"Login to existing account"}
           onPress={() => {
-            props.navigation.navigate("login", {
+            /* props.navigation.navigate("login", {
               back_key: props.route.key,
-            });
+            }); */
+            checkForUser();
           }}
         />
 
