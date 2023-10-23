@@ -13,7 +13,6 @@ function FixedBottomNav(props) {
     userDetails,
   } = props;
 
-  console.info("Fixed bottom nav (props):", props);
 
   const menuItems = [
     {
@@ -51,7 +50,11 @@ function FixedBottomNav(props) {
           ]}
           onPress={() => {
             if(item.id == 3) {
-              ToastAndroid.show("Under Development!", 3000);
+              // ToastAndroid.show("Under Development!", 3000);
+              props.navigation.navigate(
+                "message_inbox",
+                { back_key: props.route.key }
+              )
             } else {
               if(item.id == 4) {
                 if(userDetails?.usertype == "talent") {

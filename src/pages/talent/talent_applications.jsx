@@ -13,7 +13,7 @@ import { colors } from "../../css/colors";
 import Navbar from "../../components/navbar";
 import { setPadding, textSize } from "../../css/common";
 import {
-  apiGetAllAppliedTalents,
+  apiGetDetailsofUsers,
   apiGetTalentApplications,
 } from "../../api/applications";
 import ApplicationCard from "../../components/page_components/application/ApplicationCard";
@@ -44,7 +44,7 @@ function TalentApplications(props) {
       applicantss.forEach((applicant) => {
         applicantids.push(applicant.userid);
       });
-      apiGetAllAppliedTalents(applicantids, (response) => {
+      apiGetDetailsofUsers(applicantids, (response) => {
         setApplications(response.res);
         setLoader(false);
       });

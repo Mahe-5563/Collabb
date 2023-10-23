@@ -831,3 +831,64 @@ export const applicationCard = StyleSheet.create({
         borderColor: colors.secondary_color_medium
     },
 })
+
+export const messagingStyles = StyleSheet.create({
+    messageCard: {
+        borderWidth: 1,
+        borderColor: colors.grey_color,
+        padding: 15,
+        borderRadius: 5,
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        marginBottom: 10,
+    },
+    recipientIcon: {
+        fontSize: textHeaderLarge,
+        marginTop: "auto",
+        marginBottom: "auto",
+        borderWidth: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 50,
+        alignSelf: "center"
+    },
+    recipientName: {
+        fontSize: textHeaderMedium,
+        marginBottom: 10,
+    },
+    messageTitle: {
+        fontSize: textSize,
+        marginBottom: 5,
+    },
+    messageContent: {
+        fontSize: textSize,
+    },
+    notopened: {
+        fontFamily: appFontFamilyBold,
+    },
+    read: {
+        fontFamily: appFontFamily,
+    },
+    threadSection: {
+        borderTopWidth: 1,
+        padding: 10,
+        marginBottom: 5,
+    },
+    threadDate: {
+        alignSelf: "flex-end",
+        fontFamily: appFontFamilyMedium
+    },
+    threadMessageSection: {
+        display: "flex",
+        flexDirection: "row",
+        marginTop: 15,
+    },
+    threadMessage: {
+        width: "95%",
+        paddingRight: 10,
+        fontFamily: appFontFamily,
+        fontSize: textSize,
+        lineHeight: 25.5
+    }
+})

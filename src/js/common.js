@@ -1,4 +1,5 @@
 import { ToastAndroid } from "react-native";
+import { months } from "../json/common";
 
 export const getSelectedDate = (date) => {
   const fullDate = new Date(date);
@@ -27,3 +28,18 @@ export const getDate = (date) => {
 
   return fullDate;
 }
+
+export const getTime = (date) => {
+  const hours = new Date(Number(date)).getHours();
+  const minutes = new Date(Number(date)).getMinutes();
+
+  return `${hours}:${minutes}`;
+};
+
+export const getShortDate = (date) => {
+  const dat = new Date(Number(date)).getDate();
+  const month = months.filter(
+    (month) => month.id == new Date(Number(date)).getMonth()
+  )[0].shortMonth;
+  return `${month} ${dat}`;
+};

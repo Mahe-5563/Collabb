@@ -20,6 +20,8 @@ import clientprofile from "../pages/account/clientprofile";
 import talentprofile from "../pages/account/talentprofile";
 import search_talents from "../pages/client/search_talents";
 import JobPost from "../pages/client/job_post";
+import inbox from "../pages/message/inbox";
+import messagethread from "../pages/message/messagethread";
 
 /* 
   Page Animations:
@@ -147,6 +149,18 @@ const commonPages = [
   {
     name: "client_profile_page",
     component: clientprofile,
+    active: true,
+    animation: "slide_from_right",
+  },
+  {
+    name: "message_inbox",
+    component: inbox,
+    active: true,
+    animation: "slide_from_right",
+  },
+  {
+    name: "message_thread",
+    component: messagethread,
     active: true,
     animation: "slide_from_right",
   },

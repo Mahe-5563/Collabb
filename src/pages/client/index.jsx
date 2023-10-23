@@ -42,6 +42,8 @@ function ClientIndex(props) {
       </SafeAreaView>
       {changePage(currentPage)}
       <FixedBottomNav
+        {...props}
+        userDetails={props?.route?.params?.userDetails}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

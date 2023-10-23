@@ -36,3 +36,18 @@ export const job_status_json = [
   { id: 2, label: "working", value: "working" },
   { id: 3, label: "completed", value: "completed" },
 ]
+
+export const months = [
+  { id: 0, month: "January", shortMonth: "Jan" },
+  { id: 1, month: "February", shortMonth: "Feb" },
+  { id: 2, month: "March", shortMonth: "Mar" },
+  { id: 3, month: "April", shortMonth: "Apr" },
+  { id: 4, month: "May", shortMonth: "May" },
+  { id: 5, month: "June", shortMonth: "Jun" },
+  { id: 6, month: "July", shortMonth: "Jul" },
+  { id: 7, month: "August", shortMonth: "Aug" },
+  { id: 8, month: "September", shortMonth: "Sep" },
+  { id: 9, month: "October", shortMonth: "Oct" },
+  { id: 10, month: "November", shortMonth: "Nov" },
+  { id: 11, month: "December", shortMonth: "Dec" },
+]

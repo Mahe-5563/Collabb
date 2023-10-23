@@ -67,12 +67,7 @@ function ClientHomePageComp(props) {
     if (props?.currentUser?._id) {
       apiGetUserProfile(props?.currentUser?._id, "client", (result) => {
         const talDetails = result?.res?.clientDetails;
-        // console.info(talDetails);
         props.setCurrentUserProfileDetails(talDetails);
-        /* apiGetJobPostsOnCategory(talDetails?.category, (result) => {
-          setJobList(result.fullObj.sort((a, b) => (+new Date(b.jobDetail.createdAt)) - (+new Date(a.jobDetail.createdAt))));
-          setLoader(false);
-        }); */
       });
     }
     // Get possible client job posts...

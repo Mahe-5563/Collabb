@@ -15,7 +15,7 @@ export function apiGetTalentApplications (userid, callback) {
     })
 }
 
-export function apiGetAllAppliedTalents (applicants, callback) {
+export function apiGetDetailsofUsers (applicants, callback) {
     axios({
         baseURL: `https://collabb-server-2.onrender.com/`,
         url: "get-all-users",
