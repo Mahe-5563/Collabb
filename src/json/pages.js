@@ -22,6 +22,7 @@ import search_talents from "../pages/client/search_talents";
 import JobPost from "../pages/client/job_post";
 import inbox from "../pages/message/inbox";
 import messagethread from "../pages/message/messagethread";
+import messagecompose from "../pages/message/messagecompose";
 
 /* 
   Page Animations:
@@ -161,6 +162,12 @@ const commonPages = [
   {
     name: "message_thread",
     component: messagethread,
+    active: true,
+    animation: "slide_from_right",
+  },
+  {
+    name: "message_compose",
+    component: messagecompose,
     active: true,
     animation: "slide_from_right",
   },

@@ -116,17 +116,19 @@ function Inbox(props) {
                       : recipients.filter(
                           (recipient) => recipient[message.clientid]
                         )[0][message.clientid].userDetail;
-                  const checkRead = message.messages[
-                    message.messages.length - 1
-                  ].opened
+
+                  const checkRead = message.opened
                     ? messagingStyles.read
-                    : messagingStyles.notopened;
+                    : messagingStyles.notopened
+
                   const lastMessageDate = getShortDate(
                     message?.messages[message?.messages?.length - 1]?.messageid
                   );
+
                   const lastMessageTime = getTime(
                     message?.messages[message?.messages?.length - 1]?.messageid
                   );
+
                   return (
                     <Pressable
                       key={`message_${message._id}`}
@@ -182,17 +184,17 @@ function Inbox(props) {
                         </Text>
                       </View>
                       <View style={{ width: "15%" }}>
-                        <Text style={{ textAlign: "right" }}>
+                        <Text style={[{ textAlign: "right" }, ...[checkRead]]}>
                           {lastMessageDate}
                         </Text>
-                        <Text style={{ textAlign: "right" }}>
+                        <Text style={[{ textAlign: "right" }, ...[checkRead]]}>
                           {lastMessageTime}
                         </Text>
-                        <Text style={{ textAlign: "right", marginTop: "auto" }}>
-                          {message.messages.length > 1
-                            ? `+${message.messages.length}`
-                            : ""}
-                        </Text>
+                        {message.messages.length > 1 ?
+                          <Text style={[{ textAlign: "right", marginTop: "auto" }, ...[checkRead]]}>
+                            +{message.messages.length}
+                          </Text>
+                        : ""}
                       </View>
                     </Pressable>
                   );

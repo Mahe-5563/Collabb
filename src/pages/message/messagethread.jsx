@@ -11,15 +11,25 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import Navbar from "../../components/navbar";
-import { setPadding, textContentSize } from "../../css/common";
+import {
+  appFontFamily,
+  appFontFamilyBold,
+  setMargin,
+  setPadding,
+  textContentSize,
+  textSubheaders,
+} from "../../css/common";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faAngleDown,
   faAngleUp,
   faPaperclip,
+  faReply,
 } from "@fortawesome/free-solid-svg-icons";
 import { messagingStyles } from "../../css/interactables";
 import { getDate, getTime } from "../../js/common";
+import { colors } from "../../css/colors";
+import { apiUpdateThreadStatus } from "../../api/messaging";
 
 function MessageThread(props) {
   const [openThread, setOpenThread] = useState(2);
@@ -30,7 +40,15 @@ function MessageThread(props) {
     if (props.route.params.message && props.route.params.recipient) {
       setMessages(props.route.params.message);
       setRecipient(props.route.params.recipient);
-			setOpenThread(props.route.params.message.messages[props.route.params.message.messages.length - 1]?.messageid);
+      setOpenThread(
+        props.route.params.message.messages[
+          props.route.params.message.messages.length - 1
+        ]?.messageid
+      );
+
+      apiUpdateThreadStatus(props?.route?.params?.message?.threadtitle, true, (response) => {
+        // console.info("apiUpdateThreadStatus (response): ", response);
+      })
     }
   }, [props.route.params.message, props.route.params.recipient]);
 
@@ -44,23 +62,79 @@ function MessageThread(props) {
         {recipient && (
           <Navbar
             {...props}
-            title={`${recipient?.firstName} ${recipient?.lastName}`}
+            // title={`${recipient?.firstName} ${recipient?.lastName}`}
           />
         )}
       </SafeAreaView>
       {messages && (
         <View style={[setPadding(20).setPadding]}>
-          <Text style={{ fontSize: textContentSize }}>
+          <Text
+            style={{ fontSize: textContentSize, fontFamily: appFontFamilyBold }}
+          >
             {messages?.threadtitle}
           </Text>
         </View>
       )}
       {messages && (
-        <ScrollView style={[setPadding(20).setPadding]}>
+        <View style={[setPadding(20).setPadding, { display: "flex", flexDirection: "row" }]}>
+          <Text
+            style={[
+              messagingStyles.recipientIcon,
+              setMargin(10).setMarginRight
+            ]}
+          >
+            {recipient?.firstName?.charAt(0)}
+          </Text>
+          <Text
+            style={{ 
+              fontSize: textSubheaders, 
+              fontFamily: appFontFamily,
+              marginTop: "auto",
+              marginBottom: "auto",
+              flexWrap: "wrap",
+              maxWidth: "90%",
+              // borderWidth: 1,
+            }}
+          >
+            {recipient?.firstName} {recipient?.lastName} 
+          </Text>
+        </View>
+      )}
+      <View style={[setPadding(20).setPaddingHorizontal, setPadding(5).setPaddingBottom]}>
+        <Pressable
+          style={{ alignSelf: "flex-end", borderColor: colors.light_color, }}
+          onPress={() => {
+            props.navigation.navigate(
+              "message_compose",
+              {
+                recipient,
+                sender: messages.clientid,
+                messageTitle: messages?.threadtitle,
+              }
+            )
+          }}
+        >
+          <View
+            style={{
+              borderWidth: 1,
+              borderRadius: 50,
+              alignItems: "center",
+              padding: 10,
+            }}
+          >
+            <FontAwesomeIcon icon={faReply} />
+          </View>
+          <Text style={{ alignSelf: "center", fontFamily: appFontFamily, marginTop: 5, }}>
+            Reply
+          </Text>
+        </Pressable>
+      </View>
+      {messages && (
+        <ScrollView style={[setPadding(20).setPaddingHorizontal]}>
           {messages.messages.map((message) => {
             return (
               <Pressable
-			  	key={`message_${message.messageid}`}
+                key={`message_${message.messageid}`}
                 style={messagingStyles.threadSection}
                 onPress={() => handleMessageThread(message.messageid)}
               >
@@ -94,60 +168,40 @@ function MessageThread(props) {
                     />
                   </View>
                 </View>
-                {message.attachments.length > 0 && 
-									<View
-										style={{
-											marginTop: 10,
-											display: "flex",
-											flexDirection: "row",
-										}}
-									>
-										<TouchableOpacity
-											style={{
-												borderWidth: 1,
-												paddingHorizontal: 6,
-												paddingVertical: 3,
-												borderRadius: 50,
-												display: "flex",
-												flexDirection: "row",
-												marginRight: 10,
-											}}
-										>
-											<FontAwesomeIcon icon={faPaperclip} size={14} />
-											<Text style={{ fontSize: 14, marginLeft: 5 }}>
-												Attachment 1
-											</Text>
-										</TouchableOpacity>
-										<TouchableOpacity
-											style={{
-												borderWidth: 1,
-												paddingHorizontal: 6,
-												paddingVertical: 3,
-												borderRadius: 50,
-												display: "flex",
-												flexDirection: "row",
-												marginRight: 10,
-											}}
-										>
-											<FontAwesomeIcon icon={faPaperclip} size={14} />
-											<Text style={{ fontSize: 14, marginLeft: 5 }}>
-												Attachment 2
-											</Text>
-										</TouchableOpacity>
-										<TouchableOpacity
-											style={{
-												borderWidth: 1,
-												paddingHorizontal: 6,
-												paddingVertical: 3,
-												borderRadius: 50,
-												display: "flex",
-												flexDirection: "row",
-											}}
-										>
-											<Text style={{ fontSize: 14 }}>+2</Text>
-										</TouchableOpacity>
-									</View>
-								}
+                {message.attachments.length > 0 && (
+                  <View
+                    style={{
+                      marginTop: 10,
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    {message?.attachments?.map(attachment => (
+                      <TouchableOpacity 
+                        key={`attachment_${attachment.url}`}
+                        style={messagingStyles.threadAttachment}
+                      >
+                        <FontAwesomeIcon icon={faPaperclip} size={14} />
+                        <Text style={{ fontSize: 14, marginLeft: 5, paddingRight: 10, }} numberOfLines={1}>
+                          {attachment.name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                    {/* <TouchableOpacity
+                      style={{
+                        borderWidth: 1,
+                        paddingHorizontal: 6,
+                        paddingVertical: 3,
+                        borderRadius: 50,
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text style={{ fontSize: 14 }}>+2</Text>
+                    </TouchableOpacity> */}
+                  </View>
+                )}
               </Pressable>
             );
           })}

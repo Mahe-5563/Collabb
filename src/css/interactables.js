@@ -890,5 +890,33 @@ export const messagingStyles = StyleSheet.create({
         fontFamily: appFontFamily,
         fontSize: textSize,
         lineHeight: 25.5
+    },
+    attachDocument: {
+        display: "flex",
+        flexDirection: "row",
+        borderWidth: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        width: "55%",
+        borderRadius: 30,
+    },
+    attachments: {
+        fontSize: textSize, 
+        backgroundColor: colors.primary_complementary,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        marginBottom: 5,
+    },
+    threadAttachment: {
+        borderWidth: 1,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 50,
+        display: "flex",
+        flexDirection: "row",
+        marginRight: 10,
+        marginBottom: 5,
+        maxWidth: 150,
     }
 })

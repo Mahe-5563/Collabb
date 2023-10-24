@@ -22,4 +22,4 @@ const storage = getStorage(app);
 
 console.log("firebaseConfig: ", firebaseConfig);
 
-export {app, firebase};
+export {app, firebase, storage};
