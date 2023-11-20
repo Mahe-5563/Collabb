@@ -9,7 +9,7 @@ import CTAButton from "../components/cta_button";
 import { textStyles } from "../css/interactables";
 import InputField from "../components/input_field";
 import { setUserDetails } from "../../redux/actions/user";
-import { appFontFamily, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
+import { appFontFamily, customValue, fontFamily, fontSize, setMargin, textHeaders } from "../css/common";
 import { apiCheckForUser } from "../api/account_creation";
 
 function Signup(props) {
@@ -143,6 +143,9 @@ function Signup(props) {
             placeholderText="First name"
             onTextChange={(text) => onTextChange("field_first_name", text)}
             onBlur={() => onBlur("field_first_name")}
+            customCSS={[
+              customValue("borderColor", checkValidity["field_first_name"] == false && colors.danger_color).setCustomValue,
+            ]}
           />
           {checkValidity["field_first_name"] == false && 
             <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
@@ -157,6 +160,9 @@ function Signup(props) {
             placeholderText="Last Name"
             onTextChange={(text) => onTextChange("field_last_name", text)}
             onBlur={() => onBlur("field_last_name")}
+            customCSS={[
+              customValue("borderColor", checkValidity["field_last_name"] == false && colors.danger_color).setCustomValue,
+            ]}
           />
           {checkValidity["field_last_name"] == false && 
             <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
@@ -172,6 +178,9 @@ function Signup(props) {
             onTextChange={(text) => onTextChange("field_email", text)}
             onBlur={() => onBlur("field_email")}
             keyboardType={"email-address"}
+            customCSS={[
+              customValue("borderColor", checkValidity["field_email"] == false && colors.danger_color).setCustomValue,
+            ]}
           />
           {checkValidity["field_email"] == false && 
             <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>
@@ -187,6 +196,9 @@ function Signup(props) {
             placeholderText="Enter Password"
             onTextChange={(text) => onTextChange("field_pwd", text)}
             onBlur={() => onBlur("field_pwd")}
+            customCSS={[
+              customValue("borderColor", checkValidity["field_pwd"] == false && colors.danger_color).setCustomValue,
+            ]}
           />
           {checkValidity["field_pwd"] == false && 
             <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft, setMargin(5).setMarginTop]}>

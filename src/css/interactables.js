@@ -874,9 +874,17 @@ export const messagingStyles = StyleSheet.create({
         borderTopWidth: 1,
         padding: 10,
         marginBottom: 5,
+        position: "relative"
     },
     threadDate: {
         alignSelf: "flex-end",
+        fontFamily: appFontFamilyMedium
+    },
+    threadSender: {
+        // alignSelf: "flex-start",
+        position: "absolute",
+        top: 10,
+        left: 10,
         fontFamily: appFontFamilyMedium
     },
     threadMessageSection: {

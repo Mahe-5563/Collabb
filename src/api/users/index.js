@@ -23,3 +23,15 @@ export const apiGetTalents = (filters, callback) => {
   .then(res => callback(res.data))
   .catch(fail => console.error(fail))
 }
+
+export const apiLoginUser = (loginDet, callback) => {
+  axios({
+    baseURL: "https://collabb-server-2.onrender.com",
+    url: "/login-user",
+    params: {
+      ...loginDet,
+    }
+  })
+  .then(res => callback(res.data))
+  .catch(fail => console.error(fail))
+}

@@ -1,39 +1,63 @@
 import React from "react";
-import { View, Text, Pressable, SafeAreaView, Image } from "react-native";
+import { View, Text, Pressable, SafeAreaView, Image, Alert } from "react-native";
 
 import { homepageNavStyle } from "../css/navbar";
 import { colors } from "../css/colors";
-import { setMargin } from "../css/common";
+import { appFontFamily, fontFamily, setMargin } from "../css/common";
 import userImg from "../../assets/images/user.png";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function NavbarHomepage(props) {
   const currentUserType = props?.currentUser?.usertype;
   return (
     <SafeAreaView>
       <View style={[homepageNavStyle.container]}>
-        {/* <Pressable
+        <Pressable
           style={[
             homepageNavStyle.profileImgPressable
           ]}
           onPress={() => {
-            if(currentUserType == "talent") {
-              props.navigation.navigate(
-                "talent_profile_page",
-                { back_key: props.route.key }
-              )
-            } else if (currentUserType == "client") {
-              props.navigation.navigate(
-                "client_profile_page",
-                { back_key: props.route.key }
-              )
-            }
+            Alert.alert(
+              "Confirmation.",
+              "Are you sure you want to log out?",
+              [
+                {
+                  text: "Yes",
+                  onPress: () => {
+                    AsyncStorage.setItem("userId", "");
+                    props.navigation.navigate("firstpage");
+                  },
+                  style: "default"
+                },
+                {
+                  text: "No",
+                  onPress: () => {},
+                  style: "cancel"
+                }
+              ]
+            )
           }}
         >
-          <Image 
-            source={props.currentUser.profileUri ? { uri: props?.currentUser?.profileUri } : userImg}
-            style={homepageNavStyle.profileImg}
+          <FontAwesomeIcon 
+            icon={faArrowRightFromBracket}
+            size={26}
+            color={colors.primary_color}
+            style={{
+              marginBottom: 5,
+              // marginRight: 10,
+            }}
           />
-        </Pressable> */}
+          <Text
+            style={{
+              color: colors.primary_color,
+              fontFamily: appFontFamily
+            }}
+          >
+            Log Out
+          </Text>
+        </Pressable>
         <View
           style={{
             position: "absolute",

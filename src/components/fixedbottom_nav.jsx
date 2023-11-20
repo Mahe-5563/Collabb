@@ -62,7 +62,7 @@ function FixedBottomNav(props) {
                     "talent_profile_page",
                     { back_key: props.route.key }
                   )
-                } else if (currentUserType == "client") {
+                } else if (userDetails?.usertype == "client") {
                   props.navigation.navigate(
                     "client_profile_page",
                     { back_key: props.route.key }

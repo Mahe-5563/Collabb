@@ -38,7 +38,10 @@ function InputField(props) {
       {/* Single line input field */}
       {!isMultiLine && !passwordField && (
         <View
-          style={[inputStyles.inputView, ...(customCSS ? [customCSS] : [])]}
+          style={[
+            inputStyles.inputView, 
+            ...(customCSS ? [customCSS] : []),
+          ]}
         >
           {interactableIcon && (
             <FontAwesomeIcon

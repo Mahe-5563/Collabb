@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CTAButton from "../components/cta_button";
 import LogoDark from "../../assets/images/logo_dark.png";
 import { apiGetUserDetailsById } from "../api/account_creation";
+import { checkForUser } from "../js/common";
 
 function FirstPage(props) {
   const [isValidCred, setIsValidCred] = useState(true); // Yet to implement...
@@ -42,11 +43,11 @@ function FirstPage(props) {
      */
     // Manually set user id...
     // AsyncStorage.setItem("userId", "65199b3ddf213b73178fcd2e");
-    checkForUser();
-
+    // checkForUser();
+    checkForUser(props.navigation);
   }, []);
 
-  async function checkForUser () {
+  /* async function checkForUser () {
     const userId =  await AsyncStorage.getItem("userId");
     console.info(userId);
     if(userId) {
@@ -70,7 +71,7 @@ function FirstPage(props) {
         }
       })
     }
-  }
+  } */
 
   return (
     <View
@@ -98,10 +99,10 @@ function FirstPage(props) {
           dark
           title={"Login to existing account"}
           onPress={() => {
-            /* props.navigation.navigate("login", {
+            props.navigation.navigate("login", {
               back_key: props.route.key,
-            }); */
-            checkForUser();
+            });
+            // checkForUser();
           }}
         />
 

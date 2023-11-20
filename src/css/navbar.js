@@ -83,7 +83,13 @@ export const homepageNavStyle = StyleSheet.create({
         // width: "80%"
     },
     profileImgPressable: {
-        alignItems: "flex-end",
+        position: "absolute",
+        right: 10,
+        top: 40,
+        // borderWidth: 1,
+        // borderColor: colors.primary_color,
+        alignItems: "center",
+        padding: 5,
     },
     profileImg: {
         height: 60,

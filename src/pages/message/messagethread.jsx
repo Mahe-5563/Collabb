@@ -34,12 +34,14 @@ import { apiUpdateThreadStatus } from "../../api/messaging";
 function MessageThread(props) {
   const [openThread, setOpenThread] = useState(2);
   const [messages, setMessages] = useState();
+  const [sender, setSender] = useState();
   const [recipient, setRecipient] = useState();
 
   useEffect(() => {
     if (props.route.params.message && props.route.params.recipient) {
       setMessages(props.route.params.message);
       setRecipient(props.route.params.recipient);
+      setSender(props.route.params.sender);
       setOpenThread(
         props.route.params.message.messages[
           props.route.params.message.messages.length - 1
@@ -132,6 +134,9 @@ function MessageThread(props) {
       {messages && (
         <ScrollView style={[setPadding(20).setPaddingHorizontal]}>
           {messages.messages.map((message) => {
+            const sentBy = message.fromreci == sender?._id ? 
+              `${sender?.firstName} ${sender?.lastName}` 
+              : `${recipient.firstName} ${recipient.lastName}`
             return (
               <Pressable
                 key={`message_${message.messageid}`}
@@ -142,6 +147,9 @@ function MessageThread(props) {
                   {`${getDate(Number(message.messageid))} ${getTime(
                     Number(message.messageid)
                   )}`}
+                </Text>
+                <Text style={messagingStyles.threadSender}>
+                  {sentBy}
                 </Text>
                 <View style={messagingStyles.threadMessageSection}>
                   <Text

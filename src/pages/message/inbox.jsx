@@ -139,6 +139,7 @@ function Inbox(props) {
                           {
                             message,
                             recipient: currentRecipient,
+                            sender: props?.currentUser,
                           }
                         );
                       }}

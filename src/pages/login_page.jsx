@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ToastAndroid, Alert } from "react-native";
 
 import CTAButton from "../components/cta_button";
 import InputField from "../components/input_field";
@@ -15,11 +15,23 @@ import {
 } from "../css/common";
 import { colors } from "../css/colors";
 import { textStyles } from "../css/interactables";
+import { apiLoginUser } from "../api/users";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { checkForUser } from "../js/common";
 
 function LoginPage(props) {
-  const [formValues, setFormValues] = useState({});
-  const [checkValidity, setCheckValidity] = useState({});
+  const [formValues, setFormValues] = useState({
+    field_email: "",
+    field_pwd: "",
+  });
+  const [checkValidity, setCheckValidity] = useState({
+    field_email: true,
+    field_pwd: true,
+  });
+  const [emailCheck, setEmailCheck] = useState("Invalid Email address");
+  const [pwdCheck, setPwdCheck] = useState("Invalid Password");
   const [isValidCred, setIsValidCred] = useState(true); // Yet to implement...
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -63,6 +75,29 @@ function LoginPage(props) {
 
   const proceedWithLogin = () => {
     console.info("Login Button clicked!");
+    setIsDisabled(true);
+    console.info("formValues: ", formValues);
+    console.info("checkValidity: ", checkValidity);
+    if(formValues.field_email && formValues.field_pwd && checkValidity.field_email, checkValidity.field_pwd) {
+      apiLoginUser({ 
+        email: formValues.field_email,
+        pwd: formValues.field_pwd
+      }, (response) => {
+        console.info("Login user: ", response);
+        if(response.statuscode == 200) {
+          AsyncStorage.setItem("userId", response.res._id);
+          // console.info("response.res._id: ", response.res._id);
+          checkForUser(props.navigation, () => {
+            ToastAndroid.show(response.message, 4000);
+            setIsDisabled(false);
+          });
+        } else {
+          ToastAndroid.show(response.message, 4000);
+        }
+      })
+    } else {
+
+    }
   };
 
   return (
@@ -99,10 +134,13 @@ function LoginPage(props) {
         onTextChange={(text) => onTextChange("field_email", text)}
         onBlur={() => onBlur("field_email")}
         keyboardType={"email-address"}
+        customCSS={[
+          customValue("borderColor", checkValidity["field_email"] == false && colors.danger_color).setCustomValue,
+        ]}
       />
       {checkValidity["field_email"] == false && (
-        <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft]}>
-          Invalid Email address
+        <Text style={[textStyles.errorMessage, setMargin(5).setMarginTop]}>
+          {emailCheck}
         </Text>
       )}
 
@@ -113,24 +151,31 @@ function LoginPage(props) {
         onTextChange={(text) => onTextChange("field_pwd", text)}
         onBlur={() => onBlur("field_pwd")}
         keyboardType={"visible-password"}
-        customCSS={[setMargin(15).setMarginTop]}
+        customCSS={[
+          setMargin(15).setMarginTop,
+          customValue("borderColor", checkValidity["field_pwd"] == false && colors.danger_color).setCustomValue,
+        ]}
       />
+      <Text style={[setMargin(5).setMarginTop, { fontFamily: appFontFamily }]}>
+        Password should be more than 6 and less than 20 characters
+      </Text>
       {checkValidity["field_pwd"] == false && (
-        <Text style={[textStyles.errorMessage, setMargin(10).setMarginLeft]}>
-          Invalid Password
+        <Text style={[textStyles.errorMessage, setMargin(5).setMarginTop]}>
+          {pwdCheck}
         </Text>
       )}
 
       <CTAButton
         dark
         halfWidth
-        title={"Login"}
+        title={isDisabled ? "Logging you in..." : "Login"}
         onPress={proceedWithLogin}
         customCSS={[
           setMargin("auto").setMarginRight,
           setMargin("auto").setMarginLeft,
           setMargin(20).setMarginTop,
         ]}
+        isDisabled={isDisabled}
       />
 
       <Pressable
@@ -140,6 +185,16 @@ function LoginPage(props) {
           setMargin("auto").setMarginRight,
         ]}
         onPress={() => {
+          Alert.alert(
+            "Feature",
+            "This feature redirects you to an external webpage that requests you to change the password. The feature is not part of the version 1.0 of the application.",
+            [
+              {
+                "text": "OK",
+                style: "cancel"
+              }
+            ]
+          )
         }}
       >
         <Text

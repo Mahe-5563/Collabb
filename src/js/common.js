@@ -1,5 +1,7 @@
 import { ToastAndroid } from "react-native";
 import { months } from "../json/common";
+import { apiGetUserDetailsById } from "../api/account_creation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getSelectedDate = (date) => {
   const fullDate = new Date(date);
@@ -43,3 +45,31 @@ export const getShortDate = (date) => {
   )[0].shortMonth;
   return `${month} ${dat}`;
 };
+
+export const checkForUser = async (navigation, callback) => {
+  const userId =  await AsyncStorage.getItem("userId");
+    console.info(userId);
+    if(userId) {
+      apiGetUserDetailsById(userId, (response) => {
+        const userType = response?.res?.usertype;
+        console.info(userType);
+        if(userType == "client"){
+          navigation.navigate(
+            "client_home_page",
+            {
+              userDetails: response?.res
+            }
+          );
+          callback && callback();
+        } else if (userType == "talent") {
+          navigation.navigate(
+            "talent_home_page",
+            {
+              userDetails: response?.res
+            }
+          );
+          callback && callback();
+        }
+      })
+    }
+}

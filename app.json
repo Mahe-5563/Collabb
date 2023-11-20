@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash_screen_collabb.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -22,7 +22,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [ "CAMERA" ]
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "package": "com.mahesu.Collabb"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,6 +43,11 @@
           "iCloudContainerEnvironment": "Production"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e68980f7-ad72-4af7-9df9-9d3dc429b344"
+      }
+    }
   }
 }
