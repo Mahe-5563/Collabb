@@ -17,8 +17,8 @@ let customFonts = {
   'Lato-Bold': require('./assets/fonts/Lato/Lato-Bold.ttf'),
 };
 
-SplashScreen.preventAutoHideAsync();
-SplashScreen.hideAsync();
+// SplashScreen.preventAutoHideAsync();
+// SplashScreen.hideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts(customFonts);
