@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, ToastAndroid, View } from "react-native";
 import { connect } from "react-redux";
 
 import ImgButton from "../../img_button";
@@ -11,11 +11,14 @@ import {
   setCurrentUserProfile,
   setCurrentUserProfileDetails,
 } from "../../../../redux/actions/user";
-import { apiGetUserProfile } from "../../../api/users";
+import { apiGetTalents, apiGetUserProfile } from "../../../api/users";
+import { homepageElements } from "../../../css/client";
+import { colors } from "../../../css/colors";
 
 function ClientHomePageComp(props) {
   const { navigation } = props;
-  const [following, setFollowing] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [similarTalents, setSimilarTalents] = useState();
 
   const imgButtons = [
     {
@@ -32,42 +35,28 @@ function ClientHomePageComp(props) {
       title: "Search Talents",
       btnBg: btnImg,
       onPress: function () {
-        ToastAndroid.show("Under development!", 3000);
-        // navigation.navigate(
-        //   "search_talents",
-        //   { back_key: props.route.key }
-        // )
+        // ToastAndroid.show("Under development!", 3000);
+        navigation.navigate(
+          "search_talents",
+          { back_key: props.route.key }
+        )
       },
     }
   ];
 
-  const similarTalents = [
-    {
-      id: "1",
-      name: "Lionel Messi",
-      profilePic: placeholderImg,
-      jobRole: "Management Consultant",
-    },
-    {
-      id: "2",
-      name: "Erling Haaland",
-      profilePic: placeholderImg,
-      jobRole: "Art Dealer",
-    },
-    {
-      id: "3",
-      name: "Eden Hazard",
-      profilePic: placeholderImg,
-      jobRole: "Web Developer",
-    },
-  ];
-
   useEffect(() => {
     // Get User profile details...
+    setLoader(true);
     if (props?.currentUser?._id) {
       apiGetUserProfile(props?.currentUser?._id, "client", (result) => {
         const talDetails = result?.res?.clientDetails;
         props.setCurrentUserProfileDetails(talDetails);
+        apiGetTalents({pageno: 1, name: "", categoryid: ""}, (response) => {
+          if(response?.res?.length > 0) {
+            setSimilarTalents(response.res);
+            setLoader(false);
+          }
+        })
       });
     }
     // Get possible client job posts...
@@ -87,18 +76,23 @@ function ClientHomePageComp(props) {
             />
           ))}
         </View>
-        <View
+        {similarTalents && <View
           style={{
-            // paddingHorizontal: 20,
             marginTop: 20,
             paddingBottom: 40,
           }}
         >
-          <SimilarTalents 
-            {...props}
-            similarTalents={similarTalents}
-          />
-        </View>
+          <Text style={homepageElements.suggTitle}>
+            {"Similar to your Searches"}
+          </Text>
+          {loader ? 
+            <ActivityIndicator size={"large"} color={colors.secondary_color} style={[setMargin(30).setMarginTop]} /> : 
+            <SimilarTalents 
+              {...props}
+              similarTalents={similarTalents}
+            />
+          }
+        </View>}
       </ScrollView>
     </>
   );

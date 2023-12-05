@@ -7,6 +7,8 @@ import {
   Text,
   ToastAndroid,
   Pressable,
+	RefreshControl,
+	ActivityIndicator,
 } from "react-native";
 
 import Navbar from "../../components/navbar";
@@ -14,7 +16,7 @@ import { freelanceCategories } from "../../json/cat_subcat";
 import DropdownComponent from "../../components/dropdown";
 import TalentApplicationCard from "../../components/page_components/application/TalentApplicationCard";
 import InputField from "../../components/input_field";
-import { setMargin } from "../../css/common";
+import { appFontFamily, setMargin, textSize } from "../../css/common";
 import { apiGetTalents } from "../../api/users";
 
 function SearchTalents(props) {
@@ -25,13 +27,38 @@ function SearchTalents(props) {
 		name: "",
 		categoryid: ""
 	})
+	const [loader, setLoader] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+	const [findUsers, setFindUsers] = useState(true);
 
 	useEffect(() => {
+		onRefresh();
+		// getTalents(filters);
+	}, [filters]);
+
+	const getTalents = (filters) => {
+		setLoader(true);
+		setRefreshing(true);
 		apiGetTalents(filters, (response) => {
 			// console.info("SearchTalents (response): ", response);
-			setTalentList(response.res);
+			setLoader(false);
+			setRefreshing(false);
+			if(response?.res?.length > 0) {
+				setTalentList(response.res);
+				setFindUsers(true);
+			} else if (response?.message == "Cannot find users!") {
+				setFindUsers(false);
+			}
 		})
-	}, [filters]);
+	}
+
+	const onRefresh = () => {
+		setRefreshing(true);
+    setLoader(true);
+    setTalentList([]);
+		setFindUsers(true);
+    getTalents(filters);
+	}
 	
   return (
     <>
@@ -41,30 +68,6 @@ function SearchTalents(props) {
 					margin: 20,
 				}}
 			>
-				{/* <View
-					style={{
-						display: "flex",
-						flexDirection: "row",
-						marginBottom: 10,
-					}}
-				>
-					<InputField
-						placeholderText={"Search by talent name"}
-						onTextChange={(value) => {
-							setFilters(prev => ({ ...prev, name: value }));
-						}}
-						fieldKey={""}
-						customCSS={[{ width: "100%" }]}
-					/>
-					<Pressable
-						style={{
-							borderWidth: 1,
-							borderRadius: 5,
-						}}
-					>
-						<Text style={{  }}>Go</Text>
-					</Pressable>
-				</View> */}
 				<DropdownComponent
 					prompt={"Filter by Category"}
 					items={freelanceCategories}
@@ -80,12 +83,41 @@ function SearchTalents(props) {
 					paddingHorizontal: 20,
 					marginVertical: 5,
 				}}
+				refreshControl={
+					<RefreshControl
+						onRefresh={onRefresh} 
+						refreshing={refreshing}
+					/>
+				}
 			>
+				{talentList?.length == 0 && 
+					!findUsers && 
+					<Text
+						style={{
+							fontFamily: appFontFamily,
+							fontSize: textSize,
+							alignSelf: "center"
+						}}
+					>
+						Cannot Find Users for the category!
+					</Text>
+				}
 				{talentList && talentList.map((talent, index) => (
 					<Pressable
 						key={`talent_${index}`}
 						onPress={() => {
-							console.info("Search Talents (talent): ", talent);
+							const application = {
+								[talent.userDetail._id]: {
+									userDetail: talent.userDetail,
+									profileDetail: talent.profileDetail,
+								}
+							}
+							props.navigation.navigate("talent_apply_profile_page", {
+								application,
+								type: "view_application",
+								page: "search_talents",
+								clientId: props.currentUser._id
+							});
 						}}
 					>
 						<TalentApplicationCard 

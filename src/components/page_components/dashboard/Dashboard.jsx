@@ -80,7 +80,7 @@ import { buttons } from "../../../css/interactables";
                   fontFamily: appFontFamily
                 }}
               >
-                {userType == "talent" ? "My Applied Jobs" : "Active Jobs"}
+                {userType == "talent" ? "My Applied Jobs" : "Recently Created Jobs"}
               </Text>
             </TouchableOpacity>
             {userType == "client" &&
@@ -131,7 +131,7 @@ import { buttons } from "../../../css/interactables";
                 </Text>
               </TouchableOpacity>
             }
-            {userType == "client" &&
+            {/* {userType == "client" &&
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={[ buttons.dashboardButtons, setMargin(20).setMarginBottom ]}
@@ -148,7 +148,7 @@ import { buttons } from "../../../css/interactables";
                   {"Favourite Talents"}
                 </Text>
               </TouchableOpacity>
-            }
+            } */}
             {/* {userType == "client" && 
               <TouchableOpacity
                 activeOpacity={0.5}

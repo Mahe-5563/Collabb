@@ -65,6 +65,7 @@ function FollowersSection(props) {
 }
 
 function ActionIconSection(props) {
+  const { currentUser, clientId } = props;
   return (
     <View
       style={[
@@ -95,7 +96,18 @@ function ActionIconSection(props) {
       </Pressable>
       <Pressable
         style={[profileSectionStyles.actionIcons]}
-        onPress={() => ToastAndroid.show("Contact clicked", 2000)}
+        onPress={() => {
+          // ToastAndroid.show("Contact clicked", 2000)
+          console.info("Current User: ", currentUser._id)
+          props.navigation.navigate(
+            "message_compose",
+            {
+              recipient: currentUser,
+              sender: clientId,
+              // messageTitle: messages?.threadtitle,
+            }
+          )
+        }}
       >
         <FontAwesomeIcon icon={faMessage} size={40} />
         <Text style={[profileSectionStyles.actionIconTitle]}>Contact</Text>

@@ -54,6 +54,9 @@ function TalentApplyProfile(props) {
           jobDetails={jobDetails}
           userType={"client"}
           status="talentApply"
+          page={props?.route?.params?.page || ""}
+          clientId={props?.route?.params?.clientId || ""}
+          navigation={props.navigation}
         />
       </ScrollView>
     </SafeAreaView>

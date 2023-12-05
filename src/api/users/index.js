@@ -13,6 +13,7 @@ export const apiGetUserProfile = (userid, accounttype, callback) => {
 }
 
 export const apiGetTalents = (filters, callback) => {
+  console.info("filters: ", filters);
   axios({
     baseURL: "https://collabb-server-2.onrender.com",
     url: "/get-talents",

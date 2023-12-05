@@ -7,26 +7,21 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
 import { marginCenter, setMargin } from "../../css/common";
 import { homepageElements } from "../../css/client";
 import ToggleButtons from "../../components/toggle_button";
+import { applicationCard } from "../../css/interactables";
 
 function SimilarTalents(props) {
   const { 
     navigation, 
     similarTalents, 
   } = props;
-  const [following, setFollowing] = useState(false);
+  // const [following, setFollowing] = useState(false);
 
   return (
     <>
-      <Text style={homepageElements.suggTitle}>
-        {"Similar to your Searches"}
-      </Text>
       <ScrollView
         horizontal={true}
         style={[
@@ -38,37 +33,29 @@ function SimilarTalents(props) {
         ]}
       >
         {similarTalents.map((talent, index) => (
-          <View
-            key={`similar_talent_${talent.id}`}
+          <Pressable
+            key={`similar_talent_${index}`}
             style={[
               homepageElements.followSuggCard,
               ...(index != similarTalents.length - 1
                 ? [setMargin(20).setMarginRight]
                 : []),
             ]}
+            onPress={() => {
+              props.navigation.navigate("talent_apply_profile_page", {
+								application: { [talent.userDetail._id]: { ...talent, } },
+								type: "view_application",
+								page: "search_talents",
+								clientId: props.currentUser._id
+							});
+            }}
           >
-            <Pressable
-              style={{
-                position: "absolute",
-                right: 10,
-                top: 10,
-              }}
-              onPress={() => {
-                setFollowing(!following);
-              }}
-            >
-              <FontAwesomeIcon
-                icon={following ? faStarSolid : faStarRegular}
-                size={28}
-                color="#d20000"
-              />
-            </Pressable>
             <Image
-              source={talent.profilePic}
-              style={[marginCenter, setMargin(20).setMarginTop]}
+              source={{uri: talent?.userDetail?.profileUri}}
+              style={[marginCenter, setMargin(20).setMarginTop, applicationCard.applicationProfileImg]}
             />
-            <Text style={homepageElements.suggCardTitle}>{talent.name}</Text>
-            <Text style={homepageElements.suggCardRole}>{talent.jobRole}</Text>
+            <Text style={homepageElements.suggCardTitle}>{talent?.userDetail?.firstName?.trim()} {talent?.userDetail?.lastName?.trim()}</Text>
+            <Text style={homepageElements.suggCardRole}>{talent?.profileDetail?.subcategory}</Text>
             <View
               style={[
                 setMargin(20).setMarginTop,
@@ -80,7 +67,7 @@ function SimilarTalents(props) {
             >
               <ToggleButtons />
             </View>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </>

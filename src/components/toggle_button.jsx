@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, Pressable } from "react-native";
+import { SafeAreaView, Text, Pressable, ToastAndroid } from "react-native";
 import { toggleButtons } from "../css/interactables";
 
 function ToggleButtons() {
@@ -9,7 +9,10 @@ function ToggleButtons() {
         {isFollowing ?
             <Pressable
                 style={toggleButtons.btnFollowing}
-                onPress={() => setIsFollowing(false)}
+                onPress={() => {
+                    ToastAndroid.show("This is just a development feature. This doesn't have any changes.", 5000);
+                    setIsFollowing(false)
+                }}
             >
                 <Text
                     style={toggleButtons.btnFollowingTitle}
@@ -20,7 +23,10 @@ function ToggleButtons() {
         :
             <Pressable
                 style={toggleButtons.btnFollow}
-                onPress={() => setIsFollowing(true)}
+                onPress={() => {
+                    ToastAndroid.show("This is just a development feature. This doesn't have any changes.", 5000);
+                    setIsFollowing(true)
+                }}
             >
                 <Text
                     style={toggleButtons.btnFollowTitle}

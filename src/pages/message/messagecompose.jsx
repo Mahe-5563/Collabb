@@ -7,7 +7,7 @@ import {
   Text,
   Image,
   RefreshControl,
-	ToastAndroid,
+  ToastAndroid,
 } from "react-native";
 import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
@@ -22,146 +22,200 @@ import Navbar from "../../components/navbar";
 import CTAButton from "../../components/cta_button";
 import InputField from "../../components/input_field";
 import { messagingStyles, textStyles } from "../../css/interactables";
-import { appFontFamily, setMargin, setPadding, textHeaderMedium, textSize, textSubheaders } from "../../css/common";
+import {
+  appFontFamily,
+	appFontFamilyBold,
+  setMargin,
+  setPadding,
+  textContentSize,
+  textSize,
+  textSubheaders,
+} from "../../css/common";
 import { apiSendMessage } from "../../api/messaging";
 
 function MessageCompose(props) {
-	const [composedMessage, setComposedMessage] = useState();
-	const [formError, setFormError] = useState();
-	const [attachments, setAttachments] = useState();
-	const [sending, setSending] = useState(false);
+  const [composedMessage, setComposedMessage] = useState();
+  const [formError, setFormError] = useState();
+  const [attachments, setAttachments] = useState();
+  const [sending, setSending] = useState(false);
+	const [messageSubject, setMessageSubject] = useState();
 
-	const uploadDocuments = async () => {
-		await DocumentPicker.getDocumentAsync({ 
-				type: "*/*", 
-				copyToCacheDirectory: true,
-				multiple: true,
-			}).then(res => {
-				const files = res.assets;
-				setAttachments(files);
-			}).catch(fail => {
-				console.info("fail: ", fail);
-			})
-	}
+  const uploadDocuments = async () => {
+    await DocumentPicker.getDocumentAsync({
+      type: "*/*",
+      copyToCacheDirectory: true,
+      multiple: true,
+    })
+      .then((res) => {
+        const files = res.assets;
+        setAttachments(files);
+      })
+      .catch((fail) => {
+        console.info("fail: ", fail);
+      });
+  };
 
-	const sendMessage = async () => {
-		
-		if(composedMessage) {
-			setSending(true);
-			setFormError();
-			// console.info(props?.route?.params);
-			const recipientUsertype = props?.route?.params?.recipient?.usertype;
-			const recipientId = props?.route?.params?.recipient?._id;
-			const senderId = props?.route?.params?.sender;
-			let fbAttachments = [];
-			if(attachments?.length > 0) {
-				const imagePromises = 
-					Array.from(
-						attachments, 
-						(attachment) => 
-							uploadDocumentsFirebase(attachment, senderId, props?.route?.params?.messageTitle)
-					);
-				const imageRes = await Promise.all(imagePromises);
-				fbAttachments = imageRes;
-			}
-			const messageObj = {
-				"clientid": recipientUsertype == "client" ? recipientId : senderId,
-				"talentid": recipientUsertype == "client" ? senderId : recipientId,
-				"threadtitle": props?.route?.params?.messageTitle,
-				"messageid": +new Date(),
-				"messagecontent": composedMessage,
-				"attachments": fbAttachments?.length > 0 ? fbAttachments : [],
-				"fromreci": senderId,
-				"toreci": recipientId,
-			}
+  const sendMessage = async () => {
+    if (composedMessage) {
+      setSending(true);
+      setFormError();
+      // console.info(props?.route?.params);
+      const recipientUsertype = props?.route?.params?.recipient?.usertype;
+      const recipientId = props?.route?.params?.recipient?._id;
+      const senderId = props?.route?.params?.sender;
+      let fbAttachments = [];
+      if (attachments?.length > 0) {
+        const imagePromises = Array.from(attachments, (attachment) =>
+          uploadDocumentsFirebase(
+            attachment,
+            senderId,
+            props?.route?.params?.messageTitle || messageSubject
+          )
+        );
+        const imageRes = await Promise.all(imagePromises);
+        fbAttachments = imageRes;
+      }
+      const messageObj = {
+        clientid: recipientUsertype == "client" ? recipientId : senderId,
+        talentid: recipientUsertype == "client" ? senderId : recipientId,
+        threadtitle: props?.route?.params?.messageTitle || messageSubject,
+        messageid: +new Date(),
+        messagecontent: composedMessage,
+        attachments: fbAttachments?.length > 0 ? fbAttachments : [],
+        fromreci: senderId,
+        toreci: recipientId,
+      };
 
-			// console.info("Message Compose (messageObj): ", messageObj);
-			apiSendMessage(messageObj, (response) => {
-				// console.info("apiSendMessage (Response): ", response);
-				if(response.message == "Message sent successfully!" || response.message == "Message appended successfully!") {
-					setSending(false);
-					ToastAndroid.show("Message sent successfully!", 3000);
-					props.navigation.navigate( "message_inbox" )
-				} else {
-					ToastAndroid.show("Message send failed!", 3000);
-				}
-			})
-		} else {
-			setFormError("Mandatory Field");
-		}
-	}
+      // console.info("Message Compose (messageObj): ", messageObj);
+      apiSendMessage(messageObj, (response) => {
+        // console.info("apiSendMessage (Response): ", response);
+        if (
+          response.message == "Message sent successfully!" ||
+          response.message == "Message appended successfully!"
+        ) {
+          setSending(false);
+          ToastAndroid.show("Message sent successfully!", 3000);
+          props.navigation.navigate("message_inbox");
+        } else {
+          ToastAndroid.show("Message send failed!", 3000);
+        }
+      });
+    } else {
+      setFormError("Mandatory Field");
+    }
+  };
 
-	const uploadDocumentsFirebase = async (document, senderId, messageTitle) => {
-		// File format => senderId-document name-timestamp
-		const storageRef = ref(storage, `/mail-attachments/${senderId}-${document.name}-${Date.now()}`);
+  const uploadDocumentsFirebase = async (document, senderId, messageTitle) => {
+    // File format => senderId-document name-timestamp
+    const storageRef = ref(
+      storage,
+      `/mail-attachments/${senderId}-${document.name}-${Date.now()}`
+    );
 
-		const response = await uploadBytes(storageRef, document);
-		const url = await getDownloadURL(response.ref);
-		return { url, name: document.name };
-	}
+    const response = await uploadBytes(storageRef, document);
+    const url = await getDownloadURL(response.ref);
+    return { url, name: document.name };
+  };
 
   return (
     <>
       <SafeAreaView>
         <Navbar {...props} title={"Compose message"} />
-				<View
-					style={[setPadding(20).setPadding]}
-				>
-					<View>
-						<Text style={{ fontFamily: appFontFamily, fontSize: textSize }}>
-							To:
-						</Text>
-						<Text style={{ fontFamily: appFontFamily, fontSize: textSubheaders, fontWeight: "bold", marginLeft: 20, }}>
-							{props?.route?.params?.recipient?.firstName} {props?.route?.params?.recipient?.lastName}
-						</Text>
-					</View>
-					<View style={setMargin(20).setMarginTop}>
-						<InputField 
-							isMultiLine
-							placeholderText={"Compose your message here..."}
-							onTextChange={(val) => { setComposedMessage(val) }}
-							fieldKey={"compose_message"}
-						/>
-						{formError && 
-							<Text style={[textStyles.errorMessage, setMargin(7).setMarginTop]}>
-								{formError}
+        <View style={[setPadding(20).setPadding]}>
+					<View
+						style={{
+							marginBottom: 20,
+						}}
+					>
+						{props?.route?.params?.messageTitle ?
+							<Text style={{ fontFamily: appFontFamilyBold, fontSize: textContentSize }}>
+								{props?.route?.params?.messageTitle}
 							</Text>
+							:
+							<InputField 
+								placeholderText="Subject"
+								onTextChange={(value) => {
+									setMessageSubject(value);
+								}}
+							/>
 						}
 					</View>
-					<View style={{ marginTop: 20, }}>
-						<Pressable
-							style={messagingStyles.attachDocument}
-							onPress={() => { uploadDocuments() }}
-						>
-							<FontAwesomeIcon icon={faPaperclip} size={18} />
-							<Text style={{ marginLeft: 10, fontSize: textSize, fontFamily: appFontFamily }}>Attach Documents</Text>
-						</Pressable>
-						<View
-							style={{ margin: 10, }}
-						>
-							<View>
-								{attachments && attachments.map(attachment => (
-									<Text 
-										key={attachment.uri}
-										style={messagingStyles.attachments}
-									>
-										{attachment?.name}
-									</Text>
-								))}
-							</View>
-						</View>
-					</View>
+          <View>
+            <Text style={{ fontFamily: appFontFamily, fontSize: textSize }}>
+              To:
+            </Text>
+            <Text
+              style={{
+                fontFamily: appFontFamily,
+                fontSize: textSubheaders,
+                fontWeight: "bold",
+                marginLeft: 20,
+              }}
+            >
+              {props?.route?.params?.recipient?.firstName}{" "}
+              {props?.route?.params?.recipient?.lastName}
+            </Text>
+          </View>
+          <View style={setMargin(20).setMarginTop}>
+            <InputField
+              isMultiLine
+              placeholderText={"Compose your message here..."}
+              onTextChange={(val) => {
+                setComposedMessage(val);
+              }}
+              fieldKey={"compose_message"}
+            />
+            {formError && (
+              <Text
+                style={[textStyles.errorMessage, setMargin(7).setMarginTop]}
+              >
+                {formError}
+              </Text>
+            )}
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <Pressable
+              style={messagingStyles.attachDocument}
+              onPress={() => {
+                uploadDocuments();
+              }}
+            >
+              <FontAwesomeIcon icon={faPaperclip} size={18} />
+              <Text
+                style={{
+                  marginLeft: 10,
+                  fontSize: textSize,
+                  fontFamily: appFontFamily,
+                }}
+              >
+                Attach Documents
+              </Text>
+            </Pressable>
+            <View style={{ margin: 10 }}>
+              <View>
+                {attachments &&
+                  attachments.map((attachment) => (
+                    <Text
+                      key={attachment.uri}
+                      style={messagingStyles.attachments}
+                    >
+                      {attachment?.name}
+                    </Text>
+                  ))}
+              </View>
+            </View>
+          </View>
 
-					<View style={{ marginTop: 30, alignItems: "center" }}>
-						<CTAButton 
-							dark
-							halfWidth
-							title={sending ? "Sending..." : "Send Message"}
-							onPress={sendMessage}
-							isDisabled={sending}
-						/>
-					</View>
-				</View>
+          <View style={{ marginTop: 30, alignItems: "center" }}>
+            <CTAButton
+              dark
+              halfWidth
+              title={sending ? "Sending..." : "Send Message"}
+              onPress={sendMessage}
+              isDisabled={sending}
+            />
+          </View>
+        </View>
       </SafeAreaView>
     </>
   );
