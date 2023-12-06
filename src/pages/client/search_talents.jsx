@@ -142,7 +142,8 @@ function SearchTalents(props) {
         <Pressable
           style={{ padding: 5, }}
           onPress={() => {
-            setFilters(prev => ({...prev, pageno: (filters.pageno - 1)}));
+            if(filters.pageno > 1)
+              setFilters(prev => ({...prev, pageno: (filters.pageno - 1)}));
           }}
         >
           <FontAwesomeIcon icon={faAngleLeft} size={24} />
@@ -159,7 +160,8 @@ function SearchTalents(props) {
         <Pressable
           style={{ padding: 5, }}
           onPress={() => {
-            setFilters(prev => ({...prev, pageno: (filters.pageno + 1)}));
+            if(filters.pageno < totalPages)
+              setFilters(prev => ({...prev, pageno: (filters.pageno + 1)}));
           }}
         >
           <FontAwesomeIcon icon={faAngleRight} size={24} />
