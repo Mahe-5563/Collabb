@@ -51,7 +51,7 @@ function ClientHomePageComp(props) {
       apiGetUserProfile(props?.currentUser?._id, "client", (result) => {
         const talDetails = result?.res?.clientDetails;
         props.setCurrentUserProfileDetails(talDetails);
-        apiGetTalents({pageno: 1, name: "", categoryid: ""}, (response) => {
+        apiGetTalents({pageno: 2, name: "", categoryid: ""}, (response) => {
           if(response?.res?.length > 0) {
             setSimilarTalents(response.res);
             setLoader(false);
